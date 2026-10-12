@@ -433,6 +433,7 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 | 7.3 | Halaman login, register, dan lupa password | DONE |
 | 7.4 | Sesi demo dan alur masuk | DONE |
 | 7.5 | QA responsif, mode gelap, aksesibilitas | DONE |
+| 7.6 | Revisi 6: banner hero landing dipadatkan di ponsel | DONE |
 
 **7.1 Layout publik** — `DONE` (`assets/css/public.css`, `assets/js/public.js`)
 - [x] Halaman memakai `<body class="public" data-layout="public">` dengan slot `public-header` dan `public-footer`; tanpa sidebar, konten selebar penuh (maks 1180px)
@@ -462,6 +463,10 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 - [x] Audit axe-core (WCAG 2 A/AA) dengan waktu nyata pada seluruh 14 halaman (publik + aplikasi) x 2 tema: bersih (pengukuran dengan virtual time sempat menghasilkan temuan palsu karena transisi fade-in belum selesai)
 - [x] Diuji dengan interaksi sungguhan di Chrome: validasi, tombol password, login valid, `?next=` aman dan berbahaya, ingat saya, daftar, lupa password, ganti tema, menu mobile, tanpa overflow horizontal di 390px
 - [ ] Belum diuji di Firefox dan perangkat fisik
+
+**7.6 Revisi 6: banner hero landing di ponsel** — `DONE`
+- [x] Di layar <= 575px banner dipadatkan: padding dan radius lebih kecil, judul 1,65rem, paragraf 0,92rem, dua tombol ajakan berdampingan dengan ukuran normal (bukan besar), angka kepercayaan lebih kecil, kartu pratinjau diperkecil, jarak antarbagian dikurangi
+- [x] Tinggi banner di 390px sekitar 459px (sebelumnya hampir satu layar penuh); tidak ada overflow horizontal di 390 dan 360px
 
 ---
 
