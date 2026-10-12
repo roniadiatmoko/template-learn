@@ -14,6 +14,7 @@ hal yang tidak ada di Bootstrap. Tanpa build step. Rencana dan status pengerjaan
 
 | Halaman | File |
 |---|---|
+| Halaman publik (sebelum login): landing, login, register, lupa password | `landing.html`, `login.html`, `register.html`, `forgot-password.html` |
 | Dashboard | `index.html` |
 | Explore, Courses, Detail course | `pages/explore.html`, `pages/courses.html`, `pages/course-detail.html?id=1` |
 | Class (daftar + ruang kelas) | `pages/class.html`, `pages/class.html?course=1` |
@@ -28,18 +29,38 @@ assets/
 │  ├─ theme.css           Design tokens (--lz-*), layout shell, widget dashboard, mode gelap
 │  ├─ bootstrap-skin.css  Re-style SEMUA komponen Bootstrap + komponen tambahan (btn-icon, badge-soft, lz-chip, ...)
 │  ├─ courses.css         Kartu course, detail course, ruang kelas
-│  └─ pages.css           Schedule, Analytics, Certificate, Settings
+│  ├─ pages.css           Schedule, Analytics, Certificate, Settings
+│  └─ public.css          Layout publik: navbar, hero, section landing, halaman auth
 └─ js/
    ├─ theme-init.js       Dipasang di <head>: menerapkan tema tanpa kedipan
    ├─ lz.js               Helper: Lz.toast, Lz.table, Lz.charts, Lz.theme, Lz.palette
    ├─ layout.js           Merender sidebar, header, footer, skip link
    ├─ data/mock.js        Data dummy (user, statistik, assignment, jadwal, katalog course)
    ├─ data/curriculum.js  Kurikulum, ulasan, profil pengajar (dihasilkan dari data course)
+   ├─ public.js           Navbar dan footer layout publik
+   ├─ auth.js, landing.js Login/register/lupa password dan landing page
    └─ dashboard.js, courses.js, course-detail.js, class.js, schedule.js, analytics.js, certificate.js, settings.js
 ```
 
 Urutan muat CSS: Bootstrap, lalu `theme.css`, `bootstrap-skin.css`, dan css halaman. Urutan ini penting karena
 file kita menimpa variabel Bootstrap.
+
+## Layout publik (tanpa menu)
+
+Halaman untuk pengunjung yang belum login memakai layout penuh tanpa sidebar. Salin `landing.html` atau `login.html` sebagai dasar:
+
+```html
+<body class="public" data-layout="public" data-page="landing" data-root="">
+  <header data-slot="public-header"></header>
+  <main> ... isi halaman ... </main>
+  <footer data-slot="public-footer"></footer>
+  <script src="assets/js/lz.js"></script>
+  <script src="assets/js/public.js"></script>
+</body>
+```
+
+Tautan navbar diatur di array `LINKS` pada `assets/js/public.js`. Login memakai sesi demo (`lz.auth`) tanpa backend; ganti isi `startSession` dan
+penanganan submit di `assets/js/auth.js` dengan pemanggilan API Anda. Parameter `?next=` hanya menerima path relatif di situs ini.
 
 ## Dokumentasi komponen
 
@@ -71,9 +92,23 @@ Bagian baru otomatis masuk daftar isi jika diberi `<section class="doc-section" 
 4. Muat `lz.js`, `layout.js`, lalu skrip halaman Anda (urutannya: Bootstrap JS, data, `lz.js`, `layout.js`, skrip halaman).
 5. Hapus kelas `no-right` dari `.app-shell` jika ingin panel kanan seperti dashboard.
 
-## Menambah menu
+## Menambah menu (sampai 3 level)
 
-Edit array `MENU` di `assets/js/layout.js` (`key` harus sama dengan `data-page` halaman tujuan).
+Edit array `MENU` di `assets/js/layout.js`. Level 1 memakai `key` yang sama dengan `data-page` halaman tujuan; item dengan `children`
+menjadi dropdown dan boleh bersarang sampai level 3:
+
+```js
+{ key: "explore", label: "Explore", icon: "bi-compass", children: [          // level 1
+  { label: "All courses", href: "pages/explore.html" },                      // level 2
+  { label: "By category", children: [                                        // level 2 (induk)
+    { label: "UX Design", href: "pages/explore.html?cat=UX%20Design" },      // level 3
+  ] },
+] },
+```
+
+Item level 2 dan 3 dicocokkan dengan URL (path, `?cat`, `?level`, `?tab`, dan `#hash`); `default: true` menandai item yang aktif saat URL tanpa hash.
+Daftar parameter yang dicocokkan ada di `URL_KEYS`. Jika halaman Anda mengganti filter tanpa memuat ulang, panggil
+`Lz.url.set({ cat: "Finance" })` atau `Lz.url.hash("account")` agar penanda aktif di sidebar ikut berubah.
 
 ## Design tokens
 
@@ -109,6 +144,19 @@ Tabel dengan sort, pencarian, dan pagination: beri atribut `data-lz-table` (opsi
 `data-sort` pada `<th>` yang bisa diurutkan, `data-lz-search` pada input, dan `data-lz-pager` pada penampung pagination.
 Nilai urut khusus bisa diberikan lewat `data-value` pada `<td>`. Contoh ada di menu Components dan `pages/analytics.html`.
 
+## Notifikasi dan pesan di header
+
+Dropdown di header membaca `D.notifications` dan `D.messages` (`assets/js/data/mock.js`). Notifikasi: `{ id, tone, icon, title, text, time, href, read? }`
+(`tone`: blue, yellow, green, pink; `read: true` = sudah dibaca secara bawaan). Pesan: `{ id, name, role, text, time, read? }`.
+Status baca disimpan di `localStorage` (`lz.read.notif`, `lz.read.msg`). Template ini tidak menyertakan halaman kotak masuk atau backend pesan:
+menu pesan hanya menandai sudah dibaca, sambungkan ke API Anda untuk membuka percakapan.
+
+## Fade-in saat halaman dimuat
+
+`assets/js/theme-init.js` (wajib di `<head>`) menyembunyikan area konten (`.app-content` dan `.app-right`) sampai siap, lalu menampilkannya
+dengan fade-in 0,45 detik. Sidebar, header, dan footer tidak ikut memudar. Ubah durasinya di `theme.css`
+(`.app-content, .app-right { transition: opacity .45s ease; }`). Dimatikan otomatis untuk reduced motion.
+
 ## Hover, tautan, dan ripple
 
 - Warna hover memakai token `--lz-hover` (latar) dan `--lz-primary-ink` (teks); untuk komponen baru cukup memakai keduanya.
@@ -130,8 +178,13 @@ Semua data masih dummy (`assets/js/data/`). Status yang diubah pengguna disimpan
 
 Untuk integrasi backend, ganti pembacaan `window.LzData` dan fungsi baca/tulis `localStorage` di tiap skrip halaman dengan pemanggilan API.
 
+## Video di ruang kelas
+
+Materi bertipe video memakai elemen `<video>`. Sumber contoh ada di `D.sampleVideo` (`assets/js/data/curriculum.js`).
+Untuk video sendiri, isi `lesson.video` dengan URL MP4/WebM; materi ditandai selesai otomatis saat video habis ditonton.
+Materi Reading dan Quiz juga tersedia (isinya dummy).
+
 ## Yang belum ada
 
-- Pemutar video sungguhan di ruang kelas (area video masih placeholder).
 - Ilustrasi banner dashboard masih SVG sederhana; ganti dengan aset Anda sendiri.
-- Pengujian dengan pembaca layar dan perangkat fisik belum dilakukan.
+- Pengujian dengan pembaca layar, Firefox, dan perangkat fisik belum dilakukan (audit otomatis axe-core WCAG A/AA sudah bersih).

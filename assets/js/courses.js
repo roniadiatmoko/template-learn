@@ -72,9 +72,11 @@
   if ($("#exploreGrid")) {
     const PAGE = 9;
     const cats = ["All", ...new Set(D.courses.map((c) => c.cat))];
-    const st = { cat: "All", q: "", sort: "popular", level: "all", page: 1 };
+    const qp = new URLSearchParams(location.search);
+    const st = { cat: cats.includes(qp.get("cat")) ? qp.get("cat") : "All", q: "", sort: "popular", level: ["Beginner", "Intermediate", "Advanced"].includes(qp.get("level")) ? qp.get("level") : "all", page: 1 };
+    $("#level").value = st.level;
 
-    $("#chips").innerHTML = cats.map((c) => `<button type="button" class="lz-chip ${c === "All" ? "active" : ""}" data-cat="${c}" aria-pressed="${c === "All"}">${c}</button>`).join("");
+    $("#chips").innerHTML = cats.map((c) => `<button type="button" class="lz-chip ${c === st.cat ? "active" : ""}" data-cat="${c}" aria-pressed="${c === st.cat}">${c}</button>`).join("");
 
     const sorters = {
       popular: (a, b) => b.students - a.students,
@@ -102,11 +104,12 @@
       if (!b) return;
       st.cat = b.dataset.cat; st.page = 1;
       document.querySelectorAll("#chips .lz-chip").forEach((x) => { const a = x === b; x.classList.toggle("active", a); x.setAttribute("aria-pressed", a); });
+      Lz.url.set({ cat: st.cat });
       draw();
     });
     $("#q").addEventListener("input", (e) => { st.q = e.target.value.trim().toLowerCase(); st.page = 1; draw(); });
     $("#sort").addEventListener("change", (e) => { st.sort = e.target.value; draw(); });
-    $("#level").addEventListener("change", (e) => { st.level = e.target.value; st.page = 1; draw(); });
+    $("#level").addEventListener("change", (e) => { st.level = e.target.value; st.page = 1; Lz.url.set({ level: st.level }); draw(); });
     $("#pager").addEventListener("click", (e) => {
       const a = e.target.closest("[data-p]");
       if (!a) return;
@@ -121,7 +124,9 @@
 
   /* ---------- My Courses ---------- */
   if ($("#myGrid")) {
-    let tab = "progress";
+    const qt = new URLSearchParams(location.search).get("tab");
+    let tab = ["progress", "done", "saved"].includes(qt) ? qt : "progress";
+    document.querySelectorAll("#myTabs .nav-link").forEach((x) => x.classList.toggle("active", x.dataset.tab === tab));
     const sets = () => {
       const mine = D.courses.filter((c) => c.progress !== null);
       return {
@@ -147,6 +152,7 @@
     document.querySelectorAll("#myTabs [data-tab]").forEach((b) => b.addEventListener("click", () => {
       tab = b.dataset.tab;
       document.querySelectorAll("#myTabs .nav-link").forEach((x) => x.classList.toggle("active", x === b));
+      Lz.url.set({ tab: tab === "progress" ? null : tab });
       draw();
     }));
     $("#myQ").addEventListener("input", draw);

@@ -89,6 +89,20 @@
     Lz.toast(`${e.target.checked ? "Turned on" : "Turned off"}: ${NOTIFS.find((n) => n[0] === k)[1]}`, "info", { delay: 1800 });
   });
 
+  /* ---------- Tab lewat hash (#account, #notifications, #appearance) ---------- */
+  const TABS = { profile: "#s-profile", account: "#s-account", notifications: "#s-notif", appearance: "#s-look" };
+  const showFromHash = () => {
+    const target = TABS[location.hash.slice(1)] || TABS.profile;
+    const btn = document.querySelector(`[data-bs-target="${target}"]`);
+    if (btn) bootstrap.Tab.getOrCreateInstance(btn).show();
+  };
+  showFromHash();
+  window.addEventListener("hashchange", showFromHash);
+  document.querySelectorAll(".set-nav [data-bs-target]").forEach((b) => b.addEventListener("shown.bs.tab", () => {
+    const key = Object.keys(TABS).find((k) => TABS[k] === b.dataset.bsTarget);
+    Lz.url.hash(key === "profile" ? "" : key);
+  }));
+
   /* ---------- Tema ---------- */
   const cur = Lz.theme ? Lz.theme.get() : "light";
   const radio = document.querySelector(`input[name=theme][value=${cur}]`);

@@ -14,7 +14,7 @@
     .join("");
 
   /* ---------- Performance ring ---------- */
-  Lz.charts.ring($("#performanceChart"), 72);
+  const perfChart = Lz.charts.ring($("#performanceChart"), 72);
   $("#skillPoints").textContent = D.user.skillPoints.toLocaleString("id-ID");
   $("#rank").textContent = D.user.rank;
 
@@ -39,7 +39,7 @@
   setPeriod(periodSel.value);
 
   /* ---------- My Progress ---------- */
-  Lz.charts.donut($("#progressChart"), D.progress.parts, cats.map((c) => c.color));
+  const progChart = Lz.charts.donut($("#progressChart"), D.progress.parts, cats.map((c) => c.color));
   $("#progressTotal").textContent = D.progress.total;
   $("#progressLegend").innerHTML = cats
     .map((c, i) => `<div><small><i style="background:${c.color}"></i>${c.label}</small><strong>${D.progress.parts[i]}%</strong></div>`)
@@ -126,13 +126,34 @@
       </div>`)
     .join("");
 
-  $("#activityList").innerHTML = D.activities
-    .map((a) => `
-      <div class="tl-item">
-        <div class="tl-dot ${a.tone}"><i class="bi ${a.icon}"></i></div>
-        <div>${a.html}<small>${a.time}</small></div>
-      </div>`)
-    .join("");
+  function drawActivities() {
+    $("#activityList").innerHTML = D.activities
+      .map((a) => `
+        <div class="tl-item">
+          <div class="tl-dot ${a.tone}"><i class="bi ${a.icon}"></i></div>
+          <div>${a.html}<small>${a.time}</small></div>
+        </div>`)
+      .join("");
+  }
+  drawActivities();
 
   $("#heroName").textContent = D.user.first;
+
+  /* ---------- Menu titik tiga, tombol filter profil, dan kartu jadwal ---------- */
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("[data-more]");
+    if (a) {
+      const act = a.dataset.more;
+      if (act === "refresh-perf") { perfChart.reset(); perfChart.update(); Lz.toast("Performance updated.", "success", { delay: 1600 }); }
+      if (act === "refresh-prog") { progChart.reset(); progChart.update(); Lz.toast("Progress updated.", "success", { delay: 1600 }); }
+      if (act === "refresh-acts") { drawActivities(); Lz.toast("Activities updated.", "success", { delay: 1600 }); }
+      if (act === "clear-acts") {
+        $("#activityList").innerHTML = '<div class="text-muted small py-2">No recent activity. New activity will show here.</div>';
+        Lz.toast("Recent activities cleared. Use Refresh to bring them back.", "info", { delay: 2500 });
+      }
+    }
+    if (e.target.closest(".sched-item")) location.href = "pages/schedule.html";
+  });
+  const prof = $("#profile .btn-icon");
+  if (prof) prof.addEventListener("click", () => { location.href = "pages/settings.html"; });
 })();

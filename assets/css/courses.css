@@ -73,7 +73,7 @@ button.lz-chip { cursor: pointer; font-family: inherit; }
 .player.pink   { background: linear-gradient(135deg, #c9439b, #f58ed3 55%, var(--lz-pink)); }
 .player.yellow { background: linear-gradient(135deg, #c99200, #f5b800 55%, var(--lz-yellow)); }
 .player.green  { background: linear-gradient(135deg, #14804a, #1fa862 55%, #5ad59a); }
-.play { width: 76px; height: 76px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .95); color: var(--lz-primary-ink); font-size: 2.2rem; display: grid; place-items: center; padding-left: 4px; }
+.play { width: 76px; height: 76px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .95); color: #0b5fc9; font-size: 2.2rem; display: grid; place-items: center; padding-left: 4px; }
 .play:hover { transform: scale(1.06); }
 .player-tag { position: absolute; left: 14px; bottom: 14px; background: rgba(11, 18, 32, .55); color: #fff; font-size: .78rem; font-weight: 600; padding: .3rem .7rem; border-radius: 99px; }
 @media (max-width: 575.98px) { .detail-hero { padding: 1.25rem; } .detail-hero h2 { font-size: 1.4rem; } .detail-art { font-size: 6rem; } }
@@ -90,3 +90,9 @@ button.lz-chip { cursor: pointer; font-family: inherit; }
 .play { transition: transform .15s, background-color .15s; }
 .play:hover { background: #fff; }
 @media (prefers-reduced-motion: reduce) { .course-card:hover { transform: none; } }
+
+.player.playing { background: #000; }
+.player video { width: 100%; height: 100%; display: block; background: #000; }
+.reading p:last-child { margin-bottom: 0; }
+.quiz fieldset { border: 0; padding: 0; margin: 0 0 1rem; }
+.quiz legend { float: none; width: auto; margin-bottom: .5rem; }

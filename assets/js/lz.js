@@ -51,7 +51,6 @@
       if (!th.hasAttribute("data-sort")) return;
       th.style.cursor = "pointer";
       th.tabIndex = 0;
-      th.setAttribute("role", "button");
       const go = () => { sort = { col: i, dir: sort.col === i ? -sort.dir : 1 }; page = 1; draw(); };
       th.addEventListener("click", go);
       th.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
@@ -143,7 +142,7 @@
 
   /* ---------- Ripple saat diklik ----------
      Satu listener untuk seluruh halaman. Tambahkan data-no-ripple pada elemen yang tidak ingin diberi efek. */
-  const RIPPLE = ".btn, .btn-icon, .btn-close, .side-nav a, .nav-link, .page-link, .dropdown-item, .lz-chip, .list-group-item-action, .accordion-button, .lesson-btn, .ev-item, .cal-cell, .cal-nav, .course-save, .play, .sched-item, .assign-row, .theme-opt, .lz-more, .btn-add";
+  const RIPPLE = ".btn, .btn-icon, .btn-close, .side-nav a, .side-toggle, .pub-link, .pw-toggle, .nav-link, .page-link, .dropdown-item, .lz-chip, .list-group-item-action, .accordion-button, .lesson-btn, .ev-item, .cal-cell, .cal-nav, .course-save, .play, .sched-item, .assign-row, .theme-opt, .lz-more, .btn-add, .panel-item, .panel-link";
   const reduce = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   document.addEventListener("pointerdown", (e) => {
     if (reduce.matches || e.button > 0) return;
@@ -162,6 +161,23 @@
     dot.addEventListener("animationend", () => dot.remove(), { once: true });
     setTimeout(() => dot.remove(), 900); // cadangan jika animationend tidak terpicu
   }, { passive: true });
+
+  /* Sinkronkan URL (query/hash) tanpa memuat ulang agar penanda menu sidebar ikut berubah.
+     Lz.url.set({ cat: "Finance", level: null }) menghapus parameter bernilai null, kosong, "All", atau "all". */
+  Lz.url = {
+    set(obj) {
+      try {
+        const u = new URL(location.href);
+        Object.entries(obj).forEach(([k, v]) => { if (v === null || v === "" || v === "All" || v === "all") u.searchParams.delete(k); else u.searchParams.set(k, v); });
+        history.replaceState(null, "", u);
+      } catch (e) { /* mis. file:// pada beberapa browser */ }
+      window.dispatchEvent(new Event("lz:urlchange"));
+    },
+    hash(h) {
+      try { const u = new URL(location.href); u.hash = h || ""; history.replaceState(null, "", u); } catch (e) { /* abaikan */ }
+      window.dispatchEvent(new Event("lz:urlchange"));
+    },
+  };
 
   document.addEventListener("DOMContentLoaded", Lz.initTables);
 })();

@@ -65,15 +65,41 @@
       }).join("")}</div>`;
   }
 
+  /* Tandai selesai / batal; tampilkan toast bila course tuntas */
+  function setDone(id, on) {
+    if (on) done.add(id); else done.delete(id);
+    save();
+    if (on) {
+      if (done.size === lessons.length) Lz.toast("You finished the course. Your certificate is ready.", "success", { title: "Course completed" });
+      else Lz.toast("Lesson completed.", "success", { delay: 1800 });
+    }
+  }
+
+  const TAG = { video: "Video", reading: "Reading", quiz: "Quiz" };
+  function media(l) {
+    if (l.type === "video") {
+      return `<div class="player ${c.tone}" id="player">
+        <button class="play" type="button" aria-label="Play ${esc(l.title)}"><i class="bi bi-play-fill"></i></button>
+        <span class="player-tag">${TAG[l.type]} · ${l.min} min</span></div>`;
+    }
+    const content = D.lessonContent(c, l);
+    if (l.type === "reading") {
+      return `<article class="lz-card reading h-auto"><span class="badge badge-soft-blue mb-2">${TAG[l.type]} · ${l.min} min</span>
+        <h3 class="h5">${esc(l.title)}</h3>${content.reading.map((p) => `<p>${esc(p)}</p>`).join("")}</article>`;
+    }
+    return `<form class="lz-card quiz h-auto" id="quizForm" novalidate><span class="badge badge-soft-pink mb-2">${TAG[l.type]} · ${content.quiz.length} questions</span>
+      <h3 class="h5 mb-3">Check what you learned</h3>
+      ${content.quiz.map((q, i) => `<fieldset class="mb-3"><legend class="fs-6 fw-bold">${i + 1}. ${esc(q.q)}</legend>
+        ${q.o.map((o, j) => `<div class="form-check"><input class="form-check-input" type="radio" name="q${i}" id="q${i}-${j}" value="${j}" required><label class="form-check-label" for="q${i}-${j}">${esc(o)}</label></div>`).join("")}</fieldset>`).join("")}
+      <div id="quizResult" class="small fw-bold mb-2" role="status" aria-live="polite"></div>
+      <button class="btn btn-primary" type="submit">Check answers</button></form>`;
+  }
+
   function drawStage() {
     const l = lesson();
     const idx = lessons.indexOf(l);
     const isDone = done.has(l.id);
-    $("#stage").innerHTML = `
-      <div class="player ${c.tone}" role="img" aria-label="Video placeholder for ${esc(l.title)}">
-        <button class="play" type="button" aria-label="Play lesson"><i class="bi ${l.type === "video" ? "bi-play-fill" : ICON[l.type]}"></i></button>
-        <span class="player-tag">${l.type === "video" ? "Video" : l.type === "reading" ? "Reading" : "Quiz"} · ${l.min} min</span>
-      </div>
+    $("#stage").innerHTML = `${media(l)}
       <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mt-3">
         <div><div class="text-muted small">Lesson ${idx + 1} of ${lessons.length}</div><h2 class="h4 mb-0">${esc(l.title)}</h2></div>
         <button class="btn ${isDone ? "btn-secondary" : "btn-primary"}" id="toggleDone" type="button" aria-pressed="${isDone}">
@@ -83,6 +109,23 @@
         <button class="btn btn-secondary" id="prev" type="button" ${idx === 0 ? "disabled" : ""}><i class="bi bi-chevron-left me-1"></i>Previous</button>
         <button class="btn btn-secondary" id="next" type="button" ${idx === lessons.length - 1 ? "disabled" : ""}>Next<i class="bi bi-chevron-right ms-1"></i></button>
       </div>`;
+  }
+
+  /* Putar video: ganti tombol play dengan elemen <video>; selesai ditonton = materi ditandai selesai */
+  function playVideo() {
+    const l = lesson();
+    const box = $("#player");
+    if (!box || !l.video) return;
+    box.classList.add("playing");
+    box.innerHTML = `<video controls autoplay playsinline preload="auto" aria-label="${esc(l.title)}"><source src="${esc(l.video)}"></video>`;
+    const v = box.querySelector("video");
+    v.addEventListener("ended", () => {
+      if (!done.has(l.id)) { setDone(l.id, true); drawStage(); drawList(); }
+    });
+    v.querySelector("source").addEventListener("error", () => {
+      Lz.toast("This video could not be loaded. Check your connection, or set a video URL in curriculum.js.", "danger", { title: "Video unavailable" });
+      drawStage();
+    });
   }
 
   /* Catatan dan diskusi per course */
@@ -134,15 +177,26 @@
     if (e.target.closest("#next") && idx < lessons.length - 1) return go(lessons[idx + 1].id);
     if (e.target.closest("#toggleDone")) {
       const l = lesson();
-      if (done.has(l.id)) done.delete(l.id); else done.add(l.id);
-      save();
-      if (done.has(l.id)) {
-        if (done.size === lessons.length) Lz.toast("You finished the course. Your certificate is ready.", "success", { title: "Course completed" });
-        else Lz.toast("Lesson completed.", "success", { delay: 1800 });
-      }
+      setDone(l.id, !done.has(l.id));
       drawStage(); drawList();
     }
-    if (e.target.closest(".play")) Lz.toast("Connect your video source here (video tag or embed).", "info");
+    if (e.target.closest(".play")) playVideo();
+  });
+
+  $("#classRoot").addEventListener("submit", (e) => {
+    if (e.target.id !== "quizForm") return;
+    e.preventDefault();
+    const l = lesson();
+    const qs = D.lessonContent(c, l).quiz;
+    const form = e.target;
+    const picked = (i) => form.querySelector(`input[name=q${i}]:checked`);
+    const out = $("#quizResult");
+    if (!qs.every((_, i) => picked(i))) { out.className = "small fw-bold mb-2 text-danger"; out.textContent = "Answer every question, then check again."; return; }
+    const score = qs.filter((q, i) => Number(picked(i).value) === q.a).length;
+    const pass = score >= 2;
+    out.className = "small fw-bold mb-2 " + (pass ? "text-success" : "text-danger");
+    out.textContent = pass ? `You got ${score} of ${qs.length}. Lesson completed.` : `You got ${score} of ${qs.length}. You need at least 2 correct. Review the lesson and try again.`;
+    if (pass && !done.has(l.id)) { setDone(l.id, true); drawList(); }
   });
 
   const note = $("#note");

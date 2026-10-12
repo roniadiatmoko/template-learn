@@ -27,9 +27,34 @@
         title: `${topics[i % topics.length]}${i >= topics.length ? " (part 2)" : ""}`,
         min: type === "quiz" ? 10 : 6 + ((n * 7 + c.id * 3) % 13),
         type,
+        video: type === "video" ? D.sampleVideo : null,
       });
     }
     return mods;
+  };
+
+  /* Sumber video contoh (CC0). Ganti dengan URL video Anda, atau isi lesson.video per materi. */
+  D.sampleVideo = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm";
+
+  /* Isi materi bacaan dan soal kuis (dummy, dihasilkan dari judul materi) */
+  const rotate = (arr, n) => arr.map((_, i) => arr[(i + n) % arr.length]);
+  D.lessonContent = function (c, l) {
+    const t = l.title.replace(/ \(part 2\)$/, "");
+    const reading = [
+      `${t} is the next step in ${c.title}. Read this page once, then try the idea on a small piece of your own work.`,
+      "Start with the goal: what should be true when you finish? Write it in one sentence before you begin, and check it again at the end.",
+      "Keep notes as you go. Short notes you can find later are worth more than long notes you never reopen.",
+    ];
+    const bank = [
+      { q: `What is the main goal of "${t}"?`, o: ["Apply it to a real task", "Memorize every definition", "Skip planning and start directly", "Replace the whole workflow"] },
+      { q: `Which habit helps most when practicing ${c.cat.toLowerCase()}?`, o: ["Review your work with a checklist", "Avoid all feedback", "Work without a goal", "Copy without reading"] },
+      { q: "When should you share your result?", o: ["After checking it against the brief", "Never", "Before you start", "Only after the course ends"] },
+    ];
+    const quiz = bank.map((b, i) => {
+      const shift = (l.id + i) % 4;
+      return { q: b.q, o: rotate(b.o, shift), a: (4 - shift) % 4 };
+    });
+    return { reading, quiz };
   };
 
   D.instructors = {

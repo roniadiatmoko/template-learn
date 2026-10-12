@@ -70,6 +70,22 @@
   <script src="../assets/js/layout.js"><\/script>
 </body>
                 </script></div></div>
+              <h3>Public page (no sidebar)</h3>
+              <p class="doc-note">Pages for visitors who are not logged in use a full-width layout with a top navbar and a footer. Copy <code>landing.html</code> or <code>login.html</code> in the project root.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the HTML tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<body class="public" data-layout="public" data-page="landing" data-root="">
+  <header data-slot="public-header"></header>
+  <main>
+    <!-- sections: .pub-section > .pub-container -->
+  </main>
+  <footer data-slot="public-footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script>
+  <script src="assets/js/lz.js"><\/script>
+  <script src="assets/js/public.js"><\/script>
+</body>
+                </script></div></div>
               <p class="doc-note mb-0">Remove <code>no-right</code> from <code>.app-shell</code> and add an <code>&lt;aside class="app-right"&gt;</code> to get the right panel used on the dashboard.</p>
             </section>
 
@@ -251,10 +267,13 @@ form.addEventListener("submit", (e) => {
             <section class="doc-section" id="cards">
               <h2>Cards and widgets</h2>
               <p class="doc-lead">Cards have no border or shadow; they stand out from the page by color. <code>.lz-card</code> is the dashboard card, <code>.card</code> is the Bootstrap one.</p>
-              <h3>lz-card with header</h3>
-              <div class="doc-example"><div class="doc-preview on-bg">
+              <h3>lz-card with header and options menu</h3>
+              <p class="doc-note">The three-dots button opens a dropdown. Give it an <code>aria-label</code> that names the card.</p>
+              <div class="doc-example"><div class="doc-preview on-bg" style="min-height:220px">
                 <section class="lz-card h-auto" style="max-width:420px">
-                  <div class="lz-card-head"><h3 class="lz-card-title">Learning Activity</h3><button class="lz-more" type="button" aria-label="More"><i class="bi bi-three-dots"></i></button></div>
+                  <div class="lz-card-head"><h3 class="lz-card-title">Learning Activity</h3>
+                    <div class="dropdown"><button class="lz-more" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More options for Learning Activity"><i class="bi bi-three-dots"></i></button>
+                      <ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="analytics.html"><i class="bi bi-graph-up me-2"></i>View analytics</a></li><li><button class="dropdown-item" type="button"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button></li></ul></div></div>
                   <p class="mb-0 text-muted">Put any content here: a chart, a list, or text.</p>
                 </section>
               </div></div>
@@ -327,15 +346,55 @@ form.addEventListener("submit", (e) => {
                   <div class="collapse navbar-collapse" id="doc-nav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="#navigation">Home</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Classes</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Help</a></li></ul></div>
                 </div></nav>
               </div></div>
-              <h3>Sidebar menu item</h3>
-              <p class="doc-note">The sidebar is rendered by <code>layout.js</code>. To add a menu item, add an entry to the <code>MENU</code> array there. <code>key</code> must equal the page's <code>data-page</code>.</p>
+              <h3>Sidebar menu (up to 3 levels)</h3>
+              <p class="doc-note">The sidebar is rendered by <code>layout.js</code> from the <code>MENU</code> array. An item with <code>children</code> becomes a dropdown, and children can have their own children, down to level 3. Level 1 items use <code>key</code> (the page's <code>data-page</code>); level 2 and 3 items are matched by URL. The branch that holds the current page opens by itself, and the choice of open branches is remembered.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div style="max-width:260px;background:var(--lz-surface);border-radius:16px;padding:.75rem">
+                  <ul class="side-nav">
+                    <li><a href="#navigation" class="active" aria-current="page"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                    <li class="has-sub has-active">
+                      <button type="button" class="side-toggle" data-bs-toggle="collapse" data-bs-target="#doc-sm1" aria-expanded="true" aria-controls="doc-sm1"><i class="bi bi-compass"></i><span>Explore</span><i class="bi bi-chevron-down chev" aria-hidden="true"></i></button>
+                      <div class="collapse show" id="doc-sm1">
+                        <ul class="side-sub">
+                          <li><a href="#navigation"><span>All courses</span></a></li>
+                          <li class="has-sub">
+                            <button type="button" class="side-toggle" data-bs-toggle="collapse" data-bs-target="#doc-sm2" aria-expanded="true" aria-controls="doc-sm2"><span>By category</span><i class="bi bi-chevron-down chev" aria-hidden="true"></i></button>
+                            <div class="collapse show" id="doc-sm2">
+                              <ul class="side-sub">
+                                <li><a href="#navigation"><span>UX Design</span></a></li>
+                                <li><a href="#navigation"><span>Front-End</span></a></li>
+                              </ul>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div></div>
+              <p class="doc-note">Define the menu in <code>layout.js</code>; the markup above is generated from it. Use <code>Lz.url.set()</code> when a page changes its filter without reloading, so the highlight in the sidebar follows.</p>
               <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
                 <script type="text/plain" class="doc-code" data-lang="js">
 const MENU = [
   { key: "dashboard", label: "Dashboard", icon: "bi-grid-1x2-fill", href: "index.html" },
-  // ...
-  { key: "reports", label: "Reports", icon: "bi-file-earmark-bar-graph", href: "pages/reports.html" },
+
+  { key: "explore", label: "Explore", icon: "bi-compass", children: [        // level 1 (dropdown)
+    { label: "All courses", href: "pages/explore.html" },                    // level 2
+    { label: "By category", children: [                                      // level 2 (dropdown)
+      { label: "UX Design", href: "pages/explore.html?cat=UX%20Design" },    // level 3
+      { label: "Front-End", href: "pages/explore.html?cat=Front-End" },
+    ] },
+  ] },
+
+  { key: "settings", label: "Settings", icon: "bi-gear", children: [
+    { label: "Profile", href: "pages/settings.html", default: true },       // active when the URL has no hash
+    { label: "Account", href: "pages/settings.html#account" },
+  ] },
 ];
+
+// In a page that changes its filter without reloading:
+Lz.url.set({ cat: "Finance" });   // updates ?cat= and the sidebar highlight ("All" or null removes the parameter)
+Lz.url.hash("account");           // updates #account and the sidebar highlight
                 </script></div></div>
             </section>
 
@@ -453,6 +512,22 @@ Lz.toast("Assignment sent.", "success", { title: "Sent" });
 Lz.toast("Could not save. Check your connection, then try again.", "danger");
 Lz.toast("Course removed from saved.", "info", { delay: 2000 });
                 </script></div></div>
+              <h3>Header panels (notifications and messages)</h3>
+              <p class="doc-note">The bell and chat buttons in the page header open dropdown panels. They are built by <code>layout.js</code> from <code>LzData.notifications</code> and <code>LzData.messages</code>. A blue dot marks unread items and the red dot on the button shows when anything is unread. Read state is saved on the device.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="js">
+// assets/js/data/mock.js
+window.LzData.notifications = [
+  { id: 1, tone: "yellow", icon: "bi-alarm", title: "Deadline tomorrow",
+    text: "Corporate Finance Case Study is due Nov 5", time: "1 hour ago",
+    href: "pages/schedule.html" },                       // opened when the item is clicked
+  { id: 2, tone: "blue", icon: "bi-stars", title: "New course", text: "...", time: "3 days ago",
+    href: "pages/explore.html", read: true },            // read: true = already read
+];
+window.LzData.messages = [
+  { id: 1, name: "Maya Putri", role: "Instructor", text: "Great work on your plan.", time: "9:41 AM" },
+];
+                </script></div></div>
               <h3>Tooltip and popover</h3>
               <div class="doc-example"><div class="doc-preview" style="min-height:110px"><div class="doc-row">
                 <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Short hint">Tooltip</button>
@@ -546,6 +621,8 @@ Lz.theme.get();         // current choice
                 <button class="btn btn-secondary" type="button">Click me</button>
                 <button class="btn btn-secondary" type="button" data-no-ripple>No ripple</button>
               </div></div></div>
+              <h3>Page fade-in</h3>
+              <p class="doc-note">The content area (<code>.app-content</code> and the right panel) fades in once the page is ready, so widgets built by JavaScript do not flash in half finished. The sidebar, header, and footer stay visible. This comes from <code>theme-init.js</code> in <code>&lt;head&gt;</code>, so keep that script on every page. Change the duration with <code>.app-content, .app-right { transition: opacity .45s ease; }</code> in <code>theme.css</code>. It is skipped when the system asks for reduced motion.</p>
               <h3>Hover and focus</h3>
               <p class="doc-note">For custom components use the same tokens so they match: <code>background: var(--lz-hover)</code> and <code>color: var(--lz-primary-ink)</code> on hover, and <code>box-shadow: var(--lz-focus)</code> on <code>:focus-visible</code>. Do not underline links.</p>
             </section>

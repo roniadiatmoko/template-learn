@@ -15,6 +15,7 @@ Dribbble "E-Learning Admin Dashboard" (brand *Learnzie*). Tanpa build step: semu
 | 4 | Halaman Courses, Explore, Class | DONE |
 | 5 | Halaman Schedule, Analytics, Certificate, Settings | DONE |
 | 6 | Responsif, aksesibilitas, dark mode, QA, dokumentasi | DONE |
+| 7 | Layout publik tanpa menu (landing, login, register) untuk pengguna sebelum login | DONE |
 
 ---
 
@@ -64,6 +65,9 @@ frontend-university/
 | 1.4 | Sidebar & header reusable via JS | DONE |
 | 1.5 | Revisi 1: warna hover sidebar, header, footer | DONE |
 | 1.6 | Menu "Components" di sidebar | DONE |
+| 1.7 | Revisi 4: efek fade-in area konten saat halaman dimuat | DONE |
+| 1.8 | Menu sidebar bertingkat sampai 3 level | DONE |
+| 1.9 | Revisi 5: dropdown Notifikasi dan Pesan di header | DONE |
 
 **1.1 Setup struktur folder & dependensi CDN** — `DONE`
 - [x] Buat folder `assets/css`, `assets/js`, `assets/js/data`, `assets/img`, `pages`
@@ -96,6 +100,30 @@ frontend-university/
 **1.6 Menu Components** — `DONE`
 - [x] Item ke-9 di sidebar (ikon puzzle) menuju `pages/components.html`, ditambahkan lewat array `MENU` di `layout.js`
 
+**1.7 Revisi 4: fade-in area konten saat halaman dimuat** — `DONE`
+- [x] `theme-init.js` (di `<head>`) menambahkan kelas `lz-loading` pada `<html>`; CSS menyembunyikan **hanya area konten** (`.app-content` dan panel kanan `.app-right`, `opacity: 0`) sehingga widget yang dirender lewat JS tidak muncul setengah jadi
+- [x] **Sidebar menu, header, dan footer tidak ikut memudar** (revisi: efek semula berlaku di seluruh halaman)
+- [x] Konten muncul perlahan (`transition: opacity .45s` pada `.app-content` dan `.app-right`) setelah DOM, skrip halaman, dan font Urbanist siap (menunggu font maksimal 700 ms)
+- [x] Aman: dilewati jika pengguna memilih reduced motion, ada batas waktu 2,5 detik agar halaman tidak pernah tertahan, dan tombol back/forward (cache browser) langsung tampil
+- [x] Diukur di Chrome: opacity naik bertahap 0 ke 1 pada dashboard, explore, dan class (sekitar 20 frame perantara)
+
+**1.8 Menu sidebar bertingkat (dropdown sampai 3 level)** — `DONE`
+- [x] Struktur data `MENU` di `layout.js` mendukung `children` bersarang: level 1 (Explore, Courses, Settings), level 2 (mis. By category, By level), level 3 (mis. UX Design, Beginner)
+- [x] Item induk berupa tombol dengan panah yang berputar; submenu membuka/menutup dengan animasi Bootstrap Collapse (tanpa animasi untuk reduced motion)
+- [x] Level 2 dan 3 diberi garis pemandu di kiri dan teks lebih kecil; item aktif memakai penanda biru di garis
+- [x] Item aktif dicocokkan dari URL (path, `?cat`, `?level`, `?tab`, `#hash`); cabang induk otomatis terbuka dan berwarna biru
+- [x] Submenu yang dibuka/ditutup pengguna diingat (`localStorage`, kunci `lz.menu.open`)
+- [x] Penanda aktif ikut berubah tanpa memuat ulang saat filter/tab diganti (`Lz.url.set`, event `lz:urlchange`), dan cabang aktif otomatis dibuka
+- [x] Aksesibilitas: `aria-expanded`, `aria-controls`, `aria-current`; audit axe-core bersih; berfungsi di offcanvas mobile dan mode gelap
+- [x] Diuji dengan klik sungguhan di Chrome: buka/tutup 3 level, ingat status setelah muat ulang, penanda aktif untuk filter, tab, dan hash
+
+**1.9 Revisi 5: dropdown Notifikasi dan Pesan** — `DONE`
+- [x] Tombol pesan dan lonceng di header kini membuka panel dropdown (sebelumnya tidak melakukan apa-apa): judul, tautan "Mark all as read", daftar item dengan ikon/avatar, judul, cuplikan, waktu, dan titik biru untuk yang belum dibaca
+- [x] Notifikasi berupa tautan ke halaman terkait (tugas, jadwal, sertifikat, diskusi kelas, course baru); mengkliknya menandai sudah dibaca. Pesan berupa tombol yang menandai sudah dibaca (percakapan lengkap perlu backend)
+- [x] Titik merah pada tombol hanya muncul bila ada yang belum dibaca; `aria-label` tombol menyebut jumlahnya (mis. "Notifications, 3 unread")
+- [x] Status baca disimpan (`lz.read.notif`, `lz.read.msg` di `localStorage`); panel tetap terbuka saat klik di dalamnya dan menutup saat klik di luar atau membuka panel lain
+- [x] Data di `D.notifications` dan `D.messages` pada `mock.js`; lebar panel menyesuaikan layar kecil (diuji di 390px), mode gelap didukung
+
 ---
 
 ## SPRINT 2 — Halaman Dashboard · `DONE`
@@ -112,6 +140,7 @@ frontend-university/
 | 2.8 | Footer | DONE |
 | 2.9 | Revisi 1: hover widget dashboard | DONE |
 | 2.10 | Revisi 2: judul banner "Hello, Gareth!" berwarna putih | DONE |
+| 2.11 | Revisi 5: tombol yang belum berfungsi di dashboard | DONE |
 
 **2.1 Banner sambutan** — `DONE`
 - [x] Kartu biru, sapaan "Hello, {nama}!", teks, tombol putih "Explore More Courses"
@@ -152,6 +181,12 @@ frontend-university/
 
 **2.10 Revisi 2: warna judul banner** — `DONE`
 - [x] Judul `<h2>` di banner biru tadinya hitam karena mengikuti warna heading Bootstrap; sekarang `color: #fff` (`.hero h2`)
+
+**2.11 Revisi 5: menu titik tiga dan tombol lain di dashboard** — `DONE`
+- [x] Tombol titik tiga di kartu Performance, My Progress, dan Recent Activities membuka menu dropdown: View analytics, Go to my courses, Refresh (mengulang animasi grafik dan memunculkan toast), dan Clear list (dapat dikembalikan dengan Refresh)
+- [x] Tombol "+" di My Schedule menuju Schedule dan langsung membuka form tambah event (`#add`)
+- [x] Kartu jadwal di panel kanan membuka halaman Schedule; tombol filter di profil membuka Settings; tombol "Try Free Trial" menampilkan toast konfirmasi
+- [x] Diuji dengan klik sungguhan di Chrome
 
 ---
 
@@ -224,7 +259,8 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
       hero/performance dan grafik pindah ke breakpoint `lg` (kartu Performance tidak lagi melebar di 1024px);
       font grafik memakai Urbanist; latar modal/offcanvas/dropdown/popover putih; spinner di dalam tombol terlihat;
       latar input saat focus putih
-- [ ] Belum diuji: hover tiap komponen secara interaktif dan pembaca layar (masuk Sprint 6.3)
+- [x] Hover diuji dengan mouse sungguhan lewat Chrome DevTools Protocol (30 elemen: menu sidebar, tombol, chip, kartu course, tab, pills, pagination, accordion, list group, baris tabel, event kalender, dll.): semuanya berubah saat di-hover dan tidak ada yang bergaris bawah
+- [x] Audit otomatis axe-core (WCAG 2 A/AA) pada 10 halaman, terang dan gelap: tidak ada pelanggaran tersisa (lihat 6.3)
 
 **3.12 Revisi 1: warna hover** — `DONE`
 - [x] Tombol (bayangan lembut pada primary/success/danger, link berlatar hover), input/select/check (border biru saat hover)
@@ -258,6 +294,7 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 | 4.4 | Class: daftar kelas + ruang kelas (video player, daftar materi) | DONE |
 | 4.5 | Revisi 1: hover kartu course dan ruang kelas | DONE |
 | 4.6 | Revisi 2: judul hero detail course mengikuti warna hero | DONE |
+| 4.7 | Revisi 3: Explore dan Courses terhubung ke menu bertingkat lewat URL | DONE |
 
 **4.1 Explore** — `DONE` (`pages/explore.html`)
 - [x] Kartu course: cover berwarna per kategori, badge kategori, bookmark, rating, jumlah materi, durasi, peserta, harga/Free
@@ -281,13 +318,20 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 - [x] Ruang kelas: area video placeholder 16:9, daftar materi per modul (accordion), materi aktif ditandai
 - [x] Tandai selesai (toggle), Previous/Next, progress bar, toast saat course selesai; progres per course di `localStorage`
 - [x] Tab Overview / Notes (catatan tersimpan lokal) / Discussion (komentar tersimpan lokal)
-- [ ] Belum ada pemutar video sungguhan: tombol play hanya placeholder, ganti dengan `<video>` atau embed
+- [x] Pemutar video sungguhan: tombol play memuat elemen `<video controls>`; selesai ditonton otomatis menandai materi selesai; jika gagal dimuat muncul pesan dan tampilan kembali ke placeholder
+- [x] Sumber video contoh (CC0, MDN) ada di `D.sampleVideo` pada `assets/js/data/curriculum.js`; ganti dengan URL Anda atau isi `lesson.video` per materi
+- [x] Materi bertipe Reading menampilkan artikel, bertipe Quiz menampilkan 3 soal pilihan ganda (lulus jika benar minimal 2, lalu materi otomatis selesai); isinya dummy dan dihasilkan dari judul materi
 
 **4.5 Revisi 1: hover course & kelas** — `DONE`
 - [x] Kartu course terangkat sedikit dengan bayangan lembut (dimatikan jika reduced motion), tombol bookmark, daftar materi di ruang kelas, tombol play
 
 **4.6 Revisi 2: judul hero detail course** — `DONE`
 - [x] Judul di hero detail course memakai `color: inherit` agar putih di hero biru/hijau dan gelap di hero pink/kuning (sebelumnya selalu hitam)
+
+**4.7 Revisi 3: filter lewat URL untuk menu bertingkat** — `DONE`
+- [x] Explore membaca `?cat=` dan `?level=` (chip dan pilihan level ikut terpilih) dan memperbarui URL saat filter diganti
+- [x] Courses membaca `?tab=progress|done|saved` dan memperbarui URL saat tab diganti
+- [x] Menu sidebar level 2 dan 3 (By category, By level, In Progress/Completed/Saved) memakai parameter ini
 
 ---
 
@@ -300,6 +344,8 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 | 5.3 | Certificate: galeri sertifikat, preview, cetak/PDF | DONE |
 | 5.4 | Settings: profil, akun, notifikasi, tampilan | DONE |
 | 5.5 | Revisi 1: hover kalender, event, pengaturan | DONE |
+| 5.6 | Revisi 3: tab Settings dapat dibuka lewat hash | DONE |
+| 5.7 | Revisi 5: Schedule membuka form tambah event lewat #add | DONE |
 
 **5.1 Schedule** — `DONE` (`pages/schedule.html`, `assets/js/schedule.js`)
 - [x] Kalender bulan dan minggu, navigasi, tombol Today, event berwarna (4 warna), "+n more"
@@ -327,6 +373,12 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 **5.5 Revisi 1: hover Sprint 5** — `DONE`
 - [x] Sel kalender, item event, menu Settings, opsi tema, label switch, pemilih warna event
 
+**5.6 Revisi 3: tab Settings lewat hash** — `DONE`
+- [x] `settings.html#account`, `#notifications`, `#appearance` membuka tab yang sesuai (tanpa hash = Profile); mengganti tab memperbarui hash, dan klik menu sidebar pada halaman yang sama berpindah tab tanpa muat ulang
+
+**5.7 Revisi 5: `#add` pada Schedule** — `DONE`
+- [x] `schedule.html#add` membuka modal Add event saat halaman dimuat maupun saat hash berubah
+
 ---
 
 ## SPRINT 6 — Polishing & QA · `DONE`
@@ -341,28 +393,75 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 
 **6.1 Responsif** — `DONE`
 - [x] Semua halaman dicek di 390px (satu kolom, sidebar jadi offcanvas); dashboard juga di 768 dan 1024px
-- [ ] Belum diuji di perangkat fisik atau browser selain Chrome
+- [x] Chrome dan Edge (Chromium) diuji
+- [ ] Firefox terpasang tetapi screenshot headless gagal (masalah grafis di mesin ini), jadi belum diuji; perangkat fisik juga belum
 
 **6.2 Dark mode** — `DONE`
 - [x] Warna dipindah ke token (`--lz-text-2`, `--lz-surface-2`, `--lz-*-ink`, dst.), tema gelap hanya menimpa token
 - [x] `theme-init.js` di `<head>` mencegah kedipan; opsi System mengikuti `prefers-color-scheme`
 - [x] Chart membaca warna grid/tick dari CSS variables
 - [x] Dicek visual: dashboard, schedule, katalog komponen (gelap)
-- [ ] Halaman lain dalam mode gelap belum dicek satu per satu
+- [x] Seluruh halaman dicek dalam mode gelap (dashboard, explore, courses, detail, class, schedule, analytics, certificate, settings, components)
+- [x] Perbaikan hasil pengecekan: ikon panah accordion di mode gelap, ikon tombol play
 
 **6.3 Aksesibilitas** — `DONE` (sebagian diuji otomatis, sebagian belum)
 - [x] Skip link, landmark `main`/`nav`, `aria-current`, `aria-pressed`, `aria-live` untuk hasil, label pada tombol ikon
 - [x] Fokus keyboard terlihat di semua kontrol; `prefers-reduced-motion` dihormati
 - [x] Kontras teks sekunder dinaikkan (`--lz-muted` #667085, sedikit lebih gelap dari referensi)
-- [ ] Belum diuji dengan pembaca layar
+- [x] Audit otomatis axe-core (WCAG 2 A/AA) pada 10 halaman x 2 tema: temuan awal berupa kontras warna, `aria-sort` pada `role=button`, dan elemen interaktif bersarang; semuanya diperbaiki dan audit ulang bersih
+- [x] Perbaikan kontras: teks biru (`--lz-primary-ink` jadi #0b5fc9), hijau (#157a43), merah (#b32f34), teks sekunder (#5f6b7f), tombol success/danger/info, banner hero, sertifikat terkunci, hari di luar bulan pada kalender
+- [ ] Belum diuji dengan pembaca layar sungguhan (NVDA/VoiceOver); audit otomatis hanya mencakup sebagian aturan
 
 **6.4 Performa** — `DONE`
 - [x] Chart.js hanya dimuat di halaman yang memakai grafik; font memakai `display=swap`; tanpa framework
-- [ ] Minify CSS/JS dan hosting lokal untuk CDN tidak dilakukan (opsional untuk produksi)
+- [ ] Minify CSS/JS dan hosting lokal untuk CDN tidak dilakukan (opsional, dikerjakan saat siap produksi)
 
 **6.5 Dokumentasi** — `DONE`
 - [x] Halaman dokumentasi komponen interaktif di menu Components (lihat 3.15)
 - [x] `README.md`: cara pakai, struktur, halaman baru, menu, token, mode gelap, helper JS, kunci `localStorage`
+
+---
+
+## SPRINT 7 — Layout Publik (Sebelum Login) · `DONE`
+
+Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum login. Memakai token, komponen, mode gelap, ripple, dan fade-in yang sama dengan area aplikasi.
+
+| No | Task | Status |
+|---|---|---|
+| 7.1 | Layout publik: navbar, footer, struktur halaman | DONE |
+| 7.2 | Landing page | DONE |
+| 7.3 | Halaman login, register, dan lupa password | DONE |
+| 7.4 | Sesi demo dan alur masuk | DONE |
+| 7.5 | QA responsif, mode gelap, aksesibilitas | DONE |
+
+**7.1 Layout publik** — `DONE` (`assets/css/public.css`, `assets/js/public.js`)
+- [x] Halaman memakai `<body class="public" data-layout="public">` dengan slot `public-header` dan `public-footer`; tanpa sidebar, konten selebar penuh (maks 1180px)
+- [x] Navbar sticky: logo, tautan (Courses, Features, How it works, FAQ), tombol ganti tema terang/gelap, tombol Log in dan Sign up free; menjadi menu lipat (hamburger) di layar kecil
+- [x] Jika pengguna sudah punya sesi, tombol berubah menjadi "Go to dashboard"
+- [x] Footer 4 kolom (merek, Learn, Account, Legal) dan baris hak cipta
+- [x] Skip link, landmark `main`, dan fade-in hanya pada konten (navbar tetap terlihat)
+
+**7.2 Landing page** — `DONE` (`landing.html`, `assets/js/landing.js`)
+- [x] Hero biru dengan judul, ajakan (Create free account, Browse courses), angka kepercayaan, dan komposisi kartu pratinjau dashboard (murni CSS: grafik batang, ring progress, kartu sertifikat)
+- [x] Popular courses: 6 course dari data dummy; tombol mengarah ke login dengan `?next=` ke halaman course tersebut
+- [x] Fitur (4 kartu), How it works (3 langkah bernomor karena memang berurutan), testimoni (3), FAQ (accordion 4 pertanyaan), pita ajakan akhir
+
+**7.3 Halaman autentikasi** — `DONE` (`login.html`, `register.html`, `forgot-password.html`, `assets/js/auth.js`)
+- [x] Kartu dua kolom (panel biru berisi manfaat + formulir); panel biru disembunyikan di layar kecil
+- [x] Login: email, password dengan tombol tampil/sembunyi, "Keep me logged in", tautan Forgot password; validasi dan pesan galat per kolom
+- [x] Register: nama, email, password dengan indikator kekuatan, persetujuan syarat (wajib)
+- [x] Forgot password: formulir email lalu layar konfirmasi "Check your email"
+
+**7.4 Sesi demo** — `DONE`
+- [x] Tanpa backend: email valid dan password minimal 8 karakter dianggap berhasil (dinyatakan di formulir); sesi disimpan di `localStorage` ("ingat saya") atau `sessionStorage` (kunci `lz.auth`)
+- [x] Setelah login/daftar pengguna diarahkan ke `index.html` atau ke `?next=` bila ada; `next` hanya menerima path relatif di situs ini (alamat luar seperti `https://...` ditolak dan jatuh ke dashboard)
+- [x] Nama dan email disimpan ke `lz.profile` sehingga muncul di Settings dan sertifikat
+- [x] Catatan: area aplikasi belum memakai penjaga halaman (belum wajib login) dan belum ada tombol Log out; ini sengaja ditinggalkan agar template tetap mudah dicoba
+
+**7.5 QA** — `DONE`
+- [x] Audit axe-core (WCAG 2 A/AA) dengan waktu nyata pada seluruh 14 halaman (publik + aplikasi) x 2 tema: bersih (pengukuran dengan virtual time sempat menghasilkan temuan palsu karena transisi fade-in belum selesai)
+- [x] Diuji dengan interaksi sungguhan di Chrome: validasi, tombol password, login valid, `?next=` aman dan berbahaya, ingat saya, daftar, lupa password, ganti tema, menu mobile, tanpa overflow horizontal di 390px
+- [ ] Belum diuji di Firefox dan perangkat fisik
 
 ---
 

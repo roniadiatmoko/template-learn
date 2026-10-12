@@ -65,3 +65,17 @@ window.LzData.courses = [
   { id: 11, title: "Leadership & Team Management", cat: "Business", instructor: "Prof. Hendra Lim", rating: 4.5, students: 1480, lessons: 20, hours: 7, level: "Intermediate", price: 169000, tone: "green", icon: "bi-people", progress: 15, added: 7 },
   { id: 12, title: "Financial Analysis for Startups", cat: "Finance", instructor: "Dr. Lisa Santoso", rating: 4.4, students: 610, lessons: 18, hours: 6, level: "Advanced", price: 259000, tone: "green", icon: "bi-bar-chart-line", progress: null, added: 12 },
 ];
+
+/* Notifikasi dan pesan untuk dropdown di header (dummy). Item bertanda default sudah dibaca. */
+window.LzData.notifications = [
+  { id: 1, tone: "blue", icon: "bi-file-earmark-text", title: "New assignment posted", text: "Market Analysis Report in Business Strategy", time: "10 min ago", href: "pages/courses.html" },
+  { id: 2, tone: "yellow", icon: "bi-alarm", title: "Deadline tomorrow", text: "Corporate Finance Case Study is due Nov 5", time: "1 hour ago", href: "pages/schedule.html" },
+  { id: 3, tone: "green", icon: "bi-patch-check", title: "Certificate ready", text: "You finished Design Systems with Figma", time: "Yesterday", href: "pages/certificate.html" },
+  { id: 4, tone: "pink", icon: "bi-chat-left-text", title: "New reply in discussion", text: "Dewi Lestari replied to your question", time: "2 days ago", href: "pages/class.html?course=1", read: true },
+  { id: 5, tone: "blue", icon: "bi-stars", title: "New course: Usability Testing", text: "Maya Putri just published a course", time: "3 days ago", href: "pages/course-detail.html?id=10", read: true },
+];
+window.LzData.messages = [
+  { id: 1, name: "Maya Putri", role: "Instructor", text: "Great work on your research plan. Can you add one more interview question?", time: "9:41 AM" },
+  { id: 2, name: "Rina Kartika", role: "Instructor", text: "Your code review is ready. I left a few notes.", time: "Yesterday" },
+  { id: 3, name: "Study group: UX", role: "Group", text: "Fajar: shall we meet on Thursday evening?", time: "Mon", read: true },
+];

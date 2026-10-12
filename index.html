@@ -41,7 +41,7 @@
           </div>
           <div class="col-lg-4">
             <section class="lz-card">
-              <div class="lz-card-head"><h3 class="lz-card-title">Performance</h3><button class="lz-more" aria-label="More"><i class="bi bi-three-dots"></i></button></div>
+              <div class="lz-card-head"><h3 class="lz-card-title">Performance</h3><div class="dropdown"><button class="lz-more" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More options for Performance"><i class="bi bi-three-dots"></i></button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="pages/analytics.html"><i class="bi bi-graph-up me-2"></i>View analytics</a></li><li><button class="dropdown-item" type="button" data-more="refresh-perf"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button></li></ul></div></div>
               <div class="ring-wrap">
                 <canvas id="performanceChart"></canvas>
                 <div class="ring-center"><strong id="skillPoints">0</strong><small>Skill Points</small></div>
@@ -68,7 +68,7 @@
           </div>
           <div class="col-lg-5">
             <section class="lz-card">
-              <div class="lz-card-head"><h3 class="lz-card-title">My Progress</h3><button class="lz-more" aria-label="More"><i class="bi bi-three-dots"></i></button></div>
+              <div class="lz-card-head"><h3 class="lz-card-title">My Progress</h3><div class="dropdown"><button class="lz-more" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More options for My Progress"><i class="bi bi-three-dots"></i></button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="pages/analytics.html"><i class="bi bi-graph-up me-2"></i>View analytics</a></li><li><a class="dropdown-item" href="pages/courses.html"><i class="bi bi-columns-gap me-2"></i>Go to my courses</a></li><li><button class="dropdown-item" type="button" data-more="refresh-prog"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button></li></ul></div></div>
               <div class="d-flex align-items-center justify-content-around gap-3 flex-wrap pt-2">
                 <div class="donut-wrap">
                   <canvas id="progressChart"></canvas>
@@ -99,9 +99,9 @@
     <aside class="app-right">
       <div class="profile" id="profile"></div>
       <div class="calendar" id="calendar"></div>
-      <div class="section-title">My Schedule <button class="btn-add" aria-label="Add event"><i class="bi bi-plus"></i></button></div>
+      <div class="section-title">My Schedule <a class="btn-add" href="pages/schedule.html#add" aria-label="Add event"><i class="bi bi-plus"></i></a></div>
       <div id="scheduleList" class="mb-4"></div>
-      <div class="section-title">Recent Activities <button class="lz-more" aria-label="More"><i class="bi bi-three-dots"></i></button></div>
+      <div class="section-title">Recent Activities <div class="dropdown"><button class="lz-more" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More options for Recent Activities"><i class="bi bi-three-dots"></i></button><ul class="dropdown-menu dropdown-menu-end"><li><button class="dropdown-item" type="button" data-more="refresh-acts"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button></li><li><button class="dropdown-item" type="button" data-more="clear-acts"><i class="bi bi-trash3 me-2"></i>Clear list</button></li></ul></div></div>
       <div class="timeline"><div class="group">Today</div><div id="activityList"></div></div>
     </aside>
   </div>

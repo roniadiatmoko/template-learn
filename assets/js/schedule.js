@@ -155,4 +155,6 @@
   $("#calGrid").addEventListener("dblclick", (e) => { const c = e.target.closest("[data-day]"); if (c && !e.target.closest("[data-ev]")) openModal(null, c.dataset.day); });
 
   draw();
+  if (location.hash === "#add") openModal(null, sel);
+  window.addEventListener("hashchange", () => { if (location.hash === "#add") openModal(null, sel); });
 })();
