@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Components — Learnzie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../assets/css/theme.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap-skin.css" rel="stylesheet">
+  <link href="../assets/css/courses.css" rel="stylesheet">
+  <link href="../assets/css/pages.css" rel="stylesheet">
+  <link href="../assets/css/docs.css" rel="stylesheet">
+  <script src="../assets/js/theme-init.js"></script>
+</head>
+<body data-page="components" data-title="Components" data-root="../">
+  <div class="app-shell no-right">
+    <aside data-slot="sidebar"></aside>
+    <main class="app-main">
+      <header data-slot="header"></header>
+      <div class="app-content">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <p class="text-muted mb-0">Every component below is Bootstrap 5.3 restyled for Learnzie. Open the HTML tab to copy the code.</p>
+          <div class="theme-switch" role="group" aria-label="Preview theme">
+            <button class="btn btn-secondary btn-sm" type="button" data-set-theme="light" aria-pressed="false"><i class="bi bi-sun me-1"></i>Light</button>
+            <button class="btn btn-secondary btn-sm" type="button" data-set-theme="dark" aria-pressed="false"><i class="bi bi-moon me-1"></i>Dark</button>
+          </div>
+        </div>
+
+        <div class="docs-layout">
+          <div>
+
+            <!-- ============ Getting started ============ -->
+            <section class="doc-section" id="getting-started">
+              <h2>Getting started</h2>
+              <p class="doc-lead">The theme is plain HTML, CSS, and JavaScript on top of Bootstrap 5.3. There is no build step. Load the files in this order, because our CSS overrides Bootstrap variables.</p>
+              <h3>Page head</h3>
+              <p class="doc-note">Add the theme script in <code>&lt;head&gt;</code> so dark mode applies without a flash.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the HTML tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="assets/css/theme.css" rel="stylesheet">
+<link href="assets/css/bootstrap-skin.css" rel="stylesheet">
+<script src="assets/js/theme-init.js"><\/script>
+                </script></div></div>
+              <h3>Page skeleton</h3>
+              <p class="doc-note"><code>data-page</code> marks the active menu item, <code>data-title</code> is the header title, and <code>data-root="../"</code> is needed for pages inside <code>pages/</code>. Sidebar, header, and footer fill in from the <code>data-slot</code> elements.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the HTML tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<body data-page="courses" data-title="Courses" data-root="../">
+  <div class="app-shell no-right">
+    <aside data-slot="sidebar"></aside>
+    <main class="app-main">
+      <header data-slot="header"></header>
+      <div class="app-content">
+        <!-- your page content -->
+      </div>
+      <footer data-slot="footer"></footer>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script>
+  <script src="../assets/js/data/mock.js"><\/script>
+  <script src="../assets/js/lz.js"><\/script>
+  <script src="../assets/js/layout.js"><\/script>
+</body>
+                </script></div></div>
+              <p class="doc-note mb-0">Remove <code>no-right</code> from <code>.app-shell</code> and add an <code>&lt;aside class="app-right"&gt;</code> to get the right panel used on the dashboard.</p>
+            </section>
+
+            <!-- ============ Tokens ============ -->
+            <section class="doc-section" id="tokens">
+              <h2>Design tokens</h2>
+              <p class="doc-lead">Colors, radius, and spacing are CSS variables on <code>:root</code> in <code>theme.css</code>. Dark mode only overrides the tokens, so use tokens instead of hex values in your own CSS.</p>
+              <div class="doc-example"><div class="doc-preview">
+                <div class="row g-3">
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-primary)"></div><div class="swatch-label"><b>Primary</b><span>--lz-primary</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-primary-soft)"></div><div class="swatch-label"><b>Primary soft</b><span>--lz-primary-soft</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-pink)"></div><div class="swatch-label"><b>Pink</b><span>--lz-pink</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-yellow)"></div><div class="swatch-label"><b>Yellow</b><span>--lz-yellow</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-green)"></div><div class="swatch-label"><b>Green</b><span>--lz-green</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-red)"></div><div class="swatch-label"><b>Red</b><span>--lz-red</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-bg)"></div><div class="swatch-label"><b>Page background</b><span>--lz-bg</span></div></div>
+                  <div class="col-6 col-md-3"><div class="swatch" style="background:var(--lz-surface)"></div><div class="swatch-label"><b>Surface (cards)</b><span>--lz-surface</span></div></div>
+                </div>
+              </div></div>
+              <div class="table-responsive"><table class="doc-table">
+                <thead><tr><th>Token</th><th>Use</th></tr></thead>
+                <tbody>
+                  <tr><td><code>--lz-text</code>, <code>--lz-text-2</code>, <code>--lz-text-3</code>, <code>--lz-muted</code></td><td>Text from strongest to weakest</td></tr>
+                  <tr><td><code>--lz-hover</code>, <code>--lz-primary-ink</code></td><td>Hover background and the blue used for text (lighter in dark mode)</td></tr>
+                  <tr><td><code>--lz-*-soft</code>, <code>--lz-*-ink</code></td><td>Tinted background and its readable text color for pink, yellow, green, red</td></tr>
+                  <tr><td><code>--lz-radius</code>, <code>--lz-radius-sm</code></td><td>16px for cards, 8px for controls</td></tr>
+                  <tr><td><code>--lz-focus</code></td><td>Keyboard focus ring (<code>box-shadow</code>)</td></tr>
+                </tbody></table></div>
+              <h3>Use in your CSS</h3>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the CSS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="css">
+.my-panel {
+  background: var(--lz-surface);
+  border-radius: var(--lz-radius);
+  color: var(--lz-text);
+}
+.my-panel:hover { background: var(--lz-hover); color: var(--lz-primary-ink); }
+
+/* Change the brand color */
+:root { --lz-primary: #7c3aed; --bs-primary: #7c3aed; --bs-primary-rgb: 124, 58, 237; }
+                </script></div></div>
+            </section>
+
+            <!-- ============ Typography ============ -->
+            <section class="doc-section" id="typography">
+              <h2>Typography</h2>
+              <p class="doc-lead">The font is Urbanist. Headings are bold, body text is medium weight. Links are never underlined; hover changes the color.</p>
+              <div class="doc-example"><div class="doc-preview">
+                <h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5</h5><h6>Heading 6</h6>
+                <p class="lead">Lead paragraph for page introductions.</p>
+                <p>Body text with a <a href="#typography">link</a>, <mark>highlight</mark>, <code>inline code</code>, and <kbd>Ctrl</kbd> + <kbd>K</kbd>.</p>
+                <blockquote class="blockquote mb-0"><p>Learning is a journey, not a destination.</p><footer class="blockquote-footer">Instructor, <cite>Learnzie</cite></footer></blockquote>
+              </div></div>
+            </section>
+
+            <!-- ============ Buttons ============ -->
+            <section class="doc-section" id="buttons">
+              <h2>Buttons</h2>
+              <p class="doc-lead">Standard Bootstrap button classes. Added: <code>btn-soft</code> and <code>btn-icon</code>. Every button gets a ripple on click and a hover color.</p>
+              <h3>Variants</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <button class="btn btn-primary" type="button">Primary</button>
+                <button class="btn btn-secondary" type="button">Secondary</button>
+                <button class="btn btn-success" type="button">Success</button>
+                <button class="btn btn-danger" type="button">Danger</button>
+                <button class="btn btn-warning" type="button">Warning</button>
+                <button class="btn btn-info" type="button">Info</button>
+                <button class="btn btn-dark" type="button">Dark</button>
+                <button class="btn btn-soft" type="button">Soft</button>
+                <button class="btn btn-link" type="button">Link</button>
+                <button class="btn btn-primary" type="button" disabled>Disabled</button>
+              </div></div></div>
+              <h3>Outline</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <button class="btn btn-outline-primary" type="button">Primary</button>
+                <button class="btn btn-outline-secondary" type="button">Secondary</button>
+                <button class="btn btn-outline-success" type="button">Success</button>
+                <button class="btn btn-outline-danger" type="button">Danger</button>
+                <button class="btn btn-outline-warning" type="button">Warning</button>
+              </div></div></div>
+              <h3>Sizes, icon, loading</h3>
+              <p class="doc-note"><code>btn-icon</code> is a square icon button. Add <code>&lt;span class="dot"&gt;</code> inside for a notification indicator. Always give icon-only buttons an <code>aria-label</code>.</p>
+              <div class="doc-example"><div class="doc-preview on-bg"><div class="doc-row">
+                <button class="btn btn-primary btn-sm" type="button">Small</button>
+                <button class="btn btn-primary" type="button">Default</button>
+                <button class="btn btn-primary btn-lg" type="button">Large</button>
+                <button class="btn btn-primary" type="button"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Saving</button>
+                <button class="btn btn-primary" type="button"><i class="bi bi-plus-lg me-1"></i>Add event</button>
+                <button class="btn-icon" type="button" aria-label="Messages"><i class="bi bi-chat-dots"></i></button>
+                <button class="btn-icon" type="button" aria-label="Notifications"><i class="bi bi-bell"></i><span class="dot"></span></button>
+                <button class="btn-close" type="button" aria-label="Close"></button>
+              </div></div></div>
+              <h3>Groups</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <div class="btn-group" role="group" aria-label="Basic group">
+                  <button class="btn btn-secondary" type="button">Left</button><button class="btn btn-secondary" type="button">Middle</button><button class="btn btn-secondary" type="button">Right</button>
+                </div>
+                <div class="btn-group" role="group" aria-label="View">
+                  <input type="radio" class="btn-check" name="doc-view" id="doc-v1" checked><label class="btn btn-outline-primary" for="doc-v1">Day</label>
+                  <input type="radio" class="btn-check" name="doc-view" id="doc-v2"><label class="btn btn-outline-primary" for="doc-v2">Week</label>
+                  <input type="radio" class="btn-check" name="doc-view" id="doc-v3"><label class="btn btn-outline-primary" for="doc-v3">Month</label>
+                </div>
+              </div></div></div>
+            </section>
+
+            <!-- ============ Forms ============ -->
+            <section class="doc-section" id="forms">
+              <h2>Forms</h2>
+              <p class="doc-lead">Inputs have an 8px radius, a blue border on hover, and a soft blue ring on focus. Always connect a <code>&lt;label&gt;</code> with <code>for</code>/<code>id</code>.</p>
+              <h3>Text inputs</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><label class="form-label" for="doc-f1">Full name</label><input id="doc-f1" class="form-control" placeholder="Gareth Christopher"><div class="form-text">Use the name on your certificate.</div></div>
+                <div class="col-md-6"><label class="form-label" for="doc-f2">Category</label><select id="doc-f2" class="form-select"><option>UX Design</option><option>Front-End</option><option>Copywriting</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="doc-f3">Email</label><div class="input-group"><span class="input-group-text"><i class="bi bi-envelope"></i></span><input id="doc-f3" type="email" class="form-control" placeholder="name@email.com"></div></div>
+                <div class="col-md-6"><label class="form-label" for="doc-f4">With error</label><input id="doc-f4" class="form-control is-invalid" value="abc"><div class="invalid-feedback">Use at least 6 characters.</div></div>
+                <div class="col-12"><label class="form-label" for="doc-f5">Notes</label><textarea id="doc-f5" class="form-control" rows="3"></textarea></div>
+              </div></div></div>
+              <h3>Search box</h3>
+              <p class="doc-note">A Learnzie addition: wrap the input in <code>.search-box</code> with a leading icon.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="search-box" style="max-width:320px"><i class="bi bi-search"></i><input class="form-control" placeholder="Search course, instructor" aria-label="Search"></div></div></div>
+              <h3>Checks, radios, switch, range, file</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-12 doc-row">
+                  <div class="form-check"><input class="form-check-input" type="checkbox" id="doc-c1" checked><label class="form-check-label" for="doc-c1">Checkbox</label></div>
+                  <div class="form-check"><input class="form-check-input" type="radio" name="doc-r" id="doc-c2" checked><label class="form-check-label" for="doc-c2">Radio</label></div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="doc-c3" checked><label class="form-check-label" for="doc-c3">Switch</label></div>
+                </div>
+                <div class="col-md-6"><label class="form-label" for="doc-f6">Range</label><input id="doc-f6" type="range" class="form-range"></div>
+                <div class="col-md-6"><label class="form-label" for="doc-f7">Upload</label><input id="doc-f7" type="file" class="form-control"></div>
+              </div></div></div>
+              <h3>Validation</h3>
+              <p class="doc-note">Add <code>novalidate</code> to the form, then add <code>was-validated</code> on submit when <code>checkValidity()</code> fails. See the profile form in Settings for a full example.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="js">
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  form.classList.add("was-validated");
+  if (!form.checkValidity()) return;
+  Lz.toast("Profile saved.", "success", { title: "Saved" });
+});
+                </script></div></div>
+            </section>
+
+            <!-- ============ Feedback ============ -->
+            <section class="doc-section" id="feedback">
+              <h2>Badges and alerts</h2>
+              <p class="doc-lead">Use <code>badge-soft-*</code> for status labels, and alerts for messages that stay on the page. For short confirmations use a toast.</p>
+              <h3>Badges</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <span class="badge text-bg-primary">Primary</span><span class="badge text-bg-success">Success</span><span class="badge text-bg-danger">Danger</span>
+                <span class="badge badge-soft-blue">Soft blue</span><span class="badge badge-soft-yellow">In Progress</span><span class="badge badge-soft-red">Not Started</span>
+                <span class="badge badge-soft-green">Completed</span><span class="badge badge-soft-pink">Soft pink</span><span class="badge rounded-pill text-bg-primary">Pill</span>
+              </div></div></div>
+              <h3>Alerts</h3>
+              <div class="doc-example"><div class="doc-preview">
+                <div class="alert alert-primary" role="alert">A new class is available for you.</div>
+                <div class="alert alert-success" role="alert">Assignment submitted.</div>
+                <div class="alert alert-warning" role="alert">Your deadline is in 2 days.</div>
+                <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">Could not save. Check your connection, then try again.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+              </div></div>
+            </section>
+
+            <!-- ============ Progress ============ -->
+            <section class="doc-section" id="progress">
+              <h2>Progress and loading</h2>
+              <p class="doc-lead">Thin 5px progress bars match the dashboard. Add <code>progress-lg</code> for a taller bar.</p>
+              <div class="doc-example"><div class="doc-preview">
+                <div class="progress mb-3" role="progressbar" aria-label="Course progress" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" style="width:45%"></div></div>
+                <div class="progress progress-lg mb-3" role="progressbar" aria-label="Completed" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-success" style="width:70%">70%</div></div>
+                <div class="doc-row">
+                  <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+                  <div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>
+                  <p class="placeholder-glow mb-0 flex-grow-1"><span class="placeholder col-7"></span> <span class="placeholder col-4"></span></p>
+                </div>
+              </div></div>
+            </section>
+
+            <!-- ============ Cards ============ -->
+            <section class="doc-section" id="cards">
+              <h2>Cards and widgets</h2>
+              <p class="doc-lead">Cards have no border or shadow; they stand out from the page by color. <code>.lz-card</code> is the dashboard card, <code>.card</code> is the Bootstrap one.</p>
+              <h3>lz-card with header</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <section class="lz-card h-auto" style="max-width:420px">
+                  <div class="lz-card-head"><h3 class="lz-card-title">Learning Activity</h3><button class="lz-more" type="button" aria-label="More"><i class="bi bi-three-dots"></i></button></div>
+                  <p class="mb-0 text-muted">Put any content here: a chart, a list, or text.</p>
+                </section>
+              </div></div>
+              <h3>Stat card</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="lz-card stat h-auto" style="max-width:300px">
+                  <div class="stat-icon"><i class="bi bi-list-check"></i></div>
+                  <div><small>Active Tasks</small><strong>18 Tasks</strong></div>
+                </div>
+              </div></div>
+              <h3>Hero banner</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <section class="hero" style="min-height:0">
+                  <h2>Hello, Gareth!</h2>
+                  <p>We've missed you! Check out what's new and improved in your dashboard.</p>
+                  <a href="explore.html" class="btn btn-light">Explore More Courses</a>
+                </section>
+              </div></div>
+              <h3>Course card</h3>
+              <p class="doc-note">Cover color classes: <code>blue</code>, <code>pink</code>, <code>yellow</code>, <code>green</code>. The whole card lifts a little on hover.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <article class="course-card" style="max-width:320px">
+                  <div class="course-cover blue"><i class="bi bi-search"></i><span class="badge">UX Design</span>
+                    <button class="course-save" type="button" aria-label="Save course"><i class="bi bi-bookmark"></i></button></div>
+                  <div class="course-body">
+                    <h3 class="course-title"><a href="course-detail.html?id=1">User Research Fundamentals</a></h3>
+                    <div class="course-by">Maya Putri · Beginner</div>
+                    <div class="course-meta"><span><i class="bi bi-star-fill star"></i>4.8</span><span><i class="bi bi-play-circle"></i>24 lessons</span><span><i class="bi bi-clock"></i>8 h</span></div>
+                    <div class="course-foot"><span class="course-price free">Free</span><a class="btn btn-soft btn-sm" href="course-detail.html?id=1">View course</a></div>
+                  </div>
+                </article>
+              </div></div>
+              <h3>Bootstrap card</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="card" style="max-width:360px"><div class="card-header">Card title</div><div class="card-body"><h5 class="card-title">Business Strategy</h5><h6 class="card-subtitle mb-2">12 lessons</h6><p class="card-text">Learn the basics of strategy.</p><a href="#cards" class="btn btn-primary btn-sm">Continue</a></div><div class="card-footer small text-muted">Updated yesterday</div></div>
+              </div></div>
+            </section>
+
+            <!-- ============ Navigation ============ -->
+            <section class="doc-section" id="navigation">
+              <h2>Navigation</h2>
+              <p class="doc-lead">Tabs, pills, breadcrumb, pagination, and navbar. Active items use the soft blue background.</p>
+              <h3>Tabs</h3>
+              <div class="doc-example"><div class="doc-preview">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                  <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#doc-t1" type="button" role="tab">In Progress</button></li>
+                  <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#doc-t2" type="button" role="tab">Completed</button></li>
+                  <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#doc-t3" type="button" role="tab">Saved</button></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="doc-t1" role="tabpanel">12 courses in progress.</div>
+                  <div class="tab-pane fade" id="doc-t2" role="tabpanel">8 courses completed.</div>
+                  <div class="tab-pane fade" id="doc-t3" role="tabpanel">3 courses saved.</div>
+                </div>
+              </div></div>
+              <h3>Pills</h3>
+              <div class="doc-example"><div class="doc-preview">
+                <ul class="nav nav-pills"><li class="nav-item"><a class="nav-link active" href="#navigation">All</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Newest</a></li><li class="nav-item"><a class="nav-link disabled" href="#navigation" aria-disabled="true">Disabled</a></li></ul>
+              </div></div>
+              <h3>Breadcrumb and pagination</h3>
+              <div class="doc-example"><div class="doc-preview">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#navigation">Explore</a></li><li class="breadcrumb-item"><a href="#navigation">UX Design</a></li><li class="breadcrumb-item active" aria-current="page">User research</li></ol></nav>
+                <nav aria-label="Pages"><ul class="pagination mb-0"><li class="page-item disabled"><a class="page-link" href="#navigation" aria-label="Previous"><i class="bi bi-chevron-left"></i></a></li><li class="page-item active"><a class="page-link" href="#navigation">1</a></li><li class="page-item"><a class="page-link" href="#navigation">2</a></li><li class="page-item"><a class="page-link" href="#navigation">3</a></li><li class="page-item"><a class="page-link" href="#navigation" aria-label="Next"><i class="bi bi-chevron-right"></i></a></li></ul></nav>
+              </div></div>
+              <h3>Navbar</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <nav class="navbar navbar-expand-md bg-body-tertiary"><div class="container-fluid">
+                  <a class="navbar-brand" href="#navigation">Learnzie</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#doc-nav" aria-controls="doc-nav" aria-expanded="false" aria-label="Toggle menu"><span class="navbar-toggler-icon"></span></button>
+                  <div class="collapse navbar-collapse" id="doc-nav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="#navigation">Home</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Classes</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Help</a></li></ul></div>
+                </div></nav>
+              </div></div>
+              <h3>Sidebar menu item</h3>
+              <p class="doc-note">The sidebar is rendered by <code>layout.js</code>. To add a menu item, add an entry to the <code>MENU</code> array there. <code>key</code> must equal the page's <code>data-page</code>.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="js">
+const MENU = [
+  { key: "dashboard", label: "Dashboard", icon: "bi-grid-1x2-fill", href: "index.html" },
+  // ...
+  { key: "reports", label: "Reports", icon: "bi-file-earmark-bar-graph", href: "pages/reports.html" },
+];
+                </script></div></div>
+            </section>
+
+            <!-- ============ Accordion & list ============ -->
+            <section class="doc-section" id="accordion">
+              <h2>Accordion and list group</h2>
+              <p class="doc-lead">Accordion items are separate rounded cards. List groups work for simple lists and for clickable rows (<code>list-group-item-action</code>).</p>
+              <h3>Accordion</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="accordion" id="doc-acc">
+                  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#doc-a1" aria-expanded="true">Module 1: Foundations</button></h3>
+                    <div id="doc-a1" class="accordion-collapse collapse show" data-bs-parent="#doc-acc"><div class="accordion-body">Overview and learning goals.</div></div></div>
+                  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#doc-a2" aria-expanded="false">Module 2: Research</button></h3>
+                    <div id="doc-a2" class="accordion-collapse collapse" data-bs-parent="#doc-acc"><div class="accordion-body">Methods and analysis.</div></div></div>
+                </div>
+              </div></div>
+              <h3>List group</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="list-group" style="max-width:360px">
+                  <a href="#accordion" class="list-group-item list-group-item-action active" aria-current="true">Active item</a>
+                  <a href="#accordion" class="list-group-item list-group-item-action">Business Ethics</a>
+                  <a href="#accordion" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Assignments <span class="badge badge-soft-blue">4</span></a>
+                </div>
+              </div></div>
+            </section>
+
+            <!-- ============ Tables ============ -->
+            <section class="doc-section" id="tables">
+              <h2>Tables</h2>
+              <p class="doc-lead">Wrap a Bootstrap table in <code>.lz-table</code> to put it on a card. Add <code>data-lz-table</code> to get sorting, search, and pagination.</p>
+              <h3>Basic</h3>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="lz-table table-responsive"><table class="table table-hover">
+                  <thead><tr><th>Assignment</th><th>Course</th><th>Due</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td class="fw-bold">Market Analysis Report</td><td>Business Strategy</td><td>Oct 20, 2027</td><td><span class="badge badge-soft-yellow">In Progress</span></td></tr>
+                    <tr><td class="fw-bold">Corporate Finance Case</td><td>Finance</td><td>Nov 5, 2027</td><td><span class="badge badge-soft-red">Not Started</span></td></tr>
+                    <tr><td class="fw-bold">Leadership Essay</td><td>Management</td><td>Nov 15, 2027</td><td><span class="badge badge-soft-green">Completed</span></td></tr>
+                  </tbody>
+                </table></div>
+              </div></div>
+              <h3>Sortable, searchable, paginated</h3>
+              <p class="doc-note">Put <code>data-sort</code> on sortable <code>&lt;th&gt;</code>. Use <code>data-value</code> on a <code>&lt;td&gt;</code> when the sort value differs from the text (dates, percentages). <code>data-page-size</code> sets rows per page.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div data-lz-table data-page-size="3">
+                  <div class="search-box mb-3" style="max-width:280px"><i class="bi bi-search"></i><input class="form-control" data-lz-search placeholder="Search assignment" aria-label="Search"></div>
+                  <div class="lz-table table-responsive"><table class="table">
+                    <thead><tr><th data-sort>Assignment</th><th data-sort>Due</th><th data-sort>Progress</th></tr></thead>
+                    <tbody>
+                      <tr><td class="fw-bold">Market Analysis Report</td><td data-value="2027-10-20">Oct 20, 2027</td><td data-value="30">30%</td></tr>
+                      <tr><td class="fw-bold">Corporate Finance Case</td><td data-value="2027-11-05">Nov 5, 2027</td><td data-value="0">0%</td></tr>
+                      <tr><td class="fw-bold">Leadership Essay</td><td data-value="2027-11-15">Nov 15, 2027</td><td data-value="50">50%</td></tr>
+                      <tr><td class="fw-bold">Ethics Presentation</td><td data-value="2027-12-10">Dec 10, 2027</td><td data-value="20">20%</td></tr>
+                      <tr><td class="fw-bold">Entrepreneurship Project</td><td data-value="2027-12-15">Dec 15, 2027</td><td data-value="10">10%</td></tr>
+                    </tbody>
+                  </table></div>
+                  <div data-lz-pager class="mt-3"></div>
+                </div>
+              </div></div>
+            </section>
+
+            <!-- ============ Overlays ============ -->
+            <section class="doc-section" id="overlays">
+              <h2>Overlays</h2>
+              <p class="doc-lead">Dropdown, modal, offcanvas, toast, tooltip, and popover. They use a white (or dark) surface with a soft shadow.</p>
+              <h3>Dropdown</h3>
+              <div class="doc-example"><div class="doc-preview" style="min-height:230px">
+                <div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+                  <ul class="dropdown-menu"><li><h6 class="dropdown-header">Course</h6></li><li><a class="dropdown-item" href="#overlays">Edit</a></li><li><a class="dropdown-item active" href="#overlays">Active</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#overlays">Delete</a></li></ul></div>
+              </div></div>
+              <h3>Modal</h3>
+              <p class="doc-note">Use a clear action label on the confirm button ("Send assignment", not "OK").</p>
+              <div class="doc-example"><div class="doc-preview"><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#docModal">Open modal</button>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Open modal</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalTitle">Send assignment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">Your instructor will see it right away. You can edit it until the deadline.</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Send assignment</button>
+      </div>
+    </div>
+  </div>
+</div>
+                </script></div></div>
+              <h3>Offcanvas</h3>
+              <div class="doc-example"><div class="doc-preview"><button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#docCanvas">Open offcanvas</button>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#myCanvas">Open filters</button>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="myCanvas" aria-labelledby="myCanvasTitle">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="myCanvasTitle">Filters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">...</div>
+</div>
+                </script></div></div>
+              <h3>Toast: Lz.toast()</h3>
+              <p class="doc-note">Call <code>Lz.toast(message, type, options)</code>. Types: <code>success</code>, <code>danger</code>, <code>warning</code>, <code>info</code>. Options: <code>title</code>, <code>delay</code> (ms). Keep the verb the same as the button that caused it.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <button class="btn btn-success" type="button" data-demo-toast="success">Success</button>
+                <button class="btn btn-danger" type="button" data-demo-toast="danger">Error</button>
+                <button class="btn btn-warning" type="button" data-demo-toast="warning">Warning</button>
+                <button class="btn btn-info" type="button" data-demo-toast="info">Info</button></div>
+                <script type="text/plain" class="doc-code" data-lang="js">
+Lz.toast("Assignment sent.", "success", { title: "Sent" });
+Lz.toast("Could not save. Check your connection, then try again.", "danger");
+Lz.toast("Course removed from saved.", "info", { delay: 2000 });
+                </script></div></div>
+              <h3>Tooltip and popover</h3>
+              <div class="doc-example"><div class="doc-preview" style="min-height:110px"><div class="doc-row">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Short hint">Tooltip</button>
+                <button class="btn btn-secondary" type="button" data-bs-toggle="popover" data-bs-title="Popover" data-bs-content="A little more detail goes here.">Popover</button>
+              </div>
+                <script type="text/plain" class="doc-code" data-lang="js">
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => new bootstrap.Tooltip(el));
+document.querySelectorAll('[data-bs-toggle="popover"]').forEach((el) => new bootstrap.Popover(el));
+                </script></div></div>
+            </section>
+
+            <!-- ============ Extras ============ -->
+            <section class="doc-section" id="extras">
+              <h2>Learnzie additions</h2>
+              <p class="doc-lead">Components that Bootstrap does not have. All are in <code>bootstrap-skin.css</code> unless noted.</p>
+              <h3>Avatar, avatar group, chip, icon box</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <span class="lz-avatar">GC</span><span class="lz-avatar sm">AB</span><span class="lz-avatar lg">RD</span>
+                <span class="lz-avatar-group"><span class="lz-avatar sm">A</span><span class="lz-avatar sm">B</span><span class="lz-avatar sm">C</span></span>
+                <button class="lz-chip active" type="button">UX Design</button><button class="lz-chip" type="button">Front-End</button><button class="lz-chip" type="button">Copywriting</button>
+                <span class="lz-icon-box"><i class="bi bi-book"></i></span><span class="lz-icon-box pink"><i class="bi bi-pencil"></i></span><span class="lz-icon-box yellow"><i class="bi bi-star"></i></span><span class="lz-icon-box green"><i class="bi bi-check2"></i></span>
+              </div></div></div>
+              <h3>Steps</h3>
+              <div class="doc-example"><div class="doc-preview">
+                <ol class="lz-steps"><li class="done">Sign up</li><li class="current">Choose course</li><li>Pay</li><li>Start learning</li></ol>
+              </div></div>
+              <h3>Empty state</h3>
+              <p class="doc-note">Say what is missing and what to do next.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="lz-empty"><i class="bi bi-inbox"></i>You have no assignments yet. Pick a course to get started.<div class="mt-3"><a class="btn btn-primary btn-sm" href="explore.html">Explore courses</a></div></div>
+              </div></div>
+              <h3>Timeline</h3>
+              <p class="doc-note">Defined in <code>theme.css</code>. Dot colors: <code>blue</code>, <code>pink</code>, <code>yellow</code>.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div class="timeline" style="max-width:340px"><div class="group">Today</div>
+                  <div class="tl-item"><div class="tl-dot blue"><i class="bi bi-play-fill"></i></div><div><b>Watched</b> a lecture video on Business Ethics<small>1:00 PM</small></div></div>
+                  <div class="tl-item"><div class="tl-dot pink"><i class="bi bi-file-earmark-text"></i></div><div><b>Submitted</b> Leadership Styles Essay<small>10:30 AM</small></div></div>
+                  <div class="tl-item"><div class="tl-dot yellow"><i class="bi bi-eye"></i></div><div><b>Viewed</b> the Market Analysis Report<small>9:15 AM</small></div></div>
+                </div>
+              </div></div>
+              <h3>Event item</h3>
+              <p class="doc-note">Defined in <code>pages.css</code>. Colors: <code>blue</code>, <code>pink</code>, <code>yellow</code>, <code>green</code>.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <div style="max-width:360px">
+                  <button type="button" class="ev-item blue"><span class="ev-bar"></span><span><b>Business Strategy Test</b><small>09:00 - 09:30 · Bring your notes</small></span><i class="bi bi-pencil ms-auto"></i></button>
+                  <button type="button" class="ev-item green"><span class="ev-bar"></span><span><b>Front-End Code Review</b><small>10:00 - 11:00</small></span></button>
+                </div>
+              </div></div>
+            </section>
+
+            <!-- ============ Charts ============ -->
+            <section class="doc-section" id="charts">
+              <h2>Charts</h2>
+              <p class="doc-lead">Chart.js helpers in <code>Lz.charts</code> apply the theme colors, rounded bars, and dashed grid. Load Chart.js before <code>lz.js</code>. Colors follow light/dark mode when the page loads.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-sm-6 col-lg-3"><div class="chart-md"><canvas data-demo-chart="ring" role="img" aria-label="Ring chart 72 percent"></canvas></div></div>
+                <div class="col-sm-6 col-lg-3"><div class="chart-md"><canvas data-demo-chart="donut" role="img" aria-label="Donut chart"></canvas></div></div>
+                <div class="col-sm-6 col-lg-3"><div class="chart-md"><canvas data-demo-chart="bar" role="img" aria-label="Bar chart"></canvas></div></div>
+                <div class="col-sm-6 col-lg-3"><div class="chart-md"><canvas data-demo-chart="line" role="img" aria-label="Line chart"></canvas></div></div>
+              </div>
+                <script type="text/plain" class="doc-code" data-lang="js">
+// Chart.js must load before lz.js:
+// <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"><\/script>
+const P = Lz.palette;
+
+Lz.charts.ring(canvas, 72);                                          // progress ring (percent)
+Lz.charts.donut(canvas, [43, 32, 25], [P.primary, P.pink, P.yellow]); // parts, colors
+Lz.charts.bar(canvas, ["Mon", "Tue", "Wed"], [{ data: [3, 5, 4], backgroundColor: P.primary }], { stacked: false, max: 8 });
+Lz.charts.line(canvas, ["Mon", "Tue", "Wed"], [{ data: [2, 4, 3], borderColor: P.primary }]);
+
+// Wrap the canvas in a fixed-height box so it can size itself:
+// <div class="chart-md"><canvas id="myChart"></canvas></div>
+                </script></div></div>
+            </section>
+
+            <!-- ============ JS helpers ============ -->
+            <section class="doc-section" id="helpers">
+              <h2>Theme, ripple, and hover</h2>
+              <p class="doc-lead">Small behaviors that apply to the whole theme.</p>
+              <h3>Dark mode</h3>
+              <p class="doc-note">The choice is stored in <code>localStorage</code> (<code>lz.theme</code>). Values: <code>light</code>, <code>dark</code>, <code>auto</code> (follows the system). Try the Light / Dark switch at the top of this page.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="js">
+Lz.theme.set("dark");   // "light" | "dark" | "auto"
+Lz.theme.get();         // current choice
+                </script></div></div>
+              <h3>Ripple</h3>
+              <p class="doc-note">Buttons, menus, tabs, chips, and other clickable items show a ripple at the click point. To add it to a new element, add its selector to the <code>RIPPLE</code> list in <code>lz.js</code>. To turn it off for one element, add <code>data-no-ripple</code>. It is off when the system asks for reduced motion.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-row">
+                <button class="btn btn-primary" type="button">Click me</button>
+                <button class="btn btn-secondary" type="button">Click me</button>
+                <button class="btn btn-secondary" type="button" data-no-ripple>No ripple</button>
+              </div></div></div>
+              <h3>Hover and focus</h3>
+              <p class="doc-note">For custom components use the same tokens so they match: <code>background: var(--lz-hover)</code> and <code>color: var(--lz-primary-ink)</code> on hover, and <code>box-shadow: var(--lz-focus)</code> on <code>:focus-visible</code>. Do not underline links.</p>
+            </section>
+
+          </div>
+          <nav class="docs-toc" aria-label="On this page"><h2>On this page</h2><div id="toc"></div></nav>
+        </div>
+      </div>
+      <footer data-slot="footer"></footer>
+    </main>
+  </div>
+
+  <div class="modal fade" id="docModal" tabindex="-1" aria-labelledby="docModalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="docModalTitle">Send assignment</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+    <div class="modal-body">Your instructor will see it right away. You can edit it until the deadline.</div>
+    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Send assignment</button></div>
+  </div></div></div>
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="docCanvas" aria-labelledby="docCanvasTitle">
+    <div class="offcanvas-header"><h5 class="offcanvas-title" id="docCanvasTitle">Filters</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+    <div class="offcanvas-body"><label class="form-label" for="doc-oc">Category</label><select id="doc-oc" class="form-select mb-3"><option>All</option></select><button class="btn btn-primary w-100" type="button">Apply filters</button></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="../assets/js/data/mock.js"></script>
+  <script src="../assets/js/lz.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/docs.js"></script>
+</body>
+</html>

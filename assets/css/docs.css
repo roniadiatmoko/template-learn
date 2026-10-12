@@ -1,0 +1,45 @@
+/* ---------- Dokumentasi komponen ---------- */
+.docs-layout { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 1.5rem; align-items: start; }
+.docs-toc { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; font-size: .84rem; }
+.docs-toc h2 { font-size: .8rem; color: var(--lz-muted); font-weight: 700; margin: 0 0 .5rem .6rem; }
+.docs-toc a { display: block; padding: .38rem .6rem; border-radius: 8px; color: var(--lz-text-3); font-weight: 600; border-left: 2px solid transparent; transition: background-color .15s, color .15s; }
+.docs-toc a:hover { background: var(--lz-hover); color: var(--lz-primary-ink); }
+.docs-toc a.active { color: var(--lz-primary-ink); background: var(--lz-primary-soft); border-left-color: var(--lz-primary); }
+@media (max-width: 1199.98px) { .docs-layout { grid-template-columns: minmax(0, 1fr); } .docs-toc { display: none; } }
+
+.doc-section { background: var(--lz-surface); border-radius: var(--lz-radius); padding: 1.5rem; margin-bottom: 1rem; scroll-margin-top: 1rem; }
+.doc-section > h2 { font-size: 1.35rem; margin: 0 0 .35rem; }
+.doc-section > .doc-lead { color: var(--lz-text-3); margin-bottom: 1.25rem; max-width: 70ch; }
+.doc-section h3 { font-size: 1rem; margin: 1.5rem 0 .25rem; }
+.doc-section h3 + .doc-note { margin-top: 0; }
+.doc-note { font-size: .85rem; color: var(--lz-muted); margin: 0 0 .75rem; max-width: 70ch; }
+.doc-note code, .doc-lead code, .doc-table code { font-size: .8em; }
+
+.doc-example { border: 1px solid var(--lz-border); border-radius: 14px; overflow: hidden; margin-bottom: 1rem; }
+.doc-bar { display: flex; align-items: center; gap: .25rem; padding: .35rem .5rem; background: var(--lz-surface-2); border-bottom: 1px solid var(--lz-border); }
+.doc-tab { border: 0; background: none; font: inherit; font-size: .8rem; font-weight: 700; color: var(--lz-text-3); padding: .35rem .8rem; border-radius: 8px; transition: background-color .15s, color .15s; }
+.doc-tab:hover { background: var(--lz-hover); color: var(--lz-primary-ink); }
+.doc-tab.active { background: var(--lz-primary-soft); color: var(--lz-primary-ink); }
+.doc-copy { margin-left: auto; border: 0; background: none; font: inherit; font-size: .8rem; font-weight: 700; color: var(--lz-text-3); padding: .35rem .7rem; border-radius: 8px; display: inline-flex; gap: .4rem; align-items: center; }
+.doc-copy:hover { background: var(--lz-hover); color: var(--lz-primary-ink); }
+.doc-copy.done { color: var(--lz-green-ink); }
+.doc-preview { padding: 1.25rem; background: var(--lz-surface); overflow-x: auto; }
+.doc-preview.on-bg { background: var(--lz-bg); }
+.doc-preview .doc-stack > * + * { margin-top: .75rem; }
+.doc-row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.doc-code-panel { margin: 0; background: #0f1626; color: #d6dcec; }
+.doc-code-panel pre { margin: 0; padding: 1rem 1.25rem; overflow: auto; max-height: 420px; font-size: .8rem; line-height: 1.6; tab-size: 2; }
+.doc-code-panel code { background: none; color: inherit; padding: 0; font-size: inherit; }
+.doc-code-panel .t { color: #7fc4ff; } .doc-code-panel .a { color: #ffd479; } .doc-code-panel .s { color: #9be3b0; }
+.doc-code-panel .p { color: #8e99b4; } .doc-code-panel .c { color: #6b7691; font-style: italic; } .doc-code-panel .k { color: #f19bd4; }
+.doc-code-panel .v { color: #ffd479; }
+
+.doc-table { width: 100%; font-size: .85rem; }
+.doc-table th { color: var(--lz-muted); font-weight: 700; }
+.doc-table td, .doc-table th { padding: .55rem .75rem; border-bottom: 1px solid var(--lz-border); vertical-align: top; }
+.doc-table tr:last-child td { border-bottom: 0; }
+.swatch { height: 52px; border-radius: 12px; border: 1px solid var(--lz-border); }
+.swatch-label { font-size: .75rem; margin-top: .35rem; }
+.swatch-label b { display: block; }
+.swatch-label span { color: var(--lz-muted); }
+.theme-switch { display: inline-flex; gap: .25rem; background: var(--lz-surface); padding: .25rem; border-radius: 10px; }

@@ -1,0 +1,92 @@
+/* ---------- Course card (Explore, Courses) ---------- */
+.course-card { background: var(--lz-surface); border-radius: var(--lz-radius); overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+.course-cover { height: 132px; position: relative; display: grid; place-items: center; font-size: 2.6rem; color: #fff; }
+.course-cover.blue   { background: linear-gradient(135deg, var(--lz-primary), #4aa0ff); }
+.course-cover.pink   { background: linear-gradient(135deg, #f58ed3, var(--lz-pink)); color: #8a1f66; }
+.course-cover.yellow { background: linear-gradient(135deg, #f5b800, var(--lz-yellow)); color: #6b4a00; }
+.course-cover.green  { background: linear-gradient(135deg, #1fa862, #5ad59a); }
+.course-cover .badge { position: absolute; left: 12px; top: 12px; background: rgba(255, 255, 255, .92); color: #0b1220; }
+.course-save {
+  font-size: 1rem;
+  position: absolute; right: 10px; top: 10px; width: 34px; height: 34px; border: 0; border-radius: 10px;
+  background: rgba(255, 255, 255, .92); color: #0b1220; display: grid; place-items: center;
+}
+.course-save:hover, .course-save.on { color: #0f6fde; }
+.course-body { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+.course-title { font-size: 1rem; font-weight: 700; line-height: 1.25; margin: 0; }
+.course-title a { color: inherit; text-decoration: none; }
+.course-title a:hover { color: var(--lz-primary-ink); text-decoration: none; }
+.course-by { font-size: .8rem; color: var(--lz-muted); }
+.course-meta { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-size: .78rem; color: var(--lz-text-3); }
+.course-meta i { color: var(--lz-muted); margin-right: 3px; }
+.course-meta .star { color: #f5b800; }
+.course-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .4rem; }
+.course-price { font-weight: 800; font-size: 1.05rem; }
+.course-price.free { color: var(--lz-green-ink); }
+.course-progress { font-size: .78rem; font-weight: 600; display: flex; align-items: center; gap: .6rem; }
+.course-progress .progress { flex: 1; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.toolbar .search-box { flex: 1 1 240px; max-width: 360px; }
+.toolbar .form-select { width: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+button.lz-chip { cursor: pointer; font-family: inherit; }
+.result-count { color: var(--lz-muted); font-size: .85rem; margin-bottom: .75rem; }
+
+/* ---------- Detail course & Class ---------- */
+.detail-hero { position: relative; border-radius: var(--lz-radius); padding: 2rem; color: #fff; overflow: hidden; min-height: 200px; }
+.detail-hero.blue   { background: linear-gradient(135deg, var(--lz-primary), #4aa0ff); }
+.detail-hero.pink   { background: linear-gradient(135deg, #f58ed3, var(--lz-pink)); color: #4a0f35; }
+.detail-hero.yellow { background: linear-gradient(135deg, #f5b800, var(--lz-yellow)); color: #3d2a00; }
+.detail-hero.green  { background: linear-gradient(135deg, #1fa862, #5ad59a); }
+.detail-hero h2 { color: inherit; font-size: 1.9rem; font-weight: 800; max-width: 520px; margin: .75rem 0; position: relative; }
+.detail-hero .badge { background: rgba(255, 255, 255, .92); color: #0b1220; position: relative; }
+.detail-art { position: absolute; right: 1.5rem; bottom: -1rem; font-size: 9rem; opacity: .22; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .85rem; position: relative; }
+.detail-meta .star { color: #ffd34d; font-size: .8rem; }
+.review .star, .buy-card .star, .detail-meta + .star { color: #f5b800; }
+.outcomes { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.outcomes i { color: var(--lz-green); margin-right: .6rem; }
+.review { display: flex; gap: .75rem; padding: .85rem 0; border-top: 1px solid var(--lz-border); }
+.review:first-child { border-top: 0; }
+.review .star { font-size: .75rem; }
+.buy-wrap { position: sticky; top: 1rem; }
+.buy-list { list-style: none; padding: 0; margin: 1.1rem 0 0; display: grid; gap: .65rem; font-size: .88rem; color: var(--lz-text-2); }
+.buy-list i { color: var(--lz-primary-ink); margin-right: .6rem; }
+
+.lesson-list { list-style: none; margin: 0; padding: 0; }
+.lesson-list li { display: flex; align-items: center; gap: .7rem; padding: .7rem 1.25rem; border-top: 1px solid var(--lz-border); font-size: .88rem; font-weight: 600; }
+.lesson-list li > i, .lesson-btn > i { color: var(--lz-muted); font-size: 1.05rem; flex: none; }
+.lesson-list small { margin-left: auto; color: var(--lz-muted); white-space: nowrap; }
+.lesson-list li:has(.lesson-btn) { padding: 0; }
+.lesson-btn { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .7rem 1.25rem; border: 0; background: none; text-align: left; font: inherit; color: inherit; }
+.lesson-btn span { flex: 1; }
+.lesson-btn small { color: var(--lz-muted); white-space: nowrap; }
+
+.lesson-btn.current { background: var(--lz-primary-soft); color: var(--lz-primary-ink); }
+.lesson-btn.current > i { color: var(--lz-primary-ink); }
+.lesson-btn > i.done { color: var(--lz-green); }
+.lesson-btn:focus-visible { border-radius: 0; box-shadow: inset 0 0 0 2px rgba(15, 111, 222, .4); }
+
+.player { position: relative; aspect-ratio: 16 / 9; border-radius: var(--lz-radius); display: grid; place-items: center; overflow: hidden; }
+.player.blue   { background: linear-gradient(135deg, #0b4fa6, var(--lz-primary) 55%, #4aa0ff); }
+.player.pink   { background: linear-gradient(135deg, #c9439b, #f58ed3 55%, var(--lz-pink)); }
+.player.yellow { background: linear-gradient(135deg, #c99200, #f5b800 55%, var(--lz-yellow)); }
+.player.green  { background: linear-gradient(135deg, #14804a, #1fa862 55%, #5ad59a); }
+.play { width: 76px; height: 76px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .95); color: var(--lz-primary-ink); font-size: 2.2rem; display: grid; place-items: center; padding-left: 4px; }
+.play:hover { transform: scale(1.06); }
+.player-tag { position: absolute; left: 14px; bottom: 14px; background: rgba(11, 18, 32, .55); color: #fff; font-size: .78rem; font-weight: 600; padding: .3rem .7rem; border-radius: 99px; }
+@media (max-width: 575.98px) { .detail-hero { padding: 1.25rem; } .detail-hero h2 { font-size: 1.4rem; } .detail-art { font-size: 6rem; } }
+
+/* ---------- Revisi 1: hover course & ruang kelas ---------- */
+.course-card { transition: box-shadow .2s, transform .2s; }
+.course-card:hover { box-shadow: 0 14px 30px -16px rgba(15, 30, 60, .35); transform: translateY(-2px); }
+.course-save { transition: background-color .15s, color .15s; }
+.course-save:hover { background: #fff; }
+.lesson-list li:not(:has(.lesson-btn)):hover { background: var(--lz-hover); }
+.lesson-btn { transition: background-color .15s, color .15s; }
+.lesson-btn:hover:not(.current) { background: var(--lz-hover); color: var(--lz-primary-ink); }
+.lesson-btn:hover:not(.current) > i:not(.done) { color: var(--lz-primary-ink); }
+.play { transition: transform .15s, background-color .15s; }
+.play:hover { background: #fff; }
+@media (prefers-reduced-motion: reduce) { .course-card:hover { transform: none; } }
