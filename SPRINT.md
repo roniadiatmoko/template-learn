@@ -434,6 +434,7 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 | 7.4 | Sesi demo dan alur masuk | DONE |
 | 7.5 | QA responsif, mode gelap, aksesibilitas | DONE |
 | 7.6 | Revisi 6: banner hero landing dipadatkan di ponsel | DONE |
+| 7.7 | Revisi 7: tombol Log in menjadi dropdown pilihan jalur masuk | DONE |
 
 **7.1 Layout publik** — `DONE` (`assets/css/public.css`, `assets/js/public.js`)
 - [x] Halaman memakai `<body class="public" data-layout="public">` dengan slot `public-header` dan `public-footer`; tanpa sidebar, konten selebar penuh (maks 1180px)
@@ -467,6 +468,13 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 **7.6 Revisi 6: banner hero landing di ponsel** — `DONE`
 - [x] Di layar <= 575px banner dipadatkan: padding dan radius lebih kecil, judul 1,65rem, paragraf 0,92rem, dua tombol ajakan berdampingan dengan ukuran normal (bukan besar), angka kepercayaan lebih kecil, kartu pratinjau diperkecil, jarak antarbagian dikurangi
 - [x] Tinggi banner di 390px sekitar 459px (sebelumnya hampir satu layar penuh); tidak ada overflow horizontal di 390 dan 360px
+
+**7.7 Revisi 7: dropdown jalur masuk pada tombol Log in** — `DONE`
+- [x] Mengikuti bilah atas situs lama: tombol Log in di navbar publik membuka dropdown berisi **SSO, Dosen, Operator (Non SSO), Orangtua**, dan **Registrasi Maru** (menuju halaman daftar). Label diambil apa adanya dari tampilan situs lama
+- [x] Pilihan menuju `login.html?role=sso|dosen|operator|orangtua`; halaman login menandai jalur terpilih lewat chip, mengganti keterangan dan judul tab, dan menyimpan `role` pada sesi (`lz.auth`). Chip tetap membawa `?next=`; jalur tak dikenal jatuh ke SSO
+- [x] Daftar jalur ada di `LzRoles` (`public.js`); menambah jalur cukup menambah satu entri
+- [x] Berfungsi di menu lipat mobile tanpa overflow; diuji dengan klik sungguhan di Chrome
+- [ ] Belum ada alur SSO sungguhan atau perbedaan formulir per jalur; semuanya masih memakai sesi demo yang sama
 
 ---
 

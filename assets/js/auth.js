@@ -39,9 +39,19 @@
 
   /* ---------- Login ---------- */
   const login = $("#loginForm");
+  let role = "sso";
+  if (login) {
+    const ROLES = window.LzRoles || {};
+    const q = new URLSearchParams(location.search).get("role");
+    role = ROLES[q] ? q : "sso";
+    $("#roleChips").innerHTML = Object.entries(ROLES).map(([k, r]) =>
+      `<a class="lz-chip ${k === role ? "active" : ""}" href="login.html?role=${k}${location.search.includes("next=") ? "&next=" + encodeURIComponent(new URLSearchParams(location.search).get("next")) : ""}" ${k === role ? 'aria-current="true"' : ""}><i class="bi ${r.icon}"></i>${r.label}</a>`).join("");
+    $("#roleHint").textContent = ROLES[role] ? ROLES[role].hint : $("#roleHint").textContent;
+    document.title = `Log in as ${ROLES[role] ? ROLES[role].label : "user"}: Learnzie`;
+  }
   if (login) guard(login, () => {
     const email = $("#email").value.trim();
-    startSession({ email, name: nameFromEmail(email) }, $("#remember").checked);
+    startSession({ email, name: nameFromEmail(email), role }, $("#remember").checked);
     Lz.toast("Welcome back. Taking you to your dashboard.", "success", { title: "Logged in", delay: 1500 });
     setTimeout(() => { location.href = nextUrl(); }, 700);
   });

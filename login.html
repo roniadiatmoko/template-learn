@@ -34,7 +34,8 @@
           </aside>
         <div class="auth-form">
           <h1>Log in</h1>
-          <p class="sub">Enter your email and password to continue.</p>
+          <div class="chips mb-2" id="roleChips" role="group" aria-label="Log in as"></div>
+          <p class="sub" id="roleHint">Enter your email and password to continue.</p>
           <form id="loginForm" novalidate>
             <div class="mb-3"><label class="form-label" for="email">Email</label><input id="email" type="email" class="form-control" autocomplete="email" placeholder="name@email.com" required><div class="invalid-feedback">Enter a valid email address.</div></div>
             <div class="mb-3"><div class="d-flex justify-content-between"><label class="form-label" for="password">Password</label><a class="small" href="forgot-password.html">Forgot password?</a></div>

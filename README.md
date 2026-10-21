@@ -62,6 +62,8 @@ Halaman untuk pengunjung yang belum login memakai layout penuh tanpa sidebar. Sa
 Tautan navbar diatur di array `LINKS` pada `assets/js/public.js`. Login memakai sesi demo (`lz.auth`) tanpa backend; ganti isi `startSession` dan
 penanganan submit di `assets/js/auth.js` dengan pemanggilan API Anda. Parameter `?next=` hanya menerima path relatif di situs ini.
 
+Tombol **Log in** di navbar berupa dropdown jalur masuk (SSO, Dosen, Operator (Non SSO), Orangtua, dan Registrasi Maru). Jalurnya didefinisikan di objek `ROLES` pada `assets/js/public.js` (diekspos sebagai `window.LzRoles`); `login.html?role=dosen` menandai jalur terpilih dan menyimpannya pada sesi (`role`).
+
 ## Dokumentasi komponen
 
 Menu **Components** berisi preview dan kode setiap komponen. Kode HTML pada tab HTML diambil otomatis dari markup preview,

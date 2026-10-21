@@ -150,3 +150,9 @@ body.public { background: var(--lz-bg); }
 .public-main { transition: opacity .45s ease; }
 html.lz-loading .public-main { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .public-main { transition: none; } html.lz-loading .public-main { opacity: 1; } .feature:hover { box-shadow: none; } }
+
+/* ---------- Dropdown Log in dan pilihan jalur masuk ---------- */
+.pub-actions .dropdown .dropdown-menu { min-width: 15rem; }
+@media (max-width: 991.98px) { .pub-actions .dropdown { flex: 1; } .pub-actions .dropdown > .btn { width: 100%; } }
+.auth-form .chips { margin-bottom: .75rem; }
+.auth-form .lz-chip { text-decoration: none; }

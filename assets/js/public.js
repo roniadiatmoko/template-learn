@@ -12,6 +12,15 @@
     { label: "FAQ", href: "landing.html#faq" },
   ];
 
+  /* Jalur masuk (sama seperti bilah atas pada situs lama). Dipakai dropdown Log in dan halaman login. */
+  const ROLES = {
+    sso: { label: "SSO", icon: "bi-shield-lock", hint: "Log in with your university single sign-on account." },
+    dosen: { label: "Dosen", icon: "bi-person-workspace", hint: "For lecturers. Use your lecturer email and password." },
+    operator: { label: "Operator (Non SSO)", icon: "bi-gear", hint: "For operators with a separate account that does not use SSO." },
+    orangtua: { label: "Orangtua", icon: "bi-people", hint: "For parents and guardians. Use the email you registered with." },
+  };
+  window.LzRoles = ROLES;
+
   function session() {
     try { return JSON.parse(localStorage.getItem("lz.auth") || sessionStorage.getItem("lz.auth") || "null"); } catch (e) { return null; }
   }
@@ -31,7 +40,15 @@
           <button class="btn-icon" type="button" id="pubTheme" aria-label="Switch between light and dark theme"><i class="bi ${themeNow() === "dark" ? "bi-sun" : "bi-moon"}"></i></button>
           ${user
             ? `<a class="btn btn-primary" href="${root}index.html">Go to dashboard</a>`
-            : `<a class="btn btn-secondary" href="${root}login.html">Log in</a><a class="btn btn-primary" href="${root}register.html">Sign up free</a>`}
+            : `<div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-box-arrow-in-right me-1"></i>Log in</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><h6 class="dropdown-header">Log in as</h6></li>
+                  ${Object.entries(ROLES).map(([k, r]) => `<li><a class="dropdown-item" href="${root}login.html?role=${k}"><i class="bi ${r.icon} me-2"></i>${r.label}</a></li>`).join("")}
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="${root}register.html"><i class="bi bi-person-plus me-2"></i>Registrasi Maru</a></li>
+                </ul></div>
+               <a class="btn btn-primary" href="${root}register.html">Sign up free</a>`}
         </div>
       </div></div>`;
     const btn = document.getElementById("pubTheme");
