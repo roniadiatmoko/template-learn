@@ -111,7 +111,7 @@
   /* Warna chart dibaca dari CSS variables agar mengikuti tema */
   const css = (n, d) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || d;
   Lz.palette = { primary: "#0f6fde", pink: "#fbb6e6", yellow: "#ffc93c", green: "#2fbf71", red: "#e5484d",
-    soft: css("--lz-primary-soft", "#e8f0fe"), grid: css("--lz-grid", "#eef1f6"), tick: css("--lz-tick", "#8590a3"), surface: css("--lz-surface", "#fff") };
+    soft: css("--lz-primary-soft", "#e8f0fe"), grid: css("--lz-grid", "#eef1f6"), tick: css("--lz-tick", "#8590a3"), surface: (() => { const el = document.querySelector(".app-content"); return (el ? getComputedStyle(el) : getComputedStyle(document.documentElement)).getPropertyValue("--lz-surface").trim() || "#fff"; })() };
   if (window.Chart) Chart.defaults.color = Lz.palette.tick;
   Lz.charts = {
     axis(extra = {}) {
@@ -179,5 +179,123 @@
     },
   };
 
-  document.addEventListener("DOMContentLoaded", Lz.initTables);
+  /* ---------- Form wizard (multi-langkah) ----------
+     <form class="lz-wizard" data-lz-wizard novalidate>
+       <section class="wizard-panel" data-title="Account"> ...field... </section> ...
+       <section class="wizard-panel" data-title="Review"><dl data-wiz-summary></dl></section>
+       <div class="wizard-actions"> [data-wiz-prev] [data-wiz-next] [data-wiz-submit] </div>
+       <div class="wizard-done" hidden> ... <button data-wiz-restart> </div>
+     </form>
+     Event: "lz:wizard-submit" (detail: { name: nilai }). Panggil event.preventDefault() untuk mengganti perilaku bawaan (toast + layar selesai). */
+  Lz.wizard = function (root) {
+    const panels = Array.from(root.querySelectorAll(".wizard-panel"));
+    if (!panels.length) return;
+    const prev = root.querySelector("[data-wiz-prev]"), next = root.querySelector("[data-wiz-next]"), submit = root.querySelector("[data-wiz-submit]");
+    const done = root.querySelector(".wizard-done"), actions = root.querySelector(".wizard-actions");
+    let cur = 0, reached = 0;
+
+    const nav = document.createElement("ol");
+    nav.className = "wizard-steps";
+    nav.innerHTML = panels.map((p, i) => `<li><button type="button" class="wizard-step" data-i="${i}"><span class="wizard-dot">${i + 1}</span><span class="wizard-label">${p.dataset.title || "Step " + (i + 1)}</span></button></li>`).join("");
+    root.prepend(nav);
+    const count = document.createElement("div");
+    count.className = "wizard-count";
+    count.setAttribute("aria-live", "polite");
+    nav.after(count);
+    panels.forEach((p, i) => {
+      const h = p.querySelector(".wizard-title") || (() => { const e = document.createElement("h4"); e.className = "wizard-title"; e.textContent = p.dataset.title || ""; p.prepend(e); return e; })();
+      h.tabIndex = -1;
+      p.setAttribute("role", "group");
+      p.setAttribute("aria-label", `Step ${i + 1} of ${panels.length}: ${p.dataset.title || ""}`);
+    });
+
+    const fields = (p) => Array.from(p.querySelectorAll("input, select, textarea")).filter((f) => f.name || f.id);
+    function validStep(i) {
+      const p = panels[i];
+      p.classList.add("was-validated");
+      const bad = fields(p).find((f) => !f.checkValidity());
+      if (bad) { bad.focus(); return false; }
+      return true;
+    }
+    function label(f) {
+      const l = f.id && root.querySelector(`label[for="${f.id}"]`);
+      return l ? l.textContent.replace(/\(optional\)/i, "").trim() : f.name;
+    }
+    function values() {
+      const out = {};
+      fields(root).forEach((f) => {
+        const key = f.name || f.id;
+        if (f.type === "radio") { if (f.checked) out[key] = (root.querySelector(`label[for="${f.id}"]`) || {}).textContent || f.value; }
+        else if (f.type === "checkbox") out[key] = f.checked;
+        else out[key] = f.value;
+      });
+      return out;
+    }
+    const esc = (t) => String(t).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
+    function summary() {
+      const dl = root.querySelector("[data-wiz-summary]");
+      if (!dl) return;
+      const rows = [];
+      panels.forEach((p) => {
+        if (p.contains(dl)) return;
+        fields(p).forEach((f) => {
+          let k = label(f), v = f.value;
+          if (f.type === "radio") { if (!f.checked) return; k = f.dataset.summaryLabel || f.name; v = (root.querySelector(`label[for="${f.id}"]`) || {}).textContent || f.value; }
+          else if (f.type === "checkbox") v = f.checked ? "Yes" : "No";
+          else if (f.tagName === "SELECT") v = f.value === "" ? "" : f.options[f.selectedIndex].text;
+          if (!String(v).trim()) return;
+          rows.push([k, v]);
+        });
+      });
+      dl.innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+    }
+    function show(i, focus) {
+      cur = Math.max(0, Math.min(i, panels.length - 1));
+      reached = Math.max(reached, cur);
+      panels.forEach((p, k) => { p.hidden = k !== cur; });
+      nav.querySelectorAll(".wizard-step").forEach((b, k) => {
+        b.classList.toggle("current", k === cur);
+        const isDone = k < reached && k !== cur;
+        b.classList.toggle("done", isDone);
+        b.disabled = k > reached;
+        if (k === cur) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+        b.querySelector(".wizard-dot").innerHTML = isDone ? '<i class="bi bi-check-lg" aria-hidden="true"></i>' : String(k + 1);
+      });
+      count.textContent = `Step ${cur + 1} of ${panels.length}: ${panels[cur].dataset.title || ""}`;
+      if (prev) prev.disabled = cur === 0;
+      if (next) next.hidden = cur === panels.length - 1;
+      if (submit) submit.hidden = cur !== panels.length - 1;
+      if (cur === panels.length - 1) summary();
+      if (focus) panels[cur].querySelector(".wizard-title").focus({ preventScroll: false });
+    }
+    function go(i) {
+      if (i > cur) { for (let k = cur; k < i; k++) { if (!validStep(k)) { show(k, false); return; } } }
+      show(i, true);
+    }
+    if (prev) prev.addEventListener("click", () => go(cur - 1));
+    if (next) next.addEventListener("click", () => { if (validStep(cur)) { reached = Math.max(reached, cur + 1); show(cur + 1, true); } });
+    nav.addEventListener("click", (e) => { const b = e.target.closest(".wizard-step"); if (b && !b.disabled) go(Number(b.dataset.i)); });
+    root.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.tagName === "INPUT" && cur < panels.length - 1) { e.preventDefault(); next.click(); } });
+
+    root.addEventListener("submit", (e) => {
+      e.preventDefault();
+      for (let k = 0; k < panels.length; k++) { if (!validStep(k)) { show(k, false); return; } }
+      const ev = new CustomEvent("lz:wizard-submit", { bubbles: true, cancelable: true, detail: values() });
+      if (!root.dispatchEvent(ev)) return;
+      nav.hidden = true; count.hidden = true; panels.forEach((p) => { p.hidden = true; });
+      if (actions) actions.hidden = true;
+      if (done) { done.hidden = false; const h = done.querySelector("h4, h3"); if (h) { h.tabIndex = -1; h.focus(); } }
+      Lz.toast("Your form has been submitted.", "success", { title: "Submitted" });
+    });
+    const restart = root.querySelector("[data-wiz-restart]");
+    if (restart) restart.addEventListener("click", () => {
+      root.reset(); panels.forEach((p) => p.classList.remove("was-validated"));
+      nav.hidden = false; count.hidden = false; if (actions) actions.hidden = false; if (done) done.hidden = true;
+      reached = 0; show(0, true);
+    });
+    show(0, false);
+  };
+  Lz.initWizards = () => document.querySelectorAll("[data-lz-wizard]").forEach(Lz.wizard);
+
+  document.addEventListener("DOMContentLoaded", () => { Lz.initTables(); Lz.initWizards(); });
 })();

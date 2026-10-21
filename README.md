@@ -15,6 +15,7 @@ hal yang tidak ada di Bootstrap. Tanpa build step. Rencana dan status pengerjaan
 | Halaman | File |
 |---|---|
 | Halaman publik (sebelum login): landing, login, register, lupa password | `landing.html`, `login.html`, `register.html`, `forgot-password.html` |
+| Menu Pages (halaman contoh) | `landing.html`, `lock-screen.html`, `404.html`, `403.html`, `500.html`, `maintenance.html`, `coming-soon.html`, `pages/profile.html`, `pages/faq.html`, `pages/pricing.html`, `pages/invoice.html`, `pages/blank.html` |
 | Dashboard | `index.html` |
 | Explore, Courses, Detail course | `pages/explore.html`, `pages/courses.html`, `pages/course-detail.html?id=1` |
 | Class (daftar + ruang kelas) | `pages/class.html`, `pages/class.html?course=1` |
@@ -44,6 +45,13 @@ assets/
 
 Urutan muat CSS: Bootstrap, lalu `theme.css`, `bootstrap-skin.css`, dan css halaman. Urutan ini penting karena
 file kita menimpa variabel Bootstrap.
+
+## Halaman contoh (menu Pages)
+
+Menu **Pages** memuat halaman contoh yang bisa disalin dan diubah: error (404, 403, 500), status (maintenance, coming soon), lock screen,
+FAQ, pricing, invoice, user profile, dan blank page. Halaman berlayout aplikasi (profile, FAQ, pricing, invoice, blank) memuat `assets/js/examples.js`;
+halaman mandiri memuat `assets/js/public-pages.js`. Untuk halaman tanpa navbar sama sekali (maintenance, coming soon, lock screen) beri `class="public bare"`
+pada `<body>` dan hapus slot `public-header`/`public-footer`. Konten (paket harga, pertanyaan FAQ, item invoice) ditulis langsung di HTML masing-masing halaman.
 
 ## Layout publik (tanpa menu)
 
@@ -124,6 +132,8 @@ Semua warna, radius, dan jarak ada di `:root` pada `theme.css`.
 | `--lz-text`, `--lz-muted` | Teks utama dan sekunder (`--lz-muted` dibuat sedikit lebih gelap dari referensi agar kontras AA) |
 | `--lz-radius`, `--lz-radius-sm` | 16px untuk kartu, 8px untuk kontrol |
 
+Konten halaman dibungkus kartu putih (`.app-content`); di dalamnya `--lz-surface` dan `--lz-bg` ditukar secara lokal sehingga kartu berwarna abu muda. Gunakan `--lz-wrap` (putih) dan `--lz-gray` (abu) bila Anda butuh warna aslinya di dalam konten, mis. `background: var(--lz-wrap)` untuk elemen yang harus tetap putih. Breadcrumb di dalam konten otomatis dipindah ke atas kartu.
+
 Mengganti warna brand cukup dengan mengubah `--lz-primary` (dan `--bs-primary` / `--bs-primary-rgb` di blok yang sama).
 
 ## Mode gelap
@@ -145,6 +155,12 @@ Lz.charts.ring(canvas, 72);
 Tabel dengan sort, pencarian, dan pagination: beri atribut `data-lz-table` (opsional `data-page-size`) pada pembungkus,
 `data-sort` pada `<th>` yang bisa diurutkan, `data-lz-search` pada input, dan `data-lz-pager` pada penampung pagination.
 Nilai urut khusus bisa diberikan lewat `data-value` pada `<td>`. Contoh ada di menu Components dan `pages/analytics.html`.
+
+## Form wizard
+
+Form multi-langkah: beri `data-lz-wizard` pada `<form class="lz-wizard" novalidate>`, satu `<section class="wizard-panel" data-title="...">` per langkah,
+`<dl class="wizard-review" data-wiz-summary>` pada langkah terakhir untuk ringkasan otomatis, serta tombol `data-wiz-prev`, `data-wiz-next`, dan `data-wiz-submit`.
+Dengarkan event `lz:wizard-submit` (`e.detail` berisi nilai semua kolom) untuk mengirim data ke API Anda. Contoh lengkap ada di halaman Components bagian Forms.
 
 ## Notifikasi dan pesan di header
 

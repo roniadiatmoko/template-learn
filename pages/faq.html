@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Learnzie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../assets/css/theme.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap-skin.css" rel="stylesheet">
+  <link href="../assets/css/courses.css" rel="stylesheet">
+  <link href="../assets/css/pages.css" rel="stylesheet">
+  <script src="../assets/js/theme-init.js"></script>
+</head>
+<body data-page="pages" data-title="FAQ" data-root="../">
+  <div class="app-shell no-right">
+    <aside data-slot="sidebar"></aside>
+    <main class="app-main">
+      <header data-slot="header"></header>
+      <div class="app-content">
+
+        <div class="faq-tools">
+          <div class="search-box"><i class="bi bi-search"></i><input id="faqSearch" class="form-control" placeholder="Search questions" aria-label="Search questions"></div>
+          <div class="chips m-0" role="group" aria-label="Category">
+            <button class="lz-chip active" type="button" data-faq-cat="all" aria-pressed="true">All</button>
+            <button class="lz-chip" type="button" data-faq-cat="account" aria-pressed="false">Account</button>
+            <button class="lz-chip" type="button" data-faq-cat="courses" aria-pressed="false">Courses</button>
+            <button class="lz-chip" type="button" data-faq-cat="payments" aria-pressed="false">Payments</button>
+            <button class="lz-chip" type="button" data-faq-cat="certificates" aria-pressed="false">Certificates</button>
+          </div>
+        </div>
+        <div id="faqCount" aria-live="polite"></div>
+        <div class="accordion mb-3" id="faqAcc" data-faq>
+              <div class="accordion-item" data-cat="account"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq0" aria-expanded="false">How do I create an account?</button></h3>
+                <div id="fq0" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Choose <b>Sign up free</b> on the home page, enter your name and email, and pick a password with at least 8 characters.</div></div></div>
+              <div class="accordion-item" data-cat="account"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq1" aria-expanded="false">I forgot my password. What should I do?</button></h3>
+                <div id="fq1" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Open <a href="../forgot-password.html">Reset password</a>, enter your email, and follow the link we send you.</div></div></div>
+              <div class="accordion-item" data-cat="account"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq2" aria-expanded="false">Can I change my email address?</button></h3>
+                <div id="fq2" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Yes. Go to Settings, Profile, change the email, and select <b>Save changes</b>.</div></div></div>
+              <div class="accordion-item" data-cat="courses"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq3" aria-expanded="false">Can I take a course at my own pace?</button></h3>
+                <div id="fq3" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Yes. Lessons stay available after you enroll, and your progress is saved so you can continue any time.</div></div></div>
+              <div class="accordion-item" data-cat="courses"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq4" aria-expanded="false">How long do I have access to a course?</button></h3>
+                <div id="fq4" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">You keep lifetime access to every course you enroll in, including updates.</div></div></div>
+              <div class="accordion-item" data-cat="courses"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq5" aria-expanded="false">Where can I see my progress?</button></h3>
+                <div id="fq5" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">The dashboard shows study time and tasks, and the Courses page lists the progress of every course.</div></div></div>
+              <div class="accordion-item" data-cat="payments"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq6" aria-expanded="false">Which payment methods do you accept?</button></h3>
+                <div id="fq6" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Bank transfer, e-wallets, and major cards. Free courses do not need any payment details.</div></div></div>
+              <div class="accordion-item" data-cat="payments"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq7" aria-expanded="false">Can I get a refund?</button></h3>
+                <div id="fq7" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">If you have not completed more than 20% of a course, you can request a refund within 14 days of purchase.</div></div></div>
+              <div class="accordion-item" data-cat="certificates"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq8" aria-expanded="false">How do I get my certificate?</button></h3>
+                <div id="fq8" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Finish every lesson in a course. The certificate then unlocks on the Certificate page, where you can print it or save it as a PDF.</div></div></div>
+              <div class="accordion-item" data-cat="certificates"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fq9" aria-expanded="false">Is the certificate shareable?</button></h3>
+                <div id="fq9" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body">Yes. Each certificate has a unique ID that others can use to check it.</div></div></div>
+        </div>
+        <div class="lz-empty" id="faqEmpty" hidden><i class="bi bi-search"></i>No question matches your search. Try different words.</div>
+        <div class="lz-card help-card mt-4 h-auto"><div><h3 class="lz-card-title">Still have questions?</h3><p class="text-muted mb-0">Our team usually replies within one working day.</p></div><a class="btn btn-primary" href="mailto:help@learnzie.example"><i class="bi bi-envelope me-1"></i>Contact support</a></div>
+      </div>
+      <footer data-slot="footer"></footer>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/data/mock.js"></script>
+  <script src="../assets/js/data/curriculum.js"></script>
+  <script src="../assets/js/lz.js"></script>
+  <script src="../assets/js/layout.js"></script>
+  <script src="../assets/js/examples.js"></script>
+</body>
+</html>

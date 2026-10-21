@@ -33,14 +33,19 @@
   --lz-surface-3: #f3f5f9;
   --lz-text-2: #3a4252;
   --lz-text-3: #5a6478;
+  --lz-scroll: #d3d9e4;
+  --lz-scroll-rgb: 211, 217, 228;
   --lz-grid: #eef1f6;
   --lz-tick: #8590a3;
+
+  --lz-gray: var(--lz-bg);
+  --lz-wrap: var(--lz-surface);
 
   --lz-radius: 16px;
   --lz-radius-sm: 8px;
   --lz-gap: 16px;
 
-  --lz-sidebar-w: 250px;
+  --lz-sidebar-w: 266px;
   --lz-right-w: 320px;
 
   color-scheme: light;
@@ -86,12 +91,39 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-weight: 700; letter-
 
 .app-shell.no-right { grid-template-columns: var(--lz-sidebar-w) minmax(0, 1fr); }
 
+/* Sidebar berupa kartu putih melayang dengan sudut membulat (kolom 266px = kartu 250px + jarak 16px).
+   !important diperlukan karena .offcanvas-lg Bootstrap membuat latar transparan di layar lebar. */
 .app-sidebar {
-  background: var(--lz-surface);
-  padding: 1.5rem 1rem;
+  background-color: var(--lz-surface) !important;
+  padding: 0;
   display: flex; flex-direction: column;
-  position: sticky; top: 0; height: 100vh;
-  overflow-y: auto;
+  position: sticky; top: 1rem; height: calc(100vh - 2rem);
+  margin: 1rem 0 1rem 1rem;
+  border-radius: var(--lz-radius);
+  overflow: hidden;            /* hanya .side-scroll yang bergulir; nama aplikasi tetap di tempat */
+}
+.app-sidebar > .brand { flex: none; padding: 1.5rem 1.75rem 1rem; }
+.side-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 .5rem 1rem 1rem; display: flex; flex-direction: column; scrollbar-gutter: stable; }
+.side-scroll > nav { flex: none; margin-bottom: 1rem; }
+/* Scrollbar tipis dengan jarak atas-bawah, tanpa tombol panah, thumb menjorok dari tepi kartu.
+   Thumb transparan dan baru muncul perlahan (fade in) saat kursor berada di sidebar atau fokus ada di dalamnya. */
+/* --scroll-a (0..1) dianimasikan lewat transisi pada .side-scroll; thumb membaca nilainya sehingga muncul perlahan.
+   Transisi langsung pada ::-webkit-scrollbar-thumb tidak dijalankan Chrome, jadi dipakai properti kustom terdaftar. */
+@property --scroll-a { syntax: "<number>"; inherits: true; initial-value: 0; }
+.side-scroll { --scroll-a: 0; transition: --scroll-a .3s ease; }
+.app-sidebar:hover .side-scroll, .side-scroll:focus-within { --scroll-a: 1; }
+@media (hover: none) { .side-scroll { --scroll-a: 1; } }
+@media (prefers-reduced-motion: reduce) { .side-scroll { transition: none; } }
+@supports selector(::-webkit-scrollbar) {
+  .side-scroll::-webkit-scrollbar { width: 12px; }
+  .side-scroll::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  .side-scroll::-webkit-scrollbar-track { background: transparent; margin: 4px 0 12px; }
+  .side-scroll::-webkit-scrollbar-thumb { background-color: rgba(var(--lz-scroll-rgb), var(--scroll-a)); border-radius: 99px; border: 3.5px solid transparent; background-clip: padding-box; min-height: 40px; }
+  .side-scroll::-webkit-scrollbar-thumb:hover { background-color: var(--lz-muted); }
+}
+@supports not selector(::-webkit-scrollbar) {
+  .side-scroll { scrollbar-width: thin; scrollbar-color: transparent transparent; transition: scrollbar-color .3s ease; }
+  .app-sidebar:hover .side-scroll, .side-scroll:focus-within { scrollbar-color: var(--lz-scroll) transparent; }
 }
 .app-sidebar.offcanvas-lg { --bs-offcanvas-width: 270px; }
 
@@ -144,7 +176,26 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-weight: 700; letter-
 .promo ul { padding-left: 1rem; margin-bottom: 0.9rem; color: var(--lz-muted); }
 
 .app-main { padding: 1.5rem 1.5rem 1rem; min-width: 0; display: flex; flex-direction: column; }
-.app-content { flex: 1; }
+/* Konten dibungkus kartu putih. Di dalamnya kartu-kartu memakai abu muda (token --lz-surface dan --lz-bg ditukar secara lokal),
+   sedangkan dropdown dan popover tetap putih. */
+.app-content {
+  flex: 1;
+  background: var(--lz-wrap);
+  border-radius: 20px;
+  padding: 1.5rem;
+  --lz-surface: var(--lz-gray);
+  --lz-bg: var(--lz-wrap);
+}
+.app-content .dropdown-menu, .app-content .popover, .app-content .toast { --lz-surface: var(--lz-wrap); }
+.page-crumb { margin: -.5rem 0 1rem; }
+.page-crumb .breadcrumb { margin: 0; }
+/* Kontrol tetap putih di atas kartu abu agar terbaca jelas */
+.app-content .form-control, .app-content .form-select, .app-content .form-control:focus, .app-content .form-select:focus { background-color: var(--lz-wrap); }
+.app-content .form-control:disabled, .app-content .form-select:disabled { background-color: var(--lz-gray); }
+.app-content .btn-secondary { --bs-btn-bg: var(--lz-wrap); --bs-btn-disabled-bg: var(--lz-wrap); }
+.app-content .lz-chip:not(.active) { background: var(--lz-wrap); }
+.app-content .input-group-text { background-color: var(--lz-gray); }
+@media (max-width: 575.98px) { .app-content { padding: 1rem; border-radius: 16px; } }
 .page-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.25rem; gap: 1rem; }
 .page-head h1 { font-size: 1.75rem; margin: 0; }
 .page-head .sub { color: var(--lz-muted); font-size: 0.85rem; }
@@ -287,7 +338,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-weight: 700; letter-
 
 @media (max-width: 991.98px) {
   .app-shell, .app-shell.no-right { grid-template-columns: minmax(0, 1fr); }
-  .app-sidebar { position: fixed; height: 100%; }   /* offcanvas */
+  .app-sidebar { position: fixed; height: 100%; margin: 0; border-radius: 0 var(--lz-radius) var(--lz-radius) 0; }   /* offcanvas */
   .app-main { padding: 1rem; }
   .assign-row { grid-template-columns: 1fr 1fr; }
   .assign-main { grid-column: 1 / -1; }
@@ -319,6 +370,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-weight: 700; letter-
   --lz-text-2: #c3cbdb;
   --lz-text-3: #9aa5ba;
   --lz-muted: #8a96ae;
+  --lz-scroll: #34415c;
+  --lz-scroll-rgb: 52, 65, 92;
   --lz-grid: #243049;
   --lz-tick: #8a96ae;
   --lz-primary-ink: #6db3ff;

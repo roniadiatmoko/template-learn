@@ -26,6 +26,29 @@
       { label: "Notifications", href: "pages/settings.html#notifications" },
       { label: "Appearance", href: "pages/settings.html#appearance" },
     ] },
+    { key: "pages", label: "Pages", icon: "bi-files", children: [
+      { label: "Landing page", href: "landing.html" },
+      { label: "Authentication", children: [
+        { label: "Log in", href: "login.html" },
+        { label: "Sign up", href: "register.html" },
+        { label: "Forgot password", href: "forgot-password.html" },
+        { label: "Lock screen", href: "lock-screen.html" },
+      ] },
+      { label: "Error pages", children: [
+        { label: "404 Not found", href: "404.html" },
+        { label: "403 Access denied", href: "403.html" },
+        { label: "500 Server error", href: "500.html" },
+      ] },
+      { label: "Status pages", children: [
+        { label: "Maintenance", href: "maintenance.html" },
+        { label: "Coming soon", href: "coming-soon.html" },
+      ] },
+      { label: "User profile", href: "pages/profile.html" },
+      { label: "FAQ", href: "pages/faq.html" },
+      { label: "Pricing", href: "pages/pricing.html" },
+      { label: "Invoice", href: "pages/invoice.html" },
+      { label: "Blank page", href: "pages/blank.html" },
+    ] },
     { key: "components", label: "Components", icon: "bi-puzzle", href: "pages/components.html" },
   ];
   const URL_KEYS = ["cat", "level", "tab"];
@@ -100,12 +123,14 @@
     el.setAttribute("aria-label", "Sidebar");
     el.innerHTML = `
       <a class="brand" href="${root}index.html"><span class="brand-mark"></span>Learnzie</a>
+      <div class="side-scroll">
       <nav aria-label="Main">${renderMenu(MENU, 1, "m")}</nav>
       <div class="promo">
         <div class="promo-art"><i class="bi bi-mortarboard-fill"></i></div>
         <h6>Learnzie 4.0<br>is Available Now</h6>
         <ul><li>Advanced Analytics</li><li>Tailored Learning Paths</li><li>Improved Collaboration</li></ul>
         <button class="btn btn-primary w-100" type="button" data-trial>Try Free Trial</button>
+      </div>
       </div>`;
   }
 
@@ -203,6 +228,17 @@
     skip.textContent = "Skip to content";
     body.prepend(skip);
   }
+
+  /* Breadcrumb dipindah ke atas kartu konten (di bawah judul halaman) */
+  document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector(".app-content");
+    const nav = content && Array.from(content.querySelectorAll("nav[aria-label=breadcrumb]")).find((n) => !n.closest(".doc-example"));
+    if (!nav) return;
+    const wrap = document.createElement("div");
+    wrap.className = "page-crumb";
+    wrap.appendChild(nav);
+    content.before(wrap);
+  });
 
   renderSidebar();
   document.addEventListener("click", (e) => {

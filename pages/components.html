@@ -194,39 +194,269 @@
             <!-- ============ Forms ============ -->
             <section class="doc-section" id="forms">
               <h2>Forms</h2>
-              <p class="doc-lead">Inputs have an 8px radius, a blue border on hover, and a soft blue ring on focus. Always connect a <code>&lt;label&gt;</code> with <code>for</code>/<code>id</code>.</p>
+              <p class="doc-lead">Inputs have an 8px radius, a blue border on hover, and a soft blue ring on focus. Always connect a <code>&lt;label&gt;</code> with <code>for</code>/<code>id</code>, and write helper text so people know what to enter before they make a mistake.</p>
+
               <h3>Text inputs</h3>
               <div class="doc-example"><div class="doc-preview"><div class="row g-3">
-                <div class="col-md-6"><label class="form-label" for="doc-f1">Full name</label><input id="doc-f1" class="form-control" placeholder="Gareth Christopher"><div class="form-text">Use the name on your certificate.</div></div>
-                <div class="col-md-6"><label class="form-label" for="doc-f2">Category</label><select id="doc-f2" class="form-select"><option>UX Design</option><option>Front-End</option><option>Copywriting</option></select></div>
-                <div class="col-md-6"><label class="form-label" for="doc-f3">Email</label><div class="input-group"><span class="input-group-text"><i class="bi bi-envelope"></i></span><input id="doc-f3" type="email" class="form-control" placeholder="name@email.com"></div></div>
-                <div class="col-md-6"><label class="form-label" for="doc-f4">With error</label><input id="doc-f4" class="form-control is-invalid" value="abc"><div class="invalid-feedback">Use at least 6 characters.</div></div>
-                <div class="col-12"><label class="form-label" for="doc-f5">Notes</label><textarea id="doc-f5" class="form-control" rows="3"></textarea></div>
+                <div class="col-md-6"><label class="form-label" for="df-1">Full name</label><input id="df-1" class="form-control" placeholder="Gareth Christopher"><div class="form-text">Use the name on your certificate.</div></div>
+                <div class="col-md-6"><label class="form-label" for="df-2">Category</label><select id="df-2" class="form-select"><option>UX Design</option><option>Front-End</option><option>Copywriting</option></select></div>
+                <div class="col-md-6"><label class="form-label" for="df-3">Phone <span class="text-muted fw-normal">(optional)</span></label><input id="df-3" type="tel" class="form-control" placeholder="0812 3456 7890"></div>
+                <div class="col-md-6"><label class="form-label" for="df-4">Website</label><input id="df-4" type="url" class="form-control" placeholder="https://"></div>
+                <div class="col-12"><label class="form-label" for="df-5">Bio</label><textarea id="df-5" class="form-control" rows="3" maxlength="200" placeholder="Tell us a little about yourself"></textarea><div class="form-text">Up to 200 characters.</div></div>
               </div></div></div>
+
+              <h3>Sizes</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="doc-stack">
+                <input class="form-control form-control-lg" placeholder="Large input" aria-label="Large input">
+                <input class="form-control" placeholder="Default input" aria-label="Default input">
+                <input class="form-control form-control-sm" placeholder="Small input" aria-label="Small input">
+                <select class="form-select form-select-sm" aria-label="Small select" style="max-width:220px"><option>Small select</option></select>
+              </div></div></div>
+
+              <h3>Floating labels</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><div class="form-floating"><input id="df-6" type="email" class="form-control" placeholder="name@email.com"><label for="df-6">Email address</label></div></div>
+                <div class="col-md-6"><div class="form-floating"><select id="df-7" class="form-select"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select><label for="df-7">Level</label></div></div>
+              </div></div></div>
+
+              <h3>Input groups</h3>
+              <p class="doc-note">Put an icon, text, or button next to an input. Use <code>search-box</code> (below) for a search field with an icon inside.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><label class="form-label" for="df-8">Email</label><div class="input-group"><span class="input-group-text"><i class="bi bi-envelope"></i></span><input id="df-8" type="email" class="form-control" placeholder="name@email.com"></div></div>
+                <div class="col-md-6"><label class="form-label" for="df-9">Username</label><div class="input-group"><span class="input-group-text">@</span><input id="df-9" class="form-control" placeholder="christopher"></div></div>
+                <div class="col-md-6"><label class="form-label" for="df-10">Voucher code</label><div class="input-group"><input id="df-10" class="form-control" placeholder="LEARN2027"><button class="btn btn-primary" type="button">Apply</button></div></div>
+                <div class="col-md-6"><label class="form-label" for="df-11">Price</label><div class="input-group"><span class="input-group-text">Rp</span><input id="df-11" type="number" class="form-control" value="199000"><span class="input-group-text">.00</span></div></div>
+              </div></div></div>
+
               <h3>Search box</h3>
               <p class="doc-note">A Learnzie addition: wrap the input in <code>.search-box</code> with a leading icon.</p>
               <div class="doc-example"><div class="doc-preview"><div class="search-box" style="max-width:320px"><i class="bi bi-search"></i><input class="form-control" placeholder="Search course, instructor" aria-label="Search"></div></div></div>
-              <h3>Checks, radios, switch, range, file</h3>
+
+              <h3>Date, time, number, color</h3>
               <div class="doc-example"><div class="doc-preview"><div class="row g-3">
-                <div class="col-12 doc-row">
-                  <div class="form-check"><input class="form-check-input" type="checkbox" id="doc-c1" checked><label class="form-check-label" for="doc-c1">Checkbox</label></div>
-                  <div class="form-check"><input class="form-check-input" type="radio" name="doc-r" id="doc-c2" checked><label class="form-check-label" for="doc-c2">Radio</label></div>
-                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="doc-c3" checked><label class="form-check-label" for="doc-c3">Switch</label></div>
-                </div>
-                <div class="col-md-6"><label class="form-label" for="doc-f6">Range</label><input id="doc-f6" type="range" class="form-range"></div>
-                <div class="col-md-6"><label class="form-label" for="doc-f7">Upload</label><input id="doc-f7" type="file" class="form-control"></div>
+                <div class="col-sm-6 col-lg-3"><label class="form-label" for="df-12">Date</label><input id="df-12" type="date" class="form-control"></div>
+                <div class="col-sm-6 col-lg-3"><label class="form-label" for="df-13">Time</label><input id="df-13" type="time" class="form-control" value="09:00"></div>
+                <div class="col-sm-6 col-lg-3"><label class="form-label" for="df-14">Seats</label><input id="df-14" type="number" class="form-control" min="1" max="50" value="10"></div>
+                <div class="col-sm-6 col-lg-3"><label class="form-label" for="df-15">Accent color</label><input id="df-15" type="color" class="form-control form-control-color w-100" value="#0f6fde"></div>
               </div></div></div>
-              <h3>Validation</h3>
-              <p class="doc-note">Add <code>novalidate</code> to the form, then add <code>was-validated</code> on submit when <code>checkValidity()</code> fails. See the profile form in Settings for a full example.</p>
+
+              <h3>Checks, radios, switch</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-4">
+                <div class="col-md-4"><div class="fw-bold mb-2" id="df-g1">Notify me about</div>
+                  <div role="group" aria-labelledby="df-g1">
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="df-c1" checked><label class="form-check-label" for="df-c1">Deadlines</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="df-c2"><label class="form-check-label" for="df-c2">New courses</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="df-c3" disabled><label class="form-check-label" for="df-c3">Disabled option</label></div>
+                  </div></div>
+                <div class="col-md-4"><div class="fw-bold mb-2" id="df-g2">Course level</div>
+                  <div role="radiogroup" aria-labelledby="df-g2">
+                    <div class="form-check"><input class="form-check-input" type="radio" name="df-level" id="df-r1" checked><label class="form-check-label" for="df-r1">Beginner</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="df-level" id="df-r2"><label class="form-check-label" for="df-r2">Intermediate</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="df-level" id="df-r3"><label class="form-check-label" for="df-r3">Advanced</label></div>
+                  </div></div>
+                <div class="col-md-4"><div class="fw-bold mb-2">Preferences</div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="df-s1" checked><label class="form-check-label" for="df-s1">Weekly summary</label></div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="df-s2"><label class="form-check-label" for="df-s2">Dark mode</label></div>
+                </div>
+              </div></div></div>
+
+              <h3>Switch rows</h3>
+              <p class="doc-note">For settings: a label with a short description on the left and a switch on the right (<code>.switch-row</code>, from <code>pages.css</code>).</p>
+              <div class="doc-example"><div class="doc-preview">
+                <div style="max-width:520px">
+                  <div class="switch-row"><div><label for="df-sw1" class="fw-bold">Assignment deadlines</label><small>A reminder one day before each due date.</small></div><div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="df-sw1" checked></div></div>
+                  <div class="switch-row"><div><label for="df-sw2" class="fw-bold">Email summary</label><small>A short weekly report of your progress.</small></div><div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="df-sw2"></div></div>
+                </div>
+              </div></div>
+
+              <h3>Option cards and color picker</h3>
+              <p class="doc-note">Large choices: use <code>.btn-check</code> with <code>.theme-opt</code> for cards, and <code>.tone-pick</code> for color dots (both from <code>pages.css</code>).</p>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3" role="radiogroup" aria-label="Plan" style="max-width:560px">
+                <div class="col-sm-4"><input class="btn-check" type="radio" name="df-plan" id="df-p1" checked><label class="theme-opt" for="df-p1"><b>Free</b><div class="small text-muted">Rp 0</div></label></div>
+                <div class="col-sm-4"><input class="btn-check" type="radio" name="df-plan" id="df-p2"><label class="theme-opt" for="df-p2"><b>Pro</b><div class="small text-muted">Rp 99.000 / month</div></label></div>
+                <div class="col-sm-4"><input class="btn-check" type="radio" name="df-plan" id="df-p3"><label class="theme-opt" for="df-p3"><b>Team</b><div class="small text-muted">Rp 299.000 / month</div></label></div>
+              </div>
+              <div class="mt-3"><span class="form-label d-block" id="df-tl">Event color</span>
+                <div class="tone-pick" role="radiogroup" aria-labelledby="df-tl">
+                  <input class="btn-check" type="radio" name="df-tone" id="df-t1" value="blue" checked><label class="t-blue" for="df-t1"><span class="visually-hidden">Blue</span></label>
+                  <input class="btn-check" type="radio" name="df-tone" id="df-t2" value="pink"><label class="t-pink" for="df-t2"><span class="visually-hidden">Pink</span></label>
+                  <input class="btn-check" type="radio" name="df-tone" id="df-t3" value="yellow"><label class="t-yellow" for="df-t3"><span class="visually-hidden">Yellow</span></label>
+                  <input class="btn-check" type="radio" name="df-tone" id="df-t4" value="green"><label class="t-green" for="df-t4"><span class="visually-hidden">Green</span></label>
+                </div></div>
+              </div></div>
+
+              <h3>Range and file upload</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><label class="form-label" for="df-16">Daily goal</label><input id="df-16" type="range" class="form-range" min="1" max="8" value="3"></div>
+                <div class="col-md-6"><label class="form-label" for="df-17">Upload assignment</label><input id="df-17" type="file" class="form-control"><div class="form-text">PDF or DOCX, up to 10 MB.</div></div>
+              </div></div></div>
+
+              <h3>Avatar upload with preview</h3>
+              <p class="doc-note">Check the type and size in JavaScript and show the error under the field (see <code>settings.js</code>).</p>
+              <div class="doc-example"><div class="doc-preview"><div class="avatar-edit"><span class="lz-avatar">GC</span>
+                <div><label class="btn btn-secondary btn-sm mb-1" for="df-18"><i class="bi bi-upload me-1"></i>Upload photo</label><input type="file" id="df-18" accept="image/*" class="visually-hidden"><div class="form-text">PNG or JPG, up to 2 MB.</div></div></div></div></div>
+
+              <h3>Disabled and read-only</h3>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><label class="form-label" for="df-19">Disabled</label><input id="df-19" class="form-control" value="Cannot be changed" disabled></div>
+                <div class="col-md-6"><label class="form-label" for="df-20">Read-only</label><input id="df-20" class="form-control" value="gareth@example.com" readonly></div>
+              </div></div></div>
+
+              <h3>Validation states</h3>
+              <p class="doc-note">Use <code>is-invalid</code> / <code>is-valid</code> with <code>.invalid-feedback</code> / <code>.valid-feedback</code>. Say what is wrong and how to fix it. Do not rely on color alone.</p>
+              <div class="doc-example"><div class="doc-preview"><div class="row g-3">
+                <div class="col-md-6"><label class="form-label" for="df-21">Password</label><input id="df-21" type="password" class="form-control is-invalid" value="abc" aria-describedby="df-21f"><div class="invalid-feedback" id="df-21f">Use at least 8 characters.</div></div>
+                <div class="col-md-6"><label class="form-label" for="df-22">Email</label><input id="df-22" type="email" class="form-control is-valid" value="gareth@example.com" aria-describedby="df-22f"><div class="valid-feedback" id="df-22f">Looks good.</div></div>
+              </div></div></div>
+
+              <h3>Password field with show/hide</h3>
+              <p class="doc-note">Wrap the input in <code>.pw-field</code> and add a <code>.pw-toggle</code> button. The strength bar is a <code>.progress</code> updated in JavaScript.</p>
+              <div class="doc-example"><div class="doc-preview"><div style="max-width:380px">
+                <label class="form-label" for="df-pw">New password</label>
+                <div class="pw-field"><input id="df-pw" type="password" class="form-control" autocomplete="new-password" minlength="8"><button class="pw-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="bi bi-eye"></i></button></div>
+                <div class="progress mt-2" style="height:5px"><div class="progress-bar" id="df-meter" style="width:0"></div></div>
+                <div class="form-text" id="df-hint">Use 8 or more characters with letters and numbers.</div>
+                <script type="text/plain" class="doc-code" data-lang="js">
+// Show / hide
+toggle.addEventListener("click", () => {
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  toggle.setAttribute("aria-pressed", show);
+  toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  toggle.firstElementChild.className = "bi " + (show ? "bi-eye-slash" : "bi-eye");
+});
+
+// Strength: one point each for 8+ characters, 12+, letters and numbers, a symbol
+input.addEventListener("input", () => {
+  const v = input.value;
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (v.length >= 12) score++;
+  if (/[A-Za-z]/.test(v) && /\d/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+  meter.style.width = (v ? Math.max(1, score) * 25 : 0) + "%";
+  meter.className = "progress-bar " + (score <= 1 ? "bg-danger" : score === 2 ? "bg-warning" : "bg-success");
+});
+                </script>
+              </div></div></div>
+
+              <h3>Complete form with validation</h3>
+              <p class="doc-note">Add <code>novalidate</code> to the form, then add <code>was-validated</code> on submit. Focus the first invalid field. Press <b>Save changes</b> with empty fields to see the errors.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <form class="lz-card h-auto" id="df-form" novalidate style="max-width:560px">
+                  <h4 class="lz-card-title mb-3">Profile</h4>
+                  <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label" for="df-f1">Full name</label><input id="df-f1" class="form-control" required><div class="invalid-feedback">Enter your name.</div></div>
+                    <div class="col-md-6"><label class="form-label" for="df-f2">Email</label><input id="df-f2" type="email" class="form-control" required><div class="invalid-feedback">Enter a valid email address.</div></div>
+                    <div class="col-12"><label class="form-label" for="df-f3">Category</label><select id="df-f3" class="form-select" required><option value="">Choose a category</option><option>UX Design</option><option>Front-End</option></select><div class="invalid-feedback">Choose a category.</div></div>
+                    <div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" id="df-f4" required><label class="form-check-label" for="df-f4">I agree to the Terms and conditions</label><div class="invalid-feedback">You need to agree before saving.</div></div></div>
+                  </div>
+                  <div class="mt-4 text-end"><button class="btn btn-secondary me-2" type="reset">Reset</button><button class="btn btn-primary" type="submit">Save changes</button></div>
+                </form>
+                <script type="text/plain" class="doc-code" data-lang="html">
+<form class="lz-card" id="profileForm" novalidate>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label" for="name">Full name</label>
+      <input id="name" class="form-control" required>
+      <div class="invalid-feedback">Enter your name.</div>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label" for="email">Email</label>
+      <input id="email" type="email" class="form-control" required>
+      <div class="invalid-feedback">Enter a valid email address.</div>
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="terms" required>
+        <label class="form-check-label" for="terms">I agree to the Terms and conditions</label>
+        <div class="invalid-feedback">You need to agree before saving.</div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary mt-4" type="submit">Save changes</button>
+</form>
+
+<script>
+  profileForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    profileForm.classList.add("was-validated");
+    if (!profileForm.checkValidity()) { profileForm.querySelector(":invalid").focus(); return; }
+    Lz.toast("Profile saved.", "success", { title: "Saved" });
+  });
+<\/script>
+                </script>
+              </div></div>
+
+              <h3>Form wizard (multi-step)</h3>
+              <p class="doc-note">Split a long form into steps. Each <code>.wizard-panel</code> is one step, and <code>data-title</code> becomes its name in the step bar. <b>Next</b> checks only the current step, the step bar lets people go back to finished steps, and the last step can show a review of what they entered. Add <code>data-lz-wizard</code> to the form and it works without extra JavaScript. Try pressing <b>Next</b> with empty fields.</p>
+              <div class="doc-example"><div class="doc-preview on-bg">
+                <form class="lz-wizard" data-lz-wizard novalidate style="max-width:640px">
+                  <section class="wizard-panel" data-title="Account">
+                    <div class="row g-3">
+                      <div class="col-md-6"><label class="form-label" for="dw-name">Full name</label><input id="dw-name" name="name" class="form-control" autocomplete="name" required><div class="invalid-feedback">Enter your name.</div></div>
+                      <div class="col-md-6"><label class="form-label" for="dw-email">Email</label><input id="dw-email" name="email" type="email" class="form-control" autocomplete="email" required><div class="invalid-feedback">Enter a valid email address.</div></div>
+                      <div class="col-12"><label class="form-label" for="dw-phone">Phone <span class="text-muted fw-normal">(optional)</span></label><input id="dw-phone" name="phone" type="tel" class="form-control"></div>
+                    </div>
+                  </section>
+                  <section class="wizard-panel" data-title="Course">
+                    <div class="row g-3">
+                      <div class="col-12"><label class="form-label" for="dw-course">Course</label><select id="dw-course" name="course" class="form-select" required><option value="">Choose a course</option><option>User Research Fundamentals</option><option>HTML &amp; CSS from Scratch</option><option>Persuasive Copywriting</option></select><div class="invalid-feedback">Choose a course.</div></div>
+                      <div class="col-12"><div class="fw-bold mb-2" id="dw-lv">Your level</div>
+                        <div role="radiogroup" aria-labelledby="dw-lv">
+                          <div class="form-check"><input class="form-check-input" type="radio" name="level" id="dw-l1" data-summary-label="Level" required><label class="form-check-label" for="dw-l1">Beginner</label></div>
+                          <div class="form-check"><input class="form-check-input" type="radio" name="level" id="dw-l2" data-summary-label="Level"><label class="form-check-label" for="dw-l2">Intermediate</label></div>
+                          <div class="form-check"><input class="form-check-input" type="radio" name="level" id="dw-l3" data-summary-label="Level"><label class="form-check-label" for="dw-l3">Advanced</label></div>
+                          <div class="invalid-feedback">Choose your level.</div>
+                        </div></div>
+                      <div class="col-md-6"><label class="form-label" for="dw-date">Start date</label><input id="dw-date" name="start" type="date" class="form-control" required><div class="invalid-feedback">Choose a start date.</div></div>
+                    </div>
+                  </section>
+                  <section class="wizard-panel" data-title="Preferences">
+                    <div class="switch-row"><div><label for="dw-rem" class="fw-bold">Reminders</label><small>Get a reminder before each class.</small></div><div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="dw-rem" name="reminders" checked></div></div>
+                    <div class="form-check mt-3"><input class="form-check-input" type="checkbox" id="dw-terms" name="terms" required><label class="form-check-label" for="dw-terms">I agree to the Terms and conditions</label><div class="invalid-feedback">You need to agree before continuing.</div></div>
+                  </section>
+                  <section class="wizard-panel" data-title="Review">
+                    <p class="text-muted">Check your details. Use Back to change anything.</p>
+                    <dl class="wizard-review" data-wiz-summary></dl>
+                  </section>
+                  <div class="wizard-actions">
+                    <button class="btn btn-secondary" type="button" data-wiz-prev>Back</button>
+                    <button class="btn btn-primary" type="button" data-wiz-next>Next</button>
+                    <button class="btn btn-primary" type="submit" data-wiz-submit hidden>Enroll now</button>
+                  </div>
+                  <div class="wizard-done" hidden>
+                    <span class="lz-icon-box green mb-3"><i class="bi bi-check2-circle"></i></span>
+                    <h4>You are enrolled</h4>
+                    <p class="text-muted">We sent a confirmation to your email.</p>
+                    <button class="btn btn-secondary" type="button" data-wiz-restart>Start over</button>
+                  </div>
+                </form>
+              </div></div>
+              <p class="doc-note">The wizard is initialised on page load (<code>Lz.initWizards()</code>). To react when it finishes, listen for <code>lz:wizard-submit</code>; call <code>preventDefault()</code> to replace the built-in "enrolled" screen. For forms added later, call <code>Lz.wizard(form)</code>.</p>
               <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the JS tab.</span>
                 <script type="text/plain" class="doc-code" data-lang="js">
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  form.classList.add("was-validated");
-  if (!form.checkValidity()) return;
-  Lz.toast("Profile saved.", "success", { title: "Saved" });
+const form = document.querySelector("[data-lz-wizard]");
+
+form.addEventListener("lz:wizard-submit", (e) => {
+  console.log(e.detail);          // { name: "...", email: "...", level: "Beginner", reminders: true, ... }
+  // e.preventDefault();          // handle the result yourself (send to your API, then show your own screen)
 });
+
+// A form created after page load:
+Lz.wizard(document.querySelector("#lateForm"));
                 </script></div></div>
+
+              <h3>Horizontal and inline layouts</h3>
+              <div class="doc-example"><div class="doc-preview"><div style="max-width:620px">
+                <div class="row mb-3"><label class="col-sm-3 col-form-label" for="df-h1">Name</label><div class="col-sm-9"><input id="df-h1" class="form-control"></div></div>
+                <div class="row mb-3"><label class="col-sm-3 col-form-label" for="df-h2">Email</label><div class="col-sm-9"><input id="df-h2" type="email" class="form-control"></div></div>
+                <form class="row row-cols-lg-auto g-2 align-items-center">
+                  <div class="col-12"><label class="visually-hidden" for="df-i1">Search</label><input id="df-i1" class="form-control" placeholder="Search"></div>
+                  <div class="col-12"><label class="visually-hidden" for="df-i2">Status</label><select id="df-i2" class="form-select"><option>All status</option><option>In Progress</option></select></div>
+                  <div class="col-12"><button class="btn btn-primary" type="submit">Filter</button></div>
+                </form>
+              </div></div></div>
             </section>
 
             <!-- ============ Feedback ============ -->

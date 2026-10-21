@@ -111,6 +111,42 @@
     if (kind === "line") Lz.charts.line(c, ["Mon", "Tue", "Wed", "Thu", "Fri"], [{ data: [2, 4, 3, 5, 4], borderColor: P.primary }]);
   });
 
+  /* Demo formulir: tampil/sembunyi password, indikator kekuatan, validasi, reset */
+  const pwInput = document.getElementById("df-pw");
+  if (pwInput) {
+    const tg = pwInput.parentElement.querySelector(".pw-toggle");
+    tg.addEventListener("click", () => {
+      const show = pwInput.type === "password";
+      pwInput.type = show ? "text" : "password";
+      tg.setAttribute("aria-pressed", show);
+      tg.setAttribute("aria-label", show ? "Hide password" : "Show password");
+      tg.firstElementChild.className = "bi " + (show ? "bi-eye-slash" : "bi-eye");
+    });
+    pwInput.addEventListener("input", () => {
+      const v = pwInput.value;
+      let s = 0;
+      if (v.length >= 8) s++;
+      if (v.length >= 12) s++;
+      if (/[A-Za-z]/.test(v) && /\d/.test(v)) s++;
+      if (/[^A-Za-z0-9]/.test(v)) s++;
+      const m = document.getElementById("df-meter");
+      m.style.width = (v ? Math.max(1, s) * 25 : 0) + "%";
+      m.className = "progress-bar " + (s <= 1 ? "bg-danger" : s === 2 ? "bg-warning" : "bg-success");
+      document.getElementById("df-hint").textContent = v ? ["Weak. Add more characters.", "Weak. Add more characters.", "Fair. Add numbers or symbols.", "Good.", "Strong."][s] : "Use 8 or more characters with letters and numbers.";
+    });
+  }
+  const demoForm = document.getElementById("df-form");
+  if (demoForm) {
+    demoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      demoForm.classList.add("was-validated");
+      const bad = demoForm.querySelector(":invalid");
+      if (bad) { bad.focus(); return; }
+      Lz.toast("Profile saved.", "success", { title: "Saved" });
+    });
+    demoForm.addEventListener("reset", () => demoForm.classList.remove("was-validated"));
+  }
+
   /* Pemilih tema untuk melihat preview terang/gelap */
   document.querySelectorAll("[data-set-theme]").forEach((b) => b.addEventListener("click", () => {
     Lz.theme.set(b.dataset.setTheme);

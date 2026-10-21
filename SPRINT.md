@@ -16,6 +16,7 @@ Dribbble "E-Learning Admin Dashboard" (brand *Learnzie*). Tanpa build step: semu
 | 5 | Halaman Schedule, Analytics, Certificate, Settings | DONE |
 | 6 | Responsif, aksesibilitas, dark mode, QA, dokumentasi | DONE |
 | 7 | Layout publik tanpa menu (landing, login, register) untuk pengguna sebelum login | DONE |
+| 8 | Menu Pages: halaman-halaman contoh (auth, error, status, FAQ, pricing, invoice, profile, blank) | DONE |
 
 ---
 
@@ -68,6 +69,9 @@ frontend-university/
 | 1.7 | Revisi 4: efek fade-in area konten saat halaman dimuat | DONE |
 | 1.8 | Menu sidebar bertingkat sampai 3 level | DONE |
 | 1.9 | Revisi 5: dropdown Notifikasi dan Pesan di header | DONE |
+| 1.10 | Revisi 9: sidebar menjadi kartu putih melayang dengan sudut membulat | DONE |
+| 1.11 | Revisi 10: konten dibungkus kartu putih di bawah judul dan breadcrumb | DONE |
+| 1.12 | Revisi 11: nama aplikasi sidebar tetap, scrollbar sidebar dirapikan | DONE |
 
 **1.1 Setup struktur folder & dependensi CDN** — `DONE`
 - [x] Buat folder `assets/css`, `assets/js`, `assets/js/data`, `assets/img`, `pages`
@@ -123,6 +127,26 @@ frontend-university/
 - [x] Titik merah pada tombol hanya muncul bila ada yang belum dibaca; `aria-label` tombol menyebut jumlahnya (mis. "Notifications, 3 unread")
 - [x] Status baca disimpan (`lz.read.notif`, `lz.read.msg` di `localStorage`); panel tetap terbuka saat klik di dalamnya dan menutup saat klik di luar atau membuka panel lain
 - [x] Data di `D.notifications` dan `D.messages` pada `mock.js`; lebar panel menyesuaikan layar kecil (diuji di 390px), mode gelap didukung
+
+**1.10 Revisi 9: sidebar kartu putih** — `DONE`
+- [x] Sidebar sebelumnya terlihat abu-abu karena `.offcanvas-lg` Bootstrap membuat latar transparan di layar lebar; kini latar kartu memakai `--lz-surface` dengan `!important`
+- [x] Sidebar dibungkus kartu putih bersudut membulat (`--lz-radius`), melayang dengan jarak 16px dari tepi layar, tetap menempel saat halaman digulir (`top: 1rem`, tinggi `100vh - 2rem`); isi yang panjang digulir di dalam kartu dengan scrollbar tipis
+- [x] Kolom sidebar menjadi 266px (kartu 250px + jarak); di layar <992px tetap menjadi menu geser penuh tinggi dengan sudut kanan membulat
+- [x] Diuji di desktop terang dan gelap serta menu geser mobile
+
+**1.11 Revisi 10: kartu putih pembungkus konten** — `DONE`
+- [x] Area konten (`.app-content`) kini berupa kartu putih bersudut 20px di bawah judul halaman; header dan footer tetap di luar kartu
+- [x] Breadcrumb dipindah otomatis (`layout.js`) ke atas kartu, tepat di bawah judul halaman (berlaku untuk detail course dan ruang kelas)
+- [x] Agar kartu di dalamnya tetap terlihat, `--lz-surface` dan `--lz-bg` ditukar secara lokal di dalam `.app-content` (kartu menjadi abu muda); token baru `--lz-wrap` (putih) dan `--lz-gray` (abu) menyimpan nilai aslinya. Input, tombol secondary, chip, dropdown, dan popover tetap putih agar kontras
+- [x] Penyesuaian: kalender (sel putih, hari di luar bulan abu), cincin donut mengikuti warna kartu, mode gelap (kartu pembungkus lebih terang dari kartu dalam)
+- [x] Audit axe-core WCAG A/AA waktu nyata: 14 halaman x 2 tema bersih
+- Catatan: panel kanan di dashboard dibiarkan datar seperti semula
+
+**1.12 Revisi 11: sidebar, nama aplikasi tetap dan scrollbar rapi** — `DONE`
+- [x] Nama aplikasi (logo + Learnzie) menetap di bagian atas kartu sidebar; hanya area di bawahnya (`.side-scroll`: menu + kartu promo) yang bergulir. Diukur: posisi nama aplikasi tidak berubah saat digulir sampai bawah, di desktop dan menu geser mobile
+- [x] Scrollbar sidebar dibuat seimbang: tanpa tombol panah atas/bawah, trek diberi jarak atas dan bawah, thumb tipis membulat yang menjorok dari tepi kartu (Chrome/Edge); Firefox memakai `scrollbar-width: thin`
+- [x] Scrollbar **tersembunyi secara bawaan dan muncul dengan fade-in (0,3 detik) hanya saat kursor berada di sidebar** atau fokus keyboard ada di dalamnya; menghilang perlahan saat kursor keluar. Diimplementasikan lewat properti kustom terdaftar `--scroll-a` karena Chrome tidak menjalankan transisi langsung pada `::-webkit-scrollbar-thumb`. Di perangkat sentuh (tanpa hover) selalu tampil, dan transisi dimatikan untuk reduced motion
+- [x] Diukur di Chrome: tanpa hover alpha thumb 0; saat kursor keluar alpha turun bertahap (0,78 lalu 0); fokus keyboard memunculkannya; token warna `--lz-scroll` dan `--lz-scroll-rgb` untuk terang dan gelap
 
 ---
 
@@ -214,6 +238,7 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 | 3.13 | Revisi 2: hapus underline saat hover | DONE |
 | 3.14 | Revisi 3: efek ripple saat diklik | DONE |
 | 3.15 | Dokumentasi komponen interaktif (menu Components) | DONE |
+| 3.16 | Revisi 8: komponen form di halaman Components, termasuk form wizard | DONE |
 
 **3.1 Buttons** — `DONE`
 - [x] primary, secondary, success, danger, warning, info, light, dark, link + varian outline
@@ -281,6 +306,12 @@ fokus keyboard terlihat, gerak hanya sebagai respons aksi, `prefers-reduced-moti
 - [x] Penjelasan cara pakai di tiap bagian: kelas yang ditambahkan, atribut `data-*`, API `Lz.toast`, `Lz.charts`, `Lz.table`, `Lz.theme`, dan cara menambah menu
 - [x] Pemilih Light/Dark di atas halaman untuk melihat preview di kedua tema
 - [x] Diuji di Chrome: 43 contoh, kode ter-dedent rapi, tab dan daftar isi berfungsi tanpa error JS
+
+**3.16 Revisi 8: komponen form dan form wizard** — `DONE`
+- [x] Bagian Forms di halaman Components diperluas: input teks, ukuran, floating label, input group, search box, tanggal/waktu/angka/warna, checkbox/radio/switch, baris switch, kartu pilihan dan pemilih warna, range dan upload, upload avatar dengan pratinjau, disabled/read-only, status validasi, kolom password tampil/sembunyi + indikator kekuatan, form lengkap dengan validasi, tata letak horizontal dan inline
+- [x] **Form wizard** (multi-langkah): komponen `.lz-wizard` + `Lz.wizard()`; aktif otomatis lewat atribut `data-lz-wizard`. Stepper bernomor dengan penghubung, status selesai (centang) dan aktif, validasi per langkah (Next ditolak dan fokus ke kolom salah), tombol Back, klik langkah yang sudah dilewati, langkah Review otomatis dari isian, tombol Enroll dan layar selesai dengan Start over, event `lz:wizard-submit`
+- [x] Aksesibilitas: `aria-current="step"`, pengumuman "Step n of m" (`aria-live`), fokus pindah ke judul langkah, Enter pada input = Next; di ponsel hanya label langkah aktif yang tampil
+- [x] `.pw-field` dipindah dari `public.css` ke `bootstrap-skin.css` karena kini dipakai juga di halaman Components
 
 ---
 
@@ -475,6 +506,60 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 - [x] Daftar jalur ada di `LzRoles` (`public.js`); menambah jalur cukup menambah satu entri
 - [x] Berfungsi di menu lipat mobile tanpa overflow; diuji dengan klik sungguhan di Chrome
 - [ ] Belum ada alur SSO sungguhan atau perbedaan formulir per jalur; semuanya masih memakai sesi demo yang sama
+
+---
+
+## SPRINT 8 — Menu Pages (Halaman Contoh) · `DONE`
+
+Menu **Pages** di sidebar berisi halaman contoh siap pakai seperti pada tema-tema ThemeForest. Memakai menu bertingkat 3 level (Sprint 1.8), token, mode gelap, dan komponen yang sama.
+
+| No | Task | Status |
+|---|---|---|
+| 8.1 | Menu Pages di sidebar (3 level) | DONE |
+| 8.2 | Halaman error: 404, 403, 500 | DONE |
+| 8.3 | Halaman status: Maintenance, Coming soon | DONE |
+| 8.4 | Lock screen | DONE |
+| 8.5 | FAQ | DONE |
+| 8.6 | Pricing | DONE |
+| 8.7 | Invoice | DONE |
+| 8.8 | User profile | DONE |
+| 8.9 | Blank page (starter) | DONE |
+| 8.10 | QA | DONE |
+
+**8.1 Menu Pages** — `DONE` (`assets/js/layout.js`)
+- [x] Item "Pages" (ikon `bi-files`) sebelum Components, berisi: Landing page; Authentication (Log in, Sign up, Forgot password, Lock screen); Error pages (404, 403, 500); Status pages (Maintenance, Coming soon); User profile; FAQ; Pricing; Invoice; Blank page
+- [x] Halaman bergaya aplikasi (profile, FAQ, pricing, invoice, blank) memakai sidebar; halaman publik/mandiri (landing, auth, error, status, lock screen) memakai layout publik atau layout polos (`body.bare`, tanpa navbar)
+
+**8.2 Error pages** — `DONE` (`404.html`, `403.html`, `500.html`)
+- [x] Kode besar berwarna (biru, pink, kuning), judul dan penjelasan yang menyebut penyebab dan langkah berikutnya, tombol Go back / Log in with another account / Try again, dan Go to dashboard
+- [x] 404 menampilkan pintasan (Explore, My courses, FAQ, Home); 500 menampilkan nomor referensi acak untuk dilaporkan ke dukungan
+
+**8.3 Status pages** — `DONE` (`maintenance.html`, `coming-soon.html`)
+- [x] Maintenance: ikon, perkiraan waktu kembali, bilah progres, tombol "Check again", kontak
+- [x] Coming soon: hitung mundur hidup (hari/jam/menit/detik, `role="timer"`, tanggal rilis disimpan di `localStorage`), formulir "Notify me" dengan validasi dan pesan konfirmasi
+
+**8.4 Lock screen** — `DONE` (`lock-screen.html`)
+- [x] Avatar dan nama diambil dari sesi login atau profil; password dengan tombol tampil/sembunyi, validasi, tombol Unlock (demo: password apa pun), tautan "Not you?"
+
+**8.5 FAQ** — `DONE` (`pages/faq.html`, `assets/js/examples.js`)
+- [x] 10 pertanyaan dalam accordion, pencarian teks, filter kategori (Account, Courses, Payments, Certificates), penghitung hasil (`aria-live`), tampilan kosong, dan kartu "Still have questions?"
+
+**8.6 Pricing** — `DONE` (`pages/pricing.html`)
+- [x] 3 paket (Free, Pro populer, Team) dengan daftar fitur (termasuk yang tidak tersedia), saklar bulanan/tahunan (hemat 20%) yang mengubah harga, tombol pilih paket
+
+**8.7 Invoice** — `DONE` (`pages/invoice.html`)
+- [x] Kop, nomor, status Paid, ditagihkan ke (dari profil), tanggal terbit/jatuh tempo (dari hari ini), tabel item, subtotal, pajak 11%, total (dihitung JS); tombol cetak/simpan PDF (gaya cetak khusus) dan kirim lewat email
+
+**8.8 User profile** — `DONE` (`pages/profile.html`)
+- [x] Sampul, avatar, nama, handle, statistik (kursus, sertifikat, jam belajar, peringkat) dari data nyata; kartu About (bio, email, lokasi, bergabung, keahlian); tab Courses (progres) dan Activity (timeline); tombol Edit profile menuju Settings
+
+**8.9 Blank page** — `DONE` (`pages/blank.html`)
+- [x] Halaman kosong berlayout aplikasi sebagai titik awal halaman baru
+
+**8.10 QA** — `DONE`
+- [x] Diuji dengan interaksi sungguhan di Chrome: 11 halaman tanpa error JS, menu 3 level (penanda aktif dan cabang terbuka otomatis), pencarian/filter FAQ, saklar harga, total invoice (Rp 441.780), hitung mundur berjalan, validasi form, lock screen, tanpa overflow horizontal di 390px
+- [x] Audit axe-core WCAG A/AA waktu nyata: 11 halaman baru x 2 tema bersih
+- [ ] Belum diuji di Firefox dan perangkat fisik; halaman contoh memakai data dummy
 
 ---
 

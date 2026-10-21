@@ -390,3 +390,47 @@ mark, .mark { background: var(--lz-yellow-soft); padding: 0.1em 0.3em; border-ra
 .lz-ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: .22; transform: scale(0); pointer-events: none; animation: lz-ripple .6s ease-out forwards; }
 @keyframes lz-ripple { to { transform: scale(1); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .lz-ripple { display: none; } }
+
+/* Field password dengan tombol tampilkan/sembunyikan */
+.pw-field { position: relative; }
+.pw-field .form-control { padding-right: 2.9rem; }
+.pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border: 0; border-radius: 8px; background: none; color: var(--lz-muted); display: grid; place-items: center; }
+.pw-toggle:hover { background: var(--lz-hover); color: var(--lz-primary-ink); }
+
+/* ---------- Form wizard (multi-langkah) ---------- */
+.lz-wizard { background: var(--lz-surface); border-radius: var(--lz-radius); padding: 1.5rem; }
+.wizard-steps { list-style: none; margin: 0 0 .75rem; padding: 0; display: flex; gap: .5rem; }
+.wizard-steps li { flex: 1; position: relative; min-width: 0; }
+.wizard-steps li:not(:last-child)::after { content: ""; position: absolute; top: 19px; left: calc(50% + 24px); right: calc(-50% + 24px); height: 2px; background: var(--lz-border); }
+.wizard-steps li:has(.wizard-step.done):not(:last-child)::after { background: var(--lz-primary); }
+.wizard-step { display: flex; flex-direction: column; align-items: center; gap: .4rem; width: 100%; padding: 0; border: 0; background: none; font: inherit; color: var(--lz-text-3); font-weight: 700; font-size: .8rem; text-align: center; }
+.wizard-step:disabled { cursor: default; }
+.wizard-dot { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--lz-bg); color: var(--lz-text-3); border: 2px solid var(--lz-border); font-weight: 800; transition: background-color .15s, color .15s, border-color .15s; position: relative; z-index: 1; }
+.wizard-step.current .wizard-dot { background: var(--lz-primary); border-color: var(--lz-primary); color: #fff; }
+.wizard-step.current { color: var(--lz-text); }
+.wizard-step.done .wizard-dot { background: var(--lz-primary-soft); border-color: var(--lz-primary); color: var(--lz-primary-ink); }
+.wizard-step:not(:disabled):not(.current):hover .wizard-dot { border-color: var(--lz-primary); }
+.wizard-count { font-size: .8rem; color: var(--lz-muted); text-align: center; margin-bottom: 1.25rem; }
+.wizard-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem; }
+.wizard-title:focus { outline: 0; }
+.wizard-panel[hidden], .wizard-done[hidden] { display: none; }
+.wizard-actions { display: flex; justify-content: space-between; gap: .5rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--lz-border); }
+.wizard-actions .btn[hidden] { display: none; }
+.wizard-actions [data-wiz-next], .wizard-actions [data-wiz-submit] { margin-left: auto; }
+.wizard-review { display: grid; gap: 0; margin: 0; border: 1px solid var(--lz-border); border-radius: 12px; overflow: hidden; }
+.wizard-review > div { display: flex; gap: 1rem; justify-content: space-between; padding: .7rem 1rem; border-top: 1px solid var(--lz-border); font-size: .9rem; }
+.wizard-review > div:first-child { border-top: 0; }
+.wizard-review dt { color: var(--lz-text-3); font-weight: 600; }
+.wizard-review dd { margin: 0; font-weight: 700; text-align: right; }
+.wizard-done { text-align: center; padding: 1.5rem 0; }
+@media (max-width: 575.98px) {
+  .lz-wizard { padding: 1.1rem; }
+  .wizard-label { display: none; }
+  .wizard-step.current .wizard-label { display: block; position: absolute; left: 0; right: 0; top: 46px; white-space: nowrap; }
+  .wizard-steps { margin-bottom: 2.1rem; }
+  .wizard-count { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .wizard-dot { transition: none; } }
+
+/* Kolom opsional yang kosong tidak diberi tanda valid hijau setelah validasi */
+.was-validated .form-control:not([required]):valid { border-color: var(--lz-border); background-image: none; padding-right: .85rem; }
