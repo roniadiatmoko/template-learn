@@ -11,6 +11,9 @@
     root.setAttribute("data-bs-theme", v);
   } catch (e) { /* abaikan */ }
 
+  /* Sidebar ciut (hanya berlaku di layar lebar lewat CSS); diterapkan di sini agar tidak ada lompatan layout */
+  try { if (localStorage.getItem("lz.sidebar") === "collapsed") root.classList.add("sb-collapsed"); } catch (e) { /* abaikan */ }
+
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
   root.classList.add("lz-loading");

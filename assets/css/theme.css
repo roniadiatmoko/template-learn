@@ -102,7 +102,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-weight: 700; letter-
   border-radius: var(--lz-radius);
   overflow: hidden;            /* hanya .side-scroll yang bergulir; nama aplikasi tetap di tempat */
 }
-.app-sidebar > .brand { flex: none; padding: 1.5rem 1.75rem 1rem; }
+.side-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: 1.5rem 1rem 1rem 0; }
+.side-head .brand { padding: 0 0 0 1.75rem; margin: 0; min-width: 0; }
+/* Tombol collapse: bulatan di tepi kanan sidebar, separuh di sidebar dan separuh di area konten (posisi fixed mengikuti lebar kolom sidebar) */
+.side-collapse {
+  display: none; position: fixed; z-index: 1035;
+  top: var(--sb-toggle-top, 2.4rem); left: calc(var(--lz-sidebar-w) - 15px);
+  width: 30px; height: 30px; padding: 0; border-radius: 50%;
+  background: var(--lz-surface); color: var(--lz-text-3);
+  border: 1px solid var(--lz-border); box-shadow: 0 3px 10px -3px rgba(15, 30, 60, .25);
+  place-items: center; font-size: .8rem;
+  transition: left .25s ease, background-color .15s, color .15s, border-color .15s;
+}
+.side-collapse:hover, .side-collapse:focus-visible { background: var(--lz-primary); border-color: var(--lz-primary); color: #fff; }
 .side-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 .5rem 1rem 1rem; display: flex; flex-direction: column; scrollbar-gutter: stable; }
 .side-scroll > nav { flex: none; margin-bottom: 1rem; }
 /* Scrollbar tipis dengan jarak atas-bawah, tanpa tombol panah, thumb menjorok dari tepi kartu.
@@ -453,3 +465,24 @@ html.lz-loading .app-content, html.lz-loading .app-right { opacity: 0; }
 .unread-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lz-primary); flex: none; margin-top: .35rem; }
 .dropdown-menu .dropdown-item i { color: var(--lz-muted); }
 .dropdown-menu .dropdown-item:hover i { color: var(--lz-primary-ink); }
+
+/* ---------- Sidebar ciut (rail ikon) di layar >= 992px ---------- */
+@media (min-width: 992px) {
+  .side-collapse { display: inline-grid; }
+  .app-shell { transition: grid-template-columns .25s ease; }
+  html.sb-collapsed { --lz-sidebar-w: 92px; }
+  html.sb-collapsed .side-head { padding: 1.5rem 0 1rem; justify-content: center; }
+  html.sb-collapsed .side-head .brand { padding: 0; justify-content: center; }
+  html.sb-collapsed .brand-name,
+  html.sb-collapsed .side-nav a > span,
+  html.sb-collapsed .side-toggle > span,
+  html.sb-collapsed .side-toggle .chev,
+  html.sb-collapsed .side-nav .collapse,
+  html.sb-collapsed .promo { display: none !important; }
+  html.sb-collapsed .side-scroll { padding: 0 .75rem 1rem; scrollbar-gutter: auto; }
+  html.sb-collapsed .side-nav a, html.sb-collapsed .side-toggle { justify-content: center; padding: .85rem 0; }
+  html.sb-collapsed .side-nav a i, html.sb-collapsed .side-toggle > i:first-child { font-size: 1.3rem; }
+  html.sb-collapsed .side-nav > li { position: relative; }
+  html.sb-collapsed .side-nav .has-active > .side-toggle { background: var(--lz-primary-soft); }
+}
+@media (prefers-reduced-motion: reduce) { .app-shell, .side-collapse { transition: none; } }

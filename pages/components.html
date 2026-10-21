@@ -576,6 +576,17 @@ Lz.wizard(document.querySelector("#lateForm"));
                   <div class="collapse navbar-collapse" id="doc-nav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" href="#navigation">Home</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Classes</a></li><li class="nav-item"><a class="nav-link" href="#navigation">Help</a></li></ul></div>
                 </div></nav>
               </div></div>
+              <h3>Collapsing the sidebar</h3>
+              <p class="doc-note">The round chevron button on the right edge of the sidebar (half on the sidebar, half on the content, wide screens only) shrinks the sidebar to an icon rail, and the choice is remembered. On the rail, each level 1 item shows only its icon, with its name as a tooltip. Clicking a menu with sub-items widens the sidebar and opens that branch. Give every level 1 item an <code>icon</code>, because the text is hidden on the rail. Keep <code>theme-init.js</code> in <code>&lt;head&gt;</code> so the saved state applies before the page draws.</p>
+              <div class="doc-example"><div class="doc-preview"><span class="text-muted">Code only. Open the CSS tab.</span>
+                <script type="text/plain" class="doc-code" data-lang="css">
+/* Rail width (theme.css) */
+html.sb-collapsed { --lz-sidebar-w: 92px; }          /* 76px card + 16px gap */
+
+/* From your own code */
+document.documentElement.classList.toggle("sb-collapsed");
+localStorage.setItem("lz.sidebar", "collapsed");     /* or "expanded" */
+                </script></div></div>
               <h3>Sidebar menu (up to 3 levels)</h3>
               <p class="doc-note">The sidebar is rendered by <code>layout.js</code> from the <code>MENU</code> array. An item with <code>children</code> becomes a dropdown, and children can have their own children, down to level 3. Level 1 items use <code>key</code> (the page's <code>data-page</code>); level 2 and 3 items are matched by URL. The branch that holds the current page opens by itself, and the choice of open branches is remembered.</p>
               <div class="doc-example"><div class="doc-preview on-bg">

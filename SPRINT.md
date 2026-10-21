@@ -72,6 +72,7 @@ frontend-university/
 | 1.10 | Revisi 9: sidebar menjadi kartu putih melayang dengan sudut membulat | DONE |
 | 1.11 | Revisi 10: konten dibungkus kartu putih di bawah judul dan breadcrumb | DONE |
 | 1.12 | Revisi 11: nama aplikasi sidebar tetap, scrollbar sidebar dirapikan | DONE |
+| 1.13 | Revisi 12: sidebar dapat diciutkan menjadi rail ikon | DONE |
 
 **1.1 Setup struktur folder & dependensi CDN** — `DONE`
 - [x] Buat folder `assets/css`, `assets/js`, `assets/js/data`, `assets/img`, `pages`
@@ -147,6 +148,15 @@ frontend-university/
 - [x] Scrollbar sidebar dibuat seimbang: tanpa tombol panah atas/bawah, trek diberi jarak atas dan bawah, thumb tipis membulat yang menjorok dari tepi kartu (Chrome/Edge); Firefox memakai `scrollbar-width: thin`
 - [x] Scrollbar **tersembunyi secara bawaan dan muncul dengan fade-in (0,3 detik) hanya saat kursor berada di sidebar** atau fokus keyboard ada di dalamnya; menghilang perlahan saat kursor keluar. Diimplementasikan lewat properti kustom terdaftar `--scroll-a` karena Chrome tidak menjalankan transisi langsung pada `::-webkit-scrollbar-thumb`. Di perangkat sentuh (tanpa hover) selalu tampil, dan transisi dimatikan untuk reduced motion
 - [x] Diukur di Chrome: tanpa hover alpha thumb 0; saat kursor keluar alpha turun bertahap (0,78 lalu 0); fokus keyboard memunculkannya; token warna `--lz-scroll` dan `--lz-scroll-rgb` untuk terang dan gelap
+
+**1.13 Revisi 12: collapse sidebar** — `DONE`
+- [x] Tombol collapse (hanya di layar >= 992px) berupa bulatan 30px dengan ikon chevron (kiri saat terbuka, kanan saat ciut) yang menempel di tepi kanan sidebar, separuh di sidebar dan separuh di area konten, sejajar dengan baris nama aplikasi (revisi: semula di header halaman, lalu di samping nama aplikasi sehingga pada rail jatuh di bawah logo). Posisi `fixed` mengikuti lebar kolom sidebar dengan transisi; tinggi diatur variabel `--sb-toggle-top`. `aria-expanded`, `aria-label`, dan `title` mengikuti status; hamburger mobile tetap di header
+- [x] Sidebar ciut menjadi rail ikon selebar 76px (kolom 92px): hanya logo dan ikon menu yang tampil, teks, panah submenu, submenu, dan kartu promo disembunyikan; kolom konten melebar dengan transisi 0,25 detik (dimatikan untuk reduced motion)
+- [x] Tooltip Bootstrap di sisi kanan menampilkan nama menu pada rail (aktif hanya saat ciut); nama aksesibel diberikan lewat `aria-label` karena teks disembunyikan
+- [x] Mengklik induk menu (Explore, Courses, Settings, Pages) pada rail melebarkan sidebar dan langsung membuka cabangnya; mengklik menu tanpa submenu langsung berpindah halaman dan rail tetap ciut
+- [x] Pilihan disimpan di `localStorage` (`lz.sidebar`) dan diterapkan dari `<head>` (`theme-init.js`) sebelum render sehingga tidak ada lompatan layout antarhalaman
+- [x] Catatan teknis: Bootstrap memasang pendengar klik terdelegasi pada fase capture di `document`, jadi pencegat klik induk menu dipasang di `window` agar berjalan lebih dulu (tanpa ini cabang yang sudah terbuka malah tertutup)
+- [x] Diuji dengan klik sungguhan dan keyboard (Enter) di Chrome; tidak berlaku di mobile (menu geser tetap penuh dan tombol collapse disembunyikan); audit axe-core WCAG A/AA saat ciut: 4 halaman x 2 tema bersih
 
 ---
 

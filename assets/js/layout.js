@@ -122,7 +122,9 @@
     el.id = "sidebar";
     el.setAttribute("aria-label", "Sidebar");
     el.innerHTML = `
-      <a class="brand" href="${root}index.html"><span class="brand-mark"></span>Learnzie</a>
+      <div class="side-head">
+        <a class="brand" href="${root}index.html"><span class="brand-mark"></span><span class="brand-name">Learnzie</span></a>
+      </div>
       <div class="side-scroll">
       <nav aria-label="Main">${renderMenu(MENU, 1, "m")}</nav>
       <div class="promo">
@@ -132,6 +134,17 @@
         <button class="btn btn-primary w-100" type="button" data-trial>Try Free Trial</button>
       </div>
       </div>`;
+    if (!document.querySelector(".side-collapse")) {
+      const btn = document.createElement("button");
+      btn.className = "side-collapse";
+      btn.type = "button";
+      btn.setAttribute("data-sidebar-toggle", "");
+      btn.setAttribute("aria-controls", "sidebar");
+      btn.setAttribute("aria-expanded", "true");
+      btn.setAttribute("aria-label", "Collapse sidebar");
+      btn.innerHTML = '<i class="bi bi-chevron-left" aria-hidden="true"></i>';
+      el.before(btn);   // di tepi kanan sidebar; posisinya diatur CSS (fixed) agar separuh di sidebar, separuh di konten
+    }
   }
 
   function renderHeader() {
@@ -241,6 +254,59 @@
   });
 
   renderSidebar();
+
+  /* ---------- Sidebar ciut (rail ikon) ---------- */
+  const SB_KEY = "lz.sidebar";
+  const rootEl = document.documentElement;
+  const isCollapsed = () => rootEl.classList.contains("sb-collapsed") && window.matchMedia("(min-width: 992px)").matches;
+  let tips = [];
+  function syncSidebar() {
+    const on = isCollapsed();
+    document.querySelectorAll("[data-sidebar-toggle]").forEach((b) => {
+      b.setAttribute("title", on ? "Expand sidebar" : "Collapse sidebar");
+      b.setAttribute("aria-expanded", String(!on));
+      b.setAttribute("aria-label", on ? "Expand sidebar" : "Collapse sidebar");
+      b.firstElementChild.className = "bi " + (on ? "bi-chevron-right" : "bi-chevron-left");
+    });
+    tips.forEach((t) => (on ? t.enable() : t.disable()));
+    /* Pada rail label teks disembunyikan, jadi beri nama aksesibel lewat aria-label */
+    const brand = document.querySelector(".app-sidebar .brand");
+    if (brand) { if (on) brand.setAttribute("aria-label", "Learnzie home"); else brand.removeAttribute("aria-label"); }
+    document.querySelectorAll(".app-sidebar .side-nav > li > a, .app-sidebar .side-nav > li > .side-toggle").forEach((el) => {
+      const sp = el.querySelector("span");
+      if (!sp) return;
+      if (on) el.setAttribute("aria-label", sp.textContent.trim()); else el.removeAttribute("aria-label");
+    });
+  }
+  function setCollapsed(on) {
+    rootEl.classList.toggle("sb-collapsed", on);
+    try { localStorage.setItem(SB_KEY, on ? "collapsed" : "expanded"); } catch (e) { /* abaikan */ }
+    syncSidebar();
+  }
+  /* Tooltip nama menu pada rail (aktif hanya saat ciut) */
+  if (window.bootstrap) {
+    tips = Array.from(document.querySelectorAll(".app-sidebar .side-nav > li > a, .app-sidebar .side-nav > li > .side-toggle")).map((el) => {
+      const label = el.querySelector("span") ? el.querySelector("span").textContent.trim() : "";
+      return new bootstrap.Tooltip(el, { title: label, placement: "right", trigger: "hover focus", container: "body" });
+    });
+  }
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-sidebar-toggle]")) setCollapsed(!isCollapsed());
+  });
+  /* Pada rail, mengklik induk menu melebarkan sidebar dan membuka cabangnya (bukan membuka-tutup di tempat).
+     Bootstrap memasang pendengar klik terdelegasi di document (fase capture), jadi pendengar ini dipasang di window agar lebih dulu. */
+  window.addEventListener("click", (e) => {
+    const t = e.target.closest && e.target.closest(".app-sidebar .side-toggle");
+    if (!t || !isCollapsed()) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    setCollapsed(false);
+    const target = document.querySelector(t.getAttribute("data-bs-target"));
+    if (target && window.bootstrap) bootstrap.Collapse.getOrCreateInstance(target, { toggle: false }).show();
+  }, true);
+  window.matchMedia("(min-width: 992px)").addEventListener("change", syncSidebar);
+  syncSidebar();
+
   document.addEventListener("click", (e) => {
     if (e.target.closest("[data-trial]") && window.Lz) Lz.toast("Your 14-day free trial of Learnzie 4.0 has started.", "success", { title: "Trial started" });
   });
@@ -252,4 +318,5 @@
   }
   renderHeader();
   renderFooter();
+  syncSidebar();
 })();

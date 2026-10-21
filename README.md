@@ -102,6 +102,12 @@ Bagian baru otomatis masuk daftar isi jika diberi `<section class="doc-section" 
 4. Muat `lz.js`, `layout.js`, lalu skrip halaman Anda (urutannya: Bootstrap JS, data, `lz.js`, `layout.js`, skrip halaman).
 5. Hapus kelas `no-right` dari `.app-shell` jika ingin panel kanan seperti dashboard.
 
+## Collapse sidebar
+
+Tombol chevron bulat di tepi kanan sidebar (separuh di sidebar, separuh di konten; `[data-sidebar-toggle]`, tinggi diatur `--sb-toggle-top`) menciutkan sidebar menjadi rail ikon di layar >= 992px. Status disimpan di `localStorage` (`lz.sidebar`) dan
+diterapkan lewat kelas `sb-collapsed` pada `<html>` oleh `theme-init.js` (wajib di `<head>`). Lebar rail diatur di `theme.css` (`html.sb-collapsed { --lz-sidebar-w: 92px; }`).
+Item menu level 1 sebaiknya memiliki ikon karena hanya ikon yang tampil pada rail; teksnya otomatis menjadi tooltip dan `aria-label`.
+
 ## Menambah menu (sampai 3 level)
 
 Edit array `MENU` di `assets/js/layout.js`. Level 1 memakai `key` yang sama dengan `data-page` halaman tujuan; item dengan `children`
