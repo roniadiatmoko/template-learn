@@ -113,7 +113,7 @@
 .price-list .off { color: var(--lz-muted); }
 .price-list .off i { color: var(--lz-muted); }
 
-.invoice { background: var(--lz-surface); border-radius: var(--lz-radius); padding: clamp(1.25rem, 4vw, 2.5rem); }
+.invoice { background: var(--lz-wrap); border: 1px solid var(--lz-border); border-radius: var(--lz-radius); padding: clamp(1.25rem, 4vw, 2.5rem); }
 .inv-head { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; margin-bottom: 2rem; }
 .inv-head .brand { padding: 0; margin-bottom: .5rem; }
 .inv-no { font-size: 1.6rem; font-weight: 800; }

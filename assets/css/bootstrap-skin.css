@@ -300,7 +300,10 @@ mark, .mark { background: var(--lz-yellow-soft); padding: 0.1em 0.3em; border-ra
 .table-dark  { --bs-table-bg: var(--lz-text); --bs-table-border-color: #1d2738; }
 .table-responsive { border-radius: var(--lz-radius); }
 /* Tabel di dalam kartu */
-.lz-table { background: var(--lz-surface); border-radius: var(--lz-radius); overflow: hidden; }
+/* Tabel selalu berlatar putih (token --lz-wrap) dengan garis tepi tipis agar data jelas dibaca, juga di dalam kartu abu */
+.lz-table { background: var(--lz-wrap); border: 1px solid var(--lz-border); border-radius: var(--lz-radius); overflow: hidden; }
+.lz-table .table > :not(caption) > * > * { background-color: transparent; }
+.lz-table .table-hover > tbody > tr:hover > * { --bs-table-bg-state: var(--lz-hover); }
 .lz-table .table { margin: 0; }
 .lz-table .table > :not(caption) > tr:last-child > * { border-bottom: 0; }
 
