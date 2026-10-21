@@ -28,6 +28,7 @@
     ] },
     { key: "pages", label: "Pages", icon: "bi-files", children: [
       { label: "Landing page", href: "landing.html" },
+      { label: "Landing page (glass)", href: "landing-2.html" },
       { label: "Authentication", children: [
         { label: "Log in", href: "login.html" },
         { label: "Sign up", href: "register.html" },

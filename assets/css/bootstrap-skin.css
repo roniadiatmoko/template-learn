@@ -437,3 +437,50 @@ mark, .mark { background: var(--lz-yellow-soft); padding: 0.1em 0.3em; border-ra
 
 /* Kolom opsional yang kosong tidak diberi tanda valid hijau setelah validasi */
 .was-validated .form-control:not([required]):valid { border-color: var(--lz-border); background-image: none; padding-right: .85rem; }
+
+/* ---------- Carousel card stack ---------- */
+.card-stack { position: relative; height: var(--stack-h, 480px); max-width: 380px; margin-inline: auto; user-select: none; -webkit-user-select: none; }
+.stack-track { position: absolute; inset: 0 0 34px; }
+.stack-card {
+  --pos: 0; --dx: 0px; --rot: 0deg;
+  position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--lz-wrap); color: var(--lz-text); border: 1px solid var(--lz-border); border-radius: 22px;
+  box-shadow: 0 18px 36px -22px rgba(15, 30, 60, .45);
+  transform-origin: 50% 100%;
+  transform: translate3d(var(--dx), calc(var(--pos) * 16px), 0) rotate(var(--rot)) scale(calc(1 - var(--pos) * .06));
+  transition: transform .38s cubic-bezier(.22, .8, .3, 1), opacity .3s ease;
+  touch-action: pan-y; will-change: transform;
+}
+.stack-card[data-pos="0"] { cursor: grab; }
+.stack-card[data-pos="1"] { opacity: .96; }
+.stack-card[data-pos="2"] { opacity: .88; }
+.stack-card:not([data-pos="0"]):not([data-pos="1"]):not([data-pos="2"]) { opacity: 0; pointer-events: none; }
+.stack-card.dragging { transition: none; cursor: grabbing; }
+.stack-card.flying { transition: transform .45s cubic-bezier(.4, 0, .6, 1), opacity .45s ease; }
+.stack-card.no-anim { transition: none !important; }
+.stack-card a, .stack-card button { -webkit-user-drag: none; }
+.stack-cover { height: 150px; position: relative; display: grid; place-items: center; font-size: 3.2rem; color: #fff; flex: none; }
+.stack-cover.blue   { background: linear-gradient(135deg, var(--lz-primary), #4aa0ff); }
+.stack-cover.pink   { background: linear-gradient(135deg, #f58ed3, var(--lz-pink)); color: #8a1f66; }
+.stack-cover.yellow { background: linear-gradient(135deg, #f5b800, var(--lz-yellow)); color: #6b4a00; }
+.stack-cover.green  { background: linear-gradient(135deg, #1fa862, #5ad59a); }
+.stack-cover .badge { position: absolute; left: 14px; top: 14px; background: rgba(255, 255, 255, .92); color: #0b1220; }
+.stack-body { padding: 1.15rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: .7rem; flex: 1; min-height: 0; }
+.stack-body h3 { font-size: 1.2rem; font-weight: 800; margin: 0; }
+.stack-body p { color: var(--lz-text-3); font-size: .88rem; margin: 0; }
+.stack-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .35rem; font-size: .84rem; font-weight: 600; }
+.stack-list li { display: flex; gap: .5rem; align-items: center; }
+.stack-list i { color: var(--lz-green-ink); font-size: .8rem; }
+.stack-meta { display: flex; flex-wrap: wrap; gap: .3rem 1rem; font-size: .8rem; color: var(--lz-text-3); }
+.stack-meta i { color: var(--lz-muted); margin-right: 3px; }
+.stack-body > * { flex-shrink: 0; }
+.stack-body .btn { margin-top: auto; }
+.stack-controls { display: flex; align-items: center; gap: .9rem; }
+.stack-dots { display: flex; gap: .45rem; align-items: center; }
+.stack-dot { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 99px; background: var(--lz-border); transition: width .25s, background-color .2s; }
+.stack-dot:hover { background: var(--lz-muted); }
+.stack-dot.active { width: 26px; background: var(--lz-primary); }
+.stack-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--lz-border); background: var(--lz-wrap); color: var(--lz-text); display: grid; place-items: center; transition: background-color .15s, color .15s, border-color .15s; }
+.stack-arrow:hover, .stack-arrow:focus-visible { background: var(--lz-primary); border-color: var(--lz-primary); color: #fff; }
+.stack-hint { font-size: .82rem; color: var(--lz-muted); margin: 1rem 0 0; display: flex; align-items: center; gap: .4rem; }
+@media (prefers-reduced-motion: reduce) { .stack-card, .stack-card.flying { transition: none; } }

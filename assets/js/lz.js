@@ -150,7 +150,8 @@
     if (!host || host.disabled || host.hasAttribute("data-no-ripple") || host.classList.contains("disabled")) return;
     const cs = getComputedStyle(host);
     if (cs.position === "static") host.style.position = "relative";
-    if (cs.overflow !== "hidden") host.style.overflow = "hidden";
+    /* overflow: clip (bukan hidden) agar elemen flex tidak ikut menyusut: hidden mengubah ukuran minimum otomatis item flex */
+    if (cs.overflow !== "hidden" && cs.overflow !== "clip") host.style.overflow = window.CSS && CSS.supports("overflow", "clip") ? "clip" : "hidden";
     const r = host.getBoundingClientRect();
     const size = Math.max(r.width, r.height) * 2.2;
     const dot = document.createElement("span");
@@ -297,5 +298,159 @@
   };
   Lz.initWizards = () => document.querySelectorAll("[data-lz-wizard]").forEach(Lz.wizard);
 
-  document.addEventListener("DOMContentLoaded", () => { Lz.initTables(); Lz.initWizards(); });
+  /* ---------- Carousel card stack ----------
+     <div data-lz-stack role="region" aria-roledescription="carousel" aria-label="...">
+       <div class="stack-track"> <article class="stack-card" data-title="..."> ... </article> ... </div>
+       <button data-stack-prev> <button data-stack-next> <button data-stack-dot> ... <div class="stack-live visually-hidden" aria-live="polite">
+     Kartu paling atas dapat digeser/di-drag ke kiri atau kanan (mouse, sentuh, pena), atau lewat tombol dan panah keyboard. */
+  Lz.cardStack = function (root) {
+    const track = root.querySelector(".stack-track");
+    const cards = Array.from(root.querySelectorAll(".stack-card"));
+    const n = cards.length;
+    if (!track || n < 2) return;
+    const dots = Array.from(root.querySelectorAll("[data-stack-dot]"));
+    const live = root.querySelector(".stack-live");
+    const reduce = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let cur = 0, busy = false, drag = null, moved = false;
+    const THRESHOLD = 90;
+
+    function layout() {
+      cards.forEach((c, i) => {
+        const pos = (i - cur + n) % n;
+        c.dataset.pos = pos;
+        c.style.setProperty("--pos", Math.min(pos, 3));
+        c.style.zIndex = n - pos;
+        c.setAttribute("aria-label", `${i + 1} of ${n}`);
+        c.setAttribute("aria-hidden", pos === 0 ? "false" : "true");
+        if (pos === 0) c.removeAttribute("inert"); else c.setAttribute("inert", "");
+      });
+      dots.forEach((d, i) => { d.classList.toggle("active", i === cur); d.setAttribute("aria-current", String(i === cur)); });
+      if (live) live.textContent = `Showing ${cur + 1} of ${n}: ${cards[cur].dataset.title || ""}`;
+    }
+    const reflow = (el) => void el.offsetWidth;
+    function clear(el) { el.classList.remove("flying", "dragging"); el.style.removeProperty("--dx"); el.style.removeProperty("--rot"); el.style.removeProperty("opacity"); }
+
+    /* Kartu atas terbang keluar, lalu berpindah ke belakang tumpukan */
+    function fly(dir, done) {
+      const top = cards[cur];
+      top.classList.remove("dragging");
+      if (reduce()) { clear(top); done(); return; }
+      top.classList.add("flying");
+      top.style.setProperty("--dx", dir * 140 + "%");
+      top.style.setProperty("--rot", dir * 16 + "deg");
+      top.style.opacity = "0";
+      let finished = false;
+      const end = () => { if (finished) return; finished = true; top.classList.add("no-anim"); clear(top); done(); reflow(top); top.classList.remove("no-anim"); };
+      top.addEventListener("transitionend", (e) => { if (e.propertyName === "transform") end(); }, { once: true });
+      setTimeout(end, 520);
+    }
+    function next(dir) {
+      if (busy) return;
+      busy = true;
+      fly(dir || -1, () => { cur = (cur + 1) % n; layout(); busy = false; });
+    }
+    function prev() {
+      if (busy) return;
+      busy = true;
+      cur = (cur - 1 + n) % n;
+      const c = cards[cur];
+      c.classList.add("no-anim");
+      layout();
+      if (!reduce()) { c.style.setProperty("--dx", "-130%"); c.style.setProperty("--rot", "-14deg"); }
+      reflow(c);
+      c.classList.remove("no-anim");
+      clear(c);
+      setTimeout(() => { busy = false; }, reduce() ? 0 : 350);
+    }
+    function goTo(i) {
+      if (i === cur || busy) return;
+      if (i === (cur + 1) % n) next(-1);
+      else if (i === (cur - 1 + n) % n) prev();
+      else { cur = i; layout(); }
+    }
+
+    /* Geser dengan pointer (mouse, sentuh, pena) */
+    track.addEventListener("pointerdown", (e) => {
+      if (busy || e.button > 0) return;
+      const top = cards[cur];
+      if (!top.contains(e.target)) return;
+      drag = { x: e.clientX, lx: e.clientX, lt: performance.now(), v: 0, dx: 0, id: e.pointerId, captured: false };
+      moved = false;
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const top = cards[cur];
+      drag.dx = e.clientX - drag.x;
+      const now = performance.now();
+      drag.v = (e.clientX - drag.lx) / Math.max(1, now - drag.lt);
+      drag.lx = e.clientX; drag.lt = now;
+      if (Math.abs(drag.dx) > 5) moved = true;
+      /* Pointer baru "ditangkap" setelah benar-benar bergeser; klik biasa tetap sampai ke tautan/tombol di dalam kartu */
+      if (moved && !drag.captured) { drag.captured = true; top.classList.add("dragging"); try { track.setPointerCapture(e.pointerId); } catch (err) { /* abaikan */ } }
+      if (!moved) return;
+      top.style.setProperty("--dx", drag.dx + "px");
+      top.style.setProperty("--rot", (drag.dx / 18).toFixed(2) + "deg");
+    });
+    function release(e) {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      const top = cards[cur], d = drag;
+      drag = null;
+      top.classList.remove("dragging");
+      if (d.captured) { try { track.releasePointerCapture(d.id); } catch (err) { /* abaikan */ } }
+      if (!d.captured) return;
+      if (Math.abs(d.dx) > THRESHOLD || Math.abs(d.v) > 0.6) {
+        const dir = (Math.abs(d.v) > 0.6 ? d.v : d.dx) > 0 ? 1 : -1;
+        busy = true;
+        fly(dir, () => { cur = (cur + 1) % n; layout(); busy = false; });
+      } else {
+        top.style.setProperty("--dx", "0px");
+        top.style.setProperty("--rot", "0deg");
+        setTimeout(() => { if (!drag) { top.style.removeProperty("--dx"); top.style.removeProperty("--rot"); } }, 400);
+      }
+      if (moved) setTimeout(() => { moved = false; }, 0);
+    }
+    track.addEventListener("pointerup", release);
+    track.addEventListener("pointercancel", release);
+    /* Setelah drag, jangan aktifkan tautan/tombol di dalam kartu */
+    track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+    root.querySelectorAll("[data-stack-next]").forEach((b) => b.addEventListener("click", () => next(-1)));
+    root.querySelectorAll("[data-stack-prev]").forEach((b) => b.addEventListener("click", prev));
+    dots.forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+    root.addEventListener("keydown", (e) => {
+      if (e.target.closest("input, textarea, select")) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); next(-1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    });
+    /* Putar otomatis (opsional): data-autoplay="6000". Berhenti saat kursor/fokus berada di dalam, saat tab tersembunyi, dan lewat tombol jeda
+       [data-stack-toggle]; mati bila pengguna memilih reduced motion. Pengumuman aria-live dimatikan agar pembaca layar tidak terganggu. */
+    const auto = Number(root.dataset.autoplay) || 0;
+    if (auto) {
+      const toggle = root.querySelector("[data-stack-toggle]");
+      let timer = null, paused = false, userPaused = reduce();
+      if (live) live.setAttribute("aria-live", "off");
+      const paintToggle = () => {
+        if (!toggle) return;
+        toggle.setAttribute("aria-pressed", String(userPaused));
+        toggle.setAttribute("aria-label", userPaused ? "Play automatic slides" : "Pause automatic slides");
+        toggle.firstElementChild.className = "bi " + (userPaused ? "bi-play-fill" : "bi-pause-fill");
+      };
+      const run = () => {
+        clearInterval(timer);
+        if (userPaused) return;
+        timer = setInterval(() => { if (!paused && !busy && !drag && !document.hidden) next(-1); }, auto);
+      };
+      root.addEventListener("pointerenter", () => { paused = true; });
+      root.addEventListener("pointerleave", () => { paused = false; });
+      root.addEventListener("focusin", () => { paused = true; });
+      root.addEventListener("focusout", () => { paused = false; });
+      if (toggle) toggle.addEventListener("click", () => { userPaused = !userPaused; paintToggle(); run(); });
+      paintToggle();
+      run();
+    }
+    layout();
+  };
+  Lz.initStacks = () => document.querySelectorAll("[data-lz-stack]").forEach(Lz.cardStack);
+
+  document.addEventListener("DOMContentLoaded", () => { Lz.initTables(); Lz.initWizards(); Lz.initStacks(); });
 })();

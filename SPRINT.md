@@ -476,6 +476,9 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 | 7.5 | QA responsif, mode gelap, aksesibilitas | DONE |
 | 7.6 | Revisi 6: banner hero landing dipadatkan di ponsel | DONE |
 | 7.7 | Revisi 7: tombol Log in menjadi dropdown pilihan jalur masuk | DONE |
+| 7.8 | Revisi 8: carousel card stack yang bisa digeser di landing page | DONE |
+| 7.9 | Landing page kedua bergaya kaca (navbar melayang + banner card stack) | DONE |
+| 7.10 | Konten pendidikan universitas di bawah banner landing glass | DONE |
 
 **7.1 Layout publik** — `DONE` (`assets/css/public.css`, `assets/js/public.js`)
 - [x] Halaman memakai `<body class="public" data-layout="public">` dengan slot `public-header` dan `public-footer`; tanpa sidebar, konten selebar penuh (maks 1180px)
@@ -517,6 +520,36 @@ Layout penuh tanpa sidebar, bergaya landing page, untuk pengunjung yang belum lo
 - [x] Berfungsi di menu lipat mobile tanpa overflow; diuji dengan klik sungguhan di Chrome
 - [ ] Belum ada alur SSO sungguhan atau perbedaan formulir per jalur; semuanya masih memakai sesi demo yang sama
 
+**7.8 Revisi 8: carousel card stack di landing page** — `DONE`
+- [x] Bagian baru "Pick a learning path" di landing: tumpukan 5 kartu (UX Design, Front-End, Copywriting, Business, Finance) yang dikelompokkan dari data course (jumlah course, total jam, rating rata-rata, tiga course teratas) dengan tombol "Start this path" ke login lalu ke Explore terfilter
+- [x] Komponen reusable `Lz.cardStack` + `data-lz-stack` (`lz.js`) dan gaya `.card-stack`/`.stack-card` (`bootstrap-skin.css`): kartu atas dapat digeser/di-drag ke kiri atau kanan dengan mouse, sentuh, atau pena, mengikuti kursor dengan rotasi; melewati ambang 90px atau gerakan cepat membuatnya terbang keluar dan pindah ke belakang tumpukan, jika kurang akan kembali dengan pegas. Tiga kartu terlihat bertumpuk dengan skala, bayangan, dan jarak vertikal
+- [x] Tombol sebelumnya/berikutnya, titik penanda (loncat ke kartu mana pun), dan panah kiri/kanan keyboard
+- [x] Aksesibilitas: `role="region"` + `aria-roledescription="carousel"`, tiap kartu `role="group"` bernomor ("2 of 5"), kartu di belakang `aria-hidden` dan `inert` (hanya kartu atas yang bisa difokus), pengumuman `aria-live` ("Showing 2 of 5: ..."), animasi dimatikan untuk reduced motion
+- [x] Klik biasa pada tombol di dalam kartu tetap berfungsi, sedangkan drag yang berawal di tombol tidak mengaktifkannya (pointer baru ditangkap setelah bergeser > 5px); `touch-action: pan-y` agar scroll vertikal di ponsel tetap jalan
+- [x] Perbaikan yang ditemukan saat uji: efek ripple memakai `overflow: hidden` yang membuat item flex menyusut (tombol di dalam kartu mengecil saat ditekan sehingga klik meleset); kini memakai `overflow: clip`, berlaku untuk seluruh template
+- [x] Contoh dan dokumentasi di halaman Components bagian Learnzie additions
+- [x] Diuji dengan drag mouse (kiri, kanan, pendek, cepat), sentuh di emulasi ponsel, tombol, titik, keyboard, dan klik tautan; tanpa error JS dan tanpa overflow horizontal di 390px
+
+**7.9 Landing page kedua (glass)** — `DONE` (`landing-2.html`, `assets/css/glass.css`, `assets/js/glass-landing.js`)
+Dikonfirmasi: isi halaman = navbar + banner + footer singkat; kartu = satu tema per kartu; ilustrasi = SVG buatan sendiri; dropdown navbar = Courses, Resources, Company.
+- [x] **Navbar melayang:** bilah membulat (24px) yang menggantung 16px dari atas dan tidak selebar layar, dengan efek kaca (`backdrop-filter: blur(18px) saturate`), garis tepi terang, dan bayangan lembut; menjadi lebih pekat saat halaman digulir atau menu mobile dibuka; di layar kecil berubah menjadi menu lipat dengan ikon hamburger
+- [x] **Child menu berlatar kaca:** dropdown Courses (kategori dengan ikon dan deskripsi), Resources (FAQ, Pricing, Help center), Company (About, Contact, Classic landing page), dan Log in (jalur SSO, Dosen, Operator (Non SSO), Orangtua, Registrasi Maru) memakai blur dan bayangan yang sama
+- [x] Kaca navbar diletakkan di pseudo-elemen (`.gl-bar::before`), bukan di elemen bilah itu sendiri, karena `backdrop-filter` bersarang tidak mengaburkan isi halaman (ditemukan saat uji: teks judul tembus pandang di balik dropdown); fallback warna solid jika browser tidak mendukung `backdrop-filter`
+- [x] **Banner = card stack selebar navbar** (revisi: semula kartu kecil di sisi kanan dengan teks di kiri): tiap kartu adalah banner penuh (1140px, sama persis dengan lebar navbar, tinggi 480px, sudut 32px) berlatar gradien warna sendiri, dengan keterangan di dalamnya (label tema, judul besar, penjelasan, tiga poin, tombol utama, dan tautan kedua) di kiri serta ilustrasi SVG besar di kanan. Kartu di belakang mengintip sebagai pita warna di bawah banner. Empat banner: **Learn** (biru), **Practice** (magenta), **Certificate** (kuning, teks gelap), **Community** (hijau). Di layar < 860px ilustrasi pindah ke atas dan daftar poin disembunyikan agar muat
+- [x] Latar bercak warna lembut (biru, pink, kuning) di belakang agar efek kaca navbar terlihat; judul `<h1>` tersembunyi secara visual untuk struktur halaman; ilustrasi sederhana bergaya datar yang dapat diganti dengan ilustrasi profesional
+- [x] Card stack memakai komponen `Lz.cardStack` (7.8) dengan **putar otomatis** 6,5 detik: berhenti saat kursor atau fokus ada di dalam, saat tab tersembunyi, dan lewat tombol jeda (`aria-pressed`); mati untuk reduced motion; wilayah `aria-live` dimatikan selama putar otomatis; banner dapat di-drag, dipilih lewat titik, tombol panah, dan keyboard
+- [x] Footer singkat, tombol ganti tema terang/gelap, dan tombol Dashboard untuk pengguna yang sudah login; menu Pages di sidebar memuat "Landing page (glass)"
+- [x] Diuji di Chrome: gaya kaca dan blur terukur, dropdown terbuka, autoplay berpindah kartu, jeda dan hover menahan putaran, klik tombol kartu bernavigasi, tema gelap, menu mobile; tanpa error JS dan tanpa overflow horizontal di 390px; audit axe-core WCAG A/AA terang dan gelap bersih
+- [ ] Belum diuji di Firefox dan Safari (dukungan `backdrop-filter` dan `:has()` berbeda antar versi)
+
+**7.10 Konten universitas di bawah banner** — `DONE` (`landing-2.html`, `assets/css/glass.css`)
+- [x] Sembilan bagian bertema pendidikan universitas, semua berbahasa Inggris dan berdata dummy: **angka kampus** (25.000+ mahasiswa, 1.200 dosen, 94 program studi, akreditasi A); **Faculties** (8 fakultas dengan ikon, jumlah program studi, deskripsi, dan jenjang); **Admissions** (5 langkah pendaftaran bernomor karena memang berurutan, dengan garis penghubung, serta kartu jadwal penerimaan yang menempel saat digulir); **Digital campus** (6 layanan portal: KRS, nilai dan transkrip, jadwal, e-learning, perpustakaan digital, surat dan sertifikat); **Scholarships** (3 jenis beasiswa dengan syarat dan tenggat); **News and events** (3 berita); **testimoni** mahasiswa dan alumni; **FAQ penerimaan** (6 pertanyaan, accordion); dan pita ajakan akhir
+- [x] Gaya konsisten dengan banner: kartu berlatar kaca (blur) dengan bayangan lembut, bagian selang-seling berlatar sedikit berwarna dengan bercak warna, angka statistik dalam satu panel kaca; mode gelap otomatis
+- [x] Navbar mendapat tautan anchor **Faculties** dan **Admissions** (di samping dropdown Courses, Resources, Company); tautan menandai bagian yang sedang terlihat (scrollspy), gulir halus, dan `scroll-margin` agar judul tidak tertutup navbar melayang
+- [x] Perbaikan: ikon `bi-flask` ternyata tidak ada di Bootstrap Icons 1.11 (kotak ikon kosong), diganti `bi-calculator` dan `bi-journal-text`; bercak warna latar dibatasi pada area banner (sebelumnya muncul lagi di dasar halaman)
+- [x] Diuji di Chrome: semua tautan anchor valid, klik navbar menggulir ke bagian yang benar, scrollspy, FAQ, tanpa ikon rusak, tanpa error JS, tanpa overflow horizontal di 390px; audit axe-core WCAG A/AA terang dan gelap bersih
+- Catatan: tautan "Start your application" dan "Create free account" menuju halaman daftar yang sama dengan landing lain; belum ada alur pendaftaran mahasiswa sungguhan
+
 ---
 
 ## SPRINT 8 — Menu Pages (Halaman Contoh) · `DONE`
@@ -537,7 +570,7 @@ Menu **Pages** di sidebar berisi halaman contoh siap pakai seperti pada tema-tem
 | 8.10 | QA | DONE |
 
 **8.1 Menu Pages** — `DONE` (`assets/js/layout.js`)
-- [x] Item "Pages" (ikon `bi-files`) sebelum Components, berisi: Landing page; Authentication (Log in, Sign up, Forgot password, Lock screen); Error pages (404, 403, 500); Status pages (Maintenance, Coming soon); User profile; FAQ; Pricing; Invoice; Blank page
+- [x] Item "Pages" (ikon `bi-files`) sebelum Components, berisi: Landing page, Landing page (glass); Authentication (Log in, Sign up, Forgot password, Lock screen); Error pages (404, 403, 500); Status pages (Maintenance, Coming soon); User profile; FAQ; Pricing; Invoice; Blank page
 - [x] Halaman bergaya aplikasi (profile, FAQ, pricing, invoice, blank) memakai sidebar; halaman publik/mandiri (landing, auth, error, status, lock screen) memakai layout publik atau layout polos (`body.bare`, tanpa navbar)
 
 **8.2 Error pages** — `DONE` (`404.html`, `403.html`, `500.html`)

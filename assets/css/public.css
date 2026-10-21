@@ -181,3 +181,6 @@ body.bare { background: var(--lz-bg); }
 .cd-box b { display: block; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .cd-box span { font-size: .75rem; color: var(--lz-muted); font-weight: 600; }
 .lock-avatar { width: 96px; height: 96px; font-size: 1.9rem; margin: 0 auto 1rem; }
+
+/* Kartu yang terbang keluar tidak boleh memunculkan scroll horizontal */
+#paths { overflow-x: clip; }

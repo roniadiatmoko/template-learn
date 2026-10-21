@@ -791,6 +791,39 @@ document.querySelectorAll('[data-bs-toggle="popover"]').forEach((el) => new boot
                 <button class="lz-chip active" type="button">UX Design</button><button class="lz-chip" type="button">Front-End</button><button class="lz-chip" type="button">Copywriting</button>
                 <span class="lz-icon-box"><i class="bi bi-book"></i></span><span class="lz-icon-box pink"><i class="bi bi-pencil"></i></span><span class="lz-icon-box yellow"><i class="bi bi-star"></i></span><span class="lz-icon-box green"><i class="bi bi-check2"></i></span>
               </div></div></div>
+              <h3>Card stack carousel</h3>
+              <p class="doc-note">Cards pile up like a deck. Swipe or drag the top card left or right (mouse, touch, or pen), or use the arrows, the dots, or the arrow keys. Add <code>data-lz-stack</code> to the wrapper and it works without extra JavaScript. Only the top card is reachable by keyboard and screen readers; the cards behind it are hidden and inert. Set the height with <code>--stack-h</code>. Motion is skipped when the system asks for reduced motion.</p>
+              <div class="doc-example"><div class="doc-preview" style="overflow:hidden">
+                <div data-lz-stack role="region" aria-roledescription="carousel" aria-label="Example cards">
+                  <div class="card-stack" tabindex="0" style="--stack-h:300px;max-width:320px" aria-label="Card stack. Use the left and right arrow keys to browse.">
+                    <div class="stack-track">
+                      <article class="stack-card" role="group" aria-roledescription="slide" data-title="Card one">
+                        <div class="stack-cover blue" style="height:100px"><i class="bi bi-lightbulb"></i></div>
+                        <div class="stack-body"><h3>Card one</h3><p>Drag me to the left or the right.</p></div>
+                      </article>
+                      <article class="stack-card" role="group" aria-roledescription="slide" data-title="Card two">
+                        <div class="stack-cover pink" style="height:100px"><i class="bi bi-pencil"></i></div>
+                        <div class="stack-body"><h3>Card two</h3><p>The card goes to the back of the stack.</p></div>
+                      </article>
+                      <article class="stack-card" role="group" aria-roledescription="slide" data-title="Card three">
+                        <div class="stack-cover yellow" style="height:100px"><i class="bi bi-star"></i></div>
+                        <div class="stack-body"><h3>Card three</h3><p>Use the dots to jump to any card.</p></div>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="stack-controls justify-content-center mt-3">
+                    <button class="stack-arrow" type="button" data-stack-prev aria-label="Previous card"><i class="bi bi-chevron-left"></i></button>
+                    <div class="stack-dots">
+                      <button class="stack-dot" type="button" data-stack-dot aria-label="Show card one"></button>
+                      <button class="stack-dot" type="button" data-stack-dot aria-label="Show card two"></button>
+                      <button class="stack-dot" type="button" data-stack-dot aria-label="Show card three"></button>
+                    </div>
+                    <button class="stack-arrow" type="button" data-stack-next aria-label="Next card"><i class="bi bi-chevron-right"></i></button>
+                  </div>
+                  <div class="stack-live visually-hidden" aria-live="polite"></div>
+                </div>
+              </div></div>
+              <p class="doc-note">Cards, dots, and arrows can also be built by script before the page finishes loading (the landing page builds its learning paths this way). For a stack added later, call <code>Lz.cardStack(element)</code>.</p>
               <h3>Steps</h3>
               <div class="doc-example"><div class="doc-preview">
                 <ol class="lz-steps"><li class="done">Sign up</li><li class="current">Choose course</li><li>Pay</li><li>Start learning</li></ol>

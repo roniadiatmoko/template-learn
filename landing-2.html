@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learnzie: build skills that show up in your work</title>
+  <meta name="description" content="Short lessons, real projects, and certificates you can share. Pick a path and start free.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/theme.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-skin.css" rel="stylesheet">
+  <link href="assets/css/glass.css" rel="stylesheet">
+  <script src="assets/js/theme-init.js"></script>
+</head>
+<body class="public gl" data-layout="public" data-page="landing-2" data-root="">
+
+  <!-- Navbar melayang berefek kaca -->
+  <header class="gl-nav" id="glNav">
+    <nav class="gl-bar" aria-label="Main">
+      <a class="brand" href="landing-2.html"><span class="brand-mark"></span>Learnzie</a>
+      <button class="navbar-toggler gl-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#glMenu" aria-controls="glMenu" aria-expanded="false" aria-label="Toggle menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse gl-collapse" id="glMenu">
+        <ul class="gl-links">
+          <li><a class="gl-link" href="#faculties">Faculties</a></li>
+          <li><a class="gl-link" href="#admissions">Admissions</a></li>
+          <li class="dropdown">
+            <button class="gl-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</button>
+            <ul class="dropdown-menu glass-menu">
+              <li><h2 class="dropdown-header">Browse by category</h2></li>
+              <li><a class="dropdown-item" href="login.html?next=pages%2Fexplore.html%3Fcat%3DUX%2520Design"><span class="gm-ico"><i class="bi bi-vector-pen"></i></span><span><b>UX Design</b><small>Research, prototypes, usability</small></span></a></li>
+              <li><a class="dropdown-item" href="login.html?next=pages%2Fexplore.html%3Fcat%3DFront-End"><span class="gm-ico pink"><i class="bi bi-code-slash"></i></span><span><b>Front-End</b><small>HTML, CSS, JavaScript</small></span></a></li>
+              <li><a class="dropdown-item" href="login.html?next=pages%2Fexplore.html%3Fcat%3DCopywriting"><span class="gm-ico yellow"><i class="bi bi-pencil-square"></i></span><span><b>Copywriting</b><small>Clear words that persuade</small></span></a></li>
+              <li><a class="dropdown-item" href="login.html?next=pages%2Fexplore.html%3Fcat%3DBusiness"><span class="gm-ico green"><i class="bi bi-graph-up-arrow"></i></span><span><b>Business and Finance</b><small>Strategy, leadership, numbers</small></span></a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="login.html?next=pages%2Fexplore.html"><span class="gm-ico"><i class="bi bi-compass"></i></span><span><b>All courses</b><small>Search the full catalog</small></span></a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button class="gl-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</button>
+            <ul class="dropdown-menu glass-menu">
+              <li><a class="dropdown-item" href="pages/faq.html"><span class="gm-ico"><i class="bi bi-question-circle"></i></span><span><b>FAQ</b><small>Answers to common questions</small></span></a></li>
+              <li><a class="dropdown-item" href="pages/pricing.html"><span class="gm-ico yellow"><i class="bi bi-tag"></i></span><span><b>Pricing</b><small>Free and paid plans</small></span></a></li>
+              <li><a class="dropdown-item" href="mailto:help@learnzie.example"><span class="gm-ico green"><i class="bi bi-life-preserver"></i></span><span><b>Help center</b><small>Write to our support team</small></span></a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button class="gl-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Company</button>
+            <ul class="dropdown-menu glass-menu">
+              <li><a class="dropdown-item" href="#about"><span class="gm-ico"><i class="bi bi-building"></i></span><span><b>About Learnzie</b><small>Who we are</small></span></a></li>
+              <li><a class="dropdown-item" href="mailto:help@learnzie.example"><span class="gm-ico pink"><i class="bi bi-envelope"></i></span><span><b>Contact</b><small>help@learnzie.example</small></span></a></li>
+              <li><a class="dropdown-item" href="landing.html"><span class="gm-ico yellow"><i class="bi bi-window"></i></span><span><b>Classic landing page</b><small>The first design</small></span></a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="gl-actions">
+          <button class="gl-icon" type="button" id="glTheme" aria-label="Switch between light and dark theme"><i class="bi bi-moon"></i></button>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-box-arrow-in-right me-1"></i>Log in</button>
+            <ul class="dropdown-menu dropdown-menu-end glass-menu" id="glLogin"></ul>
+          </div>
+          <a class="btn btn-primary" href="register.html">Sign up free</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="gl-main">
+    <div class="gl-bg" aria-hidden="true"><span class="gl-blob b1"></span><span class="gl-blob b2"></span><span class="gl-blob b3"></span></div>
+
+    <!-- Banner: card stack selebar navbar, informasi ada di dalam tiap banner -->
+    <section class="gl-hero" aria-label="Welcome">
+      <h1 class="visually-hidden">Learnzie: build skills that show up in your work</h1>
+      <div class="gl-stage" data-lz-stack data-autoplay="6500" role="region" aria-roledescription="carousel" aria-label="What you get with Learnzie">
+        <div class="card-stack" tabindex="0" aria-label="Banner stack. Use the left and right arrow keys to browse.">
+          <div class="stack-track">
+            <article class="stack-card gb gb-blue gb-light" role="group" aria-roledescription="slide" data-title="Learn at your own pace">
+              <div class="gb-copy">
+                <span class="gb-tag">Learn</span>
+                <h2>Learn at your own pace</h2>
+                <p>Short video lessons and readings you can finish in a coffee break. Pick up where you left off on any device.</p>
+                <ul class="gb-list"><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Lessons of 6 to 15 minutes</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Progress saved automatically</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Works on phone, tablet, and computer</li></ul>
+                <div class="gb-cta"><a class="btn btn-light btn-lg" href="login.html?next=pages%2Fexplore.html">Browse courses</a><a class="gb-link" href="register.html">Create free account</a></div>
+              </div>
+              <div class="gb-art"><svg viewBox="0 0 400 230" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration of a laptop playing a lesson, next to a stack of books and a plant">
+                    <ellipse cx="200" cy="208" rx="165" ry="9" fill="#06306e" opacity=".22"/>
+                    <circle cx="330" cy="62" r="46" fill="#fff" opacity=".1"/><circle cx="60" cy="40" r="30" fill="#fff" opacity=".08"/>
+                    <path d="M62 168c-24-6-32-28-28-48 22 4 34 22 28 48z" fill="#7ce3b0"/><path d="M64 168c4-26 22-42 42-46-2 26-16 42-42 46z" fill="#4fcf95"/><path d="M63 168c-3-22 2-42 15-58 8 22 3 42-15 58z" fill="#2fbf71"/>
+                    <rect x="44" y="166" width="40" height="36" rx="8" fill="#fff"/><rect x="44" y="166" width="40" height="9" rx="4" fill="#dbe8ff"/>
+                    <rect x="298" y="184" width="84" height="18" rx="5" fill="#ffc93c"/><rect x="304" y="166" width="72" height="18" rx="5" fill="#fbb6e6"/><rect x="294" y="148" width="86" height="18" rx="5" fill="#fff"/>
+                    <rect x="304" y="153" width="30" height="5" rx="2.5" fill="#0f6fde"/>
+                    <rect x="112" y="186" width="176" height="14" rx="7" fill="#dbe8ff"/><rect x="176" y="186" width="48" height="5" rx="2.5" fill="#9fb8e0"/>
+                    <rect x="126" y="62" width="148" height="128" rx="12" fill="#0b2a5c"/><rect x="134" y="70" width="132" height="112" rx="7" fill="#fff"/>
+                    <circle cx="200" cy="116" r="24" fill="#0f6fde"/><path d="M193 104l20 12-20 12z" fill="#fff"/>
+                    <rect x="148" y="158" width="104" height="8" rx="4" fill="#dbe8ff"/><rect x="148" y="158" width="66" height="8" rx="4" fill="#0f6fde"/>
+                    <g><rect x="30" y="58" width="98" height="52" rx="13" fill="#fff"/><circle cx="54" cy="84" r="12" fill="#e8f0fe"/><path d="M48 84l5 5 9-10" fill="none" stroke="#2fbf71" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="74" y="74" width="44" height="7" rx="3.5" fill="#0f6fde"/><rect x="74" y="88" width="30" height="6" rx="3" fill="#c7d6ee"/></g>
+                    <g><circle cx="338" cy="104" r="26" fill="#ffc93c"/><path d="M338 88l5 10 11 1.6-8 7.8 1.9 11-9.9-5.2-9.9 5.2 1.9-11-8-7.8 11-1.6z" fill="#fff"/></g>
+                  </svg></div>
+            </article>
+            <article class="stack-card gb gb-pink gb-light" role="group" aria-roledescription="slide" data-title="Practice with real projects">
+              <div class="gb-copy">
+                <span class="gb-tag">Practice</span>
+                <h2>Practice with real projects</h2>
+                <p>Every course ends with a project you can show to others, so what you learn turns into work you can point to.</p>
+                <ul class="gb-list"><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>A project in every course</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Feedback from instructors</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Build a portfolio as you go</li></ul>
+                <div class="gb-cta"><a class="btn btn-light btn-lg" href="login.html?next=pages%2Fexplore.html">Try a free course</a><a class="gb-link" href="pages/pricing.html">See pricing</a></div>
+              </div>
+              <div class="gb-art"><svg viewBox="0 0 400 230" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration of a design project in a browser window with a color palette and a cursor">
+                    <circle cx="350" cy="50" r="40" fill="#fff" opacity=".12"/><circle cx="46" cy="180" r="34" fill="#fff" opacity=".1"/>
+                    <rect x="62" y="40" width="276" height="160" rx="16" fill="#fff"/><path d="M62 56a16 16 0 0 1 16-16h244a16 16 0 0 1 16 16v14H62z" fill="#fde7f6"/>
+                    <circle cx="82" cy="55" r="5" fill="#ff7a90"/><circle cx="98" cy="55" r="5" fill="#ffc93c"/><circle cx="114" cy="55" r="5" fill="#2fbf71"/>
+                    <rect x="84" y="86" width="108" height="72" rx="10" fill="#fbb6e6"/><path d="M84 148l32-28 26 22 20-14 30 26v4a10 10 0 0 1-10 10H94a10 10 0 0 1-10-10z" fill="#d65fb0" opacity=".55"/><circle cx="160" cy="106" r="9" fill="#fff"/>
+                    <rect x="208" y="90" width="108" height="11" rx="5.5" fill="#0f6fde"/><rect x="208" y="110" width="88" height="8" rx="4" fill="#c7d6ee"/><rect x="208" y="126" width="100" height="8" rx="4" fill="#c7d6ee"/>
+                    <rect x="208" y="146" width="62" height="22" rx="11" fill="#ffc93c"/>
+                    <rect x="84" y="170" width="232" height="8" rx="4" fill="#eef1f6"/>
+                    <path d="M262 150l0 30 8-7 6 13 7-3-6-13 11 0z" fill="#0b1220" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+                    <g transform="translate(334 130)"><rect width="46" height="46" rx="12" fill="#fff"/><circle cx="14" cy="15" r="7" fill="#0f6fde"/><circle cx="32" cy="15" r="7" fill="#ffc93c"/><circle cx="14" cy="33" r="7" fill="#2fbf71"/><circle cx="32" cy="33" r="7" fill="#ff7a90"/></g>
+                    <g transform="rotate(-35 40 120)"><rect x="22" y="108" width="74" height="14" rx="3" fill="#ffc93c"/><rect x="22" y="108" width="16" height="14" fill="#fff"/><path d="M96 108l12 7-12 7z" fill="#f4c7a1"/></g>
+                  </svg></div>
+            </article>
+            <article class="stack-card gb gb-yellow gb-dark" role="group" aria-roledescription="slide" data-title="Earn a certificate you can share">
+              <div class="gb-copy">
+                <span class="gb-tag">Certificate</span>
+                <h2>Earn a certificate you can share</h2>
+                <p>Finish a course to unlock a certificate with a unique ID. Print it, save it as a PDF, or send it to an employer.</p>
+                <ul class="gb-list"><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Unique ID anyone can check</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Print or save as PDF</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>One certificate per course</li></ul>
+                <div class="gb-cta"><a class="btn btn-dark btn-lg" href="login.html?next=pages%2Fcertificate.html">See certificates</a><a class="gb-link" href="landing.html#how">How it works</a></div>
+              </div>
+              <div class="gb-art"><svg viewBox="0 0 400 230" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration of a certificate with a gold seal and a graduation cap">
+                    <circle cx="60" cy="50" r="36" fill="#fff" opacity=".18"/><circle cx="350" cy="190" r="44" fill="#fff" opacity=".14"/>
+                    <rect x="82" y="42" width="236" height="156" rx="12" fill="#fff"/><rect x="94" y="54" width="212" height="132" rx="7" fill="none" stroke="#fde7a6" stroke-width="3"/>
+                    <rect x="146" y="74" width="108" height="11" rx="5.5" fill="#0f6fde"/><rect x="124" y="98" width="152" height="7" rx="3.5" fill="#c7d6ee"/><rect x="146" y="114" width="108" height="7" rx="3.5" fill="#c7d6ee"/>
+                    <path d="M188 168l-9 30 21-9 21 9-9-30z" fill="#e0703f"/>
+                    <circle cx="200" cy="158" r="22" fill="#ffc93c"/><circle cx="200" cy="158" r="15" fill="none" stroke="#fff" stroke-width="3"/><path d="M200 148l3.2 6.4 7 1-5.1 5 1.2 7-6.3-3.3-6.3 3.3 1.2-7-5.1-5 7-1z" fill="#fff"/>
+                    <g transform="translate(278 22) rotate(12)"><path d="M0 22l40-18 40 18-40 18z" fill="#0b1220"/><path d="M16 32v18c0 8 48 8 48 0V32l-24 11z" fill="#1d2b4a"/><path d="M76 24v26" stroke="#ffc93c" stroke-width="3" stroke-linecap="round"/><circle cx="76" cy="54" r="4" fill="#ffc93c"/></g>
+                    <rect x="46" y="150" width="10" height="10" rx="2" fill="#0f6fde" transform="rotate(20 51 155)"/><rect x="352" y="112" width="10" height="10" rx="2" fill="#fbb6e6" transform="rotate(-18 357 117)"/><circle cx="66" cy="196" r="6" fill="#fff"/><circle cx="338" cy="60" r="5" fill="#2fbf71"/><rect x="40" y="96" width="8" height="8" rx="2" fill="#fff" transform="rotate(30 44 100)"/><circle cx="372" cy="170" r="5" fill="#0f6fde"/>
+                  </svg></div>
+            </article>
+            <article class="stack-card gb gb-green gb-light" role="group" aria-roledescription="slide" data-title="Learn together">
+              <div class="gb-copy">
+                <span class="gb-tag">Community</span>
+                <h2>Learn together</h2>
+                <p>Ask questions, share tips, and study with others. A short reply from a peer often unblocks you faster than reading alone.</p>
+                <ul class="gb-list"><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Discussion on every course</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Study groups and schedules</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Instructors who reply</li></ul>
+                <div class="gb-cta"><a class="btn btn-light btn-lg" href="login.html?next=pages%2Fclass.html">Join the discussion</a><a class="gb-link" href="pages/faq.html">Read the FAQ</a></div>
+              </div>
+              <div class="gb-art"><svg viewBox="0 0 400 230" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration of chat bubbles and three learners">
+                    <circle cx="340" cy="56" r="42" fill="#fff" opacity=".12"/><circle cx="52" cy="196" r="38" fill="#fff" opacity=".1"/>
+                    <path d="M58 40h156a16 16 0 0 1 16 16v38a16 16 0 0 1-16 16h-98l-22 20v-20H58a16 16 0 0 1-16-16V56a16 16 0 0 1 16-16z" fill="#fff"/>
+                    <circle cx="96" cy="76" r="6" fill="#2fbf71"/><circle cx="122" cy="76" r="6" fill="#2fbf71" opacity=".65"/><circle cx="148" cy="76" r="6" fill="#2fbf71" opacity=".35"/>
+                    <path d="M186 96h156a16 16 0 0 1 16 16v34a16 16 0 0 1-16 16h-16v20l-22-20h-118a16 16 0 0 1-16-16v-34a16 16 0 0 1 16-16z" fill="#fde7f6"/>
+                    <rect x="208" y="116" width="110" height="8" rx="4" fill="#d65fb0"/><rect x="208" y="132" width="76" height="8" rx="4" fill="#e9a6d3"/>
+                    <path d="M352 36c-6-10-22-6-22 6 0 12 22 24 22 24s22-12 22-24c0-12-16-16-22-6z" fill="#ff6b8a" transform="scale(.7) translate(150 14)"/>
+                    <g><circle cx="86" cy="194" r="24" fill="#ffd9b8"/><path d="M62 190c0-18 12-26 24-26s24 8 24 26c-8-8-14-10-24-10s-16 2-24 10z" fill="#0b1220"/><circle cx="78" cy="196" r="2.5" fill="#0b1220"/><circle cx="94" cy="196" r="2.5" fill="#0b1220"/><path d="M80 204q6 5 12 0" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/></g>
+                    <g><circle cx="150" cy="198" r="24" fill="#f4c7a1"/><path d="M126 196c2-16 12-22 24-22s22 6 24 22c-6-10-12-12-24-12s-18 2-24 12z" fill="#8a3b12"/><circle cx="142" cy="200" r="2.5" fill="#0b1220"/><circle cx="158" cy="200" r="2.5" fill="#0b1220"/><path d="M144 208q6 5 12 0" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/></g>
+                    <g><circle cx="214" cy="194" r="24" fill="#ffd9b8"/><path d="M190 190c0-16 12-24 24-24s24 8 24 24c-4-4-8-8-24-8s-20 4-24 8z" fill="#ffc93c"/><circle cx="206" cy="196" r="2.5" fill="#0b1220"/><circle cx="222" cy="196" r="2.5" fill="#0b1220"/><path d="M208 204q6 5 12 0" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/></g>
+                    <g transform="translate(288 168)"><rect width="84" height="44" rx="12" fill="#fff"/><path d="M26 44l-8 12 18-12z" fill="#fff"/><path d="M20 22l7 7 14-15" fill="none" stroke="#2fbf71" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="48" y="16" width="26" height="6" rx="3" fill="#c7d6ee"/><rect x="48" y="27" width="18" height="6" rx="3" fill="#c7d6ee"/></g>
+                  </svg></div>
+            </article>
+          </div>
+        </div>
+        <div class="stack-controls">
+          <button class="stack-arrow" type="button" data-stack-prev aria-label="Previous banner"><i class="bi bi-chevron-left"></i></button>
+          <div class="stack-dots"><button class="stack-dot" type="button" data-stack-dot aria-label="Show Learn banner"></button><button class="stack-dot" type="button" data-stack-dot aria-label="Show Practice banner"></button><button class="stack-dot" type="button" data-stack-dot aria-label="Show Certificate banner"></button><button class="stack-dot" type="button" data-stack-dot aria-label="Show Community banner"></button></div>
+          <button class="stack-arrow" type="button" data-stack-next aria-label="Next banner"><i class="bi bi-chevron-right"></i></button>
+          <button class="gl-pause" type="button" data-stack-toggle aria-pressed="false" aria-label="Pause automatic slides"><i class="bi bi-pause-fill"></i></button>
+        </div>
+        <div class="stack-live visually-hidden" aria-live="off"></div>
+      </div>
+    </section>
+    <!-- Angka kampus -->
+    <section class="gl-sec gl-sec-tight" aria-label="The university in numbers">
+      <div class="gl-container">
+        <div class="gl-stats">
+          <div><b>25,000+</b><span>students from 34 provinces</span></div>
+          <div><b>1,200</b><span>lecturers, 65% with a doctorate</span></div>
+          <div><b>94</b><span>study programs in 8 faculties</span></div>
+          <div><b>A</b><span>institutional accreditation</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fakultas -->
+    <section class="gl-sec" id="faculties">
+      <div class="gl-container">
+        <div class="gl-head"><h2>Eight faculties, one campus community</h2><p>From engineering to the arts, choose a field that fits you. Every program mixes lectures, lab work, and real projects.</p></div>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box "><i class="bi bi-cpu" aria-hidden="true"></i></span>
+            <h3>Engineering</h3>
+            <span class="badge badge-soft-blue">12 study programs</span>
+            <p>Civil, electrical, mechanical, industrial, and informatics engineering with modern labs.</p>
+            <small>Bachelor · Master · Doctorate</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box pink"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></span>
+            <h3>Economics and Business</h3>
+            <span class="badge badge-soft-blue">9 study programs</span>
+            <p>Management, accounting, and development economics taught with real case studies.</p>
+            <small>Bachelor · Master · Doctorate</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box yellow"><i class="bi bi-mortarboard" aria-hidden="true"></i></span>
+            <h3>Teacher Training and Education</h3>
+            <span class="badge badge-soft-blue">14 study programs</span>
+            <p>Prepare to teach from early childhood to secondary school, with school placements.</p>
+            <small>Bachelor · Master</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box green"><i class="bi bi-heart-pulse" aria-hidden="true"></i></span>
+            <h3>Medicine and Health</h3>
+            <span class="badge badge-soft-blue">8 study programs</span>
+            <p>Medicine, nursing, and public health with teaching hospitals and community clinics.</p>
+            <small>Bachelor · Master</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box "><i class="bi bi-calculator" aria-hidden="true"></i></span>
+            <h3>Mathematics and Natural Sciences</h3>
+            <span class="badge badge-soft-blue">10 study programs</span>
+            <p>Mathematics, physics, chemistry, and biology with research from the first year.</p>
+            <small>Bachelor · Master · Doctorate</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box pink"><i class="bi bi-bank" aria-hidden="true"></i></span>
+            <h3>Law</h3>
+            <span class="badge badge-soft-blue">4 study programs</span>
+            <p>Civil, criminal, and business law with moot court and legal aid practice.</p>
+            <small>Bachelor · Master</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box yellow"><i class="bi bi-flower2" aria-hidden="true"></i></span>
+            <h3>Agriculture</h3>
+            <span class="badge badge-soft-blue">7 study programs</span>
+            <p>Agribusiness, soil science, and food technology built around the university farm.</p>
+            <small>Bachelor · Master</small>
+          </article></div>
+          <div class="col-md-6 col-lg-3"><article class="gl-tile gl-faculty">
+            <span class="lz-icon-box green"><i class="bi bi-palette" aria-hidden="true"></i></span>
+            <h3>Arts and Design</h3>
+            <span class="badge badge-soft-blue">6 study programs</span>
+            <p>Visual communication, product design, and performing arts with a public gallery.</p>
+            <small>Bachelor</small>
+          </article></div>
+        </div>
+        <div class="text-center mt-4"><a class="btn btn-secondary btn-lg" href="login.html?next=pages%2Fexplore.html">Explore programs and courses</a></div>
+      </div>
+    </section>
+
+    <!-- Pendaftaran -->
+    <section class="gl-sec gl-sec-tinted" id="admissions">
+      <div class="gl-blob b1 gl-blob-sec" aria-hidden="true"></div><div class="gl-blob b2 gl-blob-sec" aria-hidden="true"></div>
+      <div class="gl-container">
+        <div class="gl-head"><h2>How to join, step by step</h2><p>The whole process is online. Most applicants finish the first three steps in one evening.</p></div>
+        <div class="row g-4 align-items-start">
+          <div class="col-lg-7"><ol class="gl-steps"><li><h3>Create your account</h3><p>Sign up with your email and confirm it. One account is used for admission, then for your student portal.</p></li><li><h3>Choose your study programs</h3><p>Pick up to two programs. You can compare entry requirements and tuition before you decide.</p></li><li><h3>Upload your documents</h3><p>Add your school certificate or transcript, ID, and a recent photo. Files are checked within three working days.</p></li><li><h3>Take the entrance test</h3><p>Sit the computer-based test online or at one of our campus test centers. Practice questions are free.</p></li><li><h3>Check results and enroll</h3><p>See your result online, pay the first tuition installment, and collect your student card.</p></li></ol></div>
+          <div class="col-lg-5">
+            <aside class="gl-tile gl-calendar" aria-labelledby="calTitle">
+              <h3 id="calTitle">Admissions 2027/2028</h3>
+              <ul><li><span class="gl-date"><b>8</b>Jan</span><span><strong>Registration opens</strong><small>Create your account and choose programs.</small></span></li><li><span class="gl-date"><b>15</b>Mar</span><span><strong>Entrance test</strong><small>Online or at a campus test center.</small></span></li><li><span class="gl-date"><b>12</b>Apr</span><span><strong>Results announced</strong><small>Check your result in the portal.</small></span></li><li><span class="gl-date"><b>30</b>Apr</span><span><strong>Re-registration closes</strong><small>Pay tuition and confirm your seat.</small></span></li><li><span class="gl-date"><b>19</b>Aug</span><span><strong>Lectures begin</strong><small>Orientation week starts on Aug 12.</small></span></li></ul>
+              <a class="btn btn-primary w-100" href="register.html">Start your application</a>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kampus digital -->
+    <section class="gl-sec" id="campus">
+      <div class="gl-container">
+        <div class="gl-head"><h2>Your digital campus, from day one</h2><p>One student account for everything you need to study: enrollment, grades, schedules, and learning materials.</p></div>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box "><i class="bi bi-journal-check" aria-hidden="true"></i></span>
+            <h3>Course enrollment</h3><p>Pick your courses each semester and watch your credit total update as you go.</p>
+          </article></div>
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box pink"><i class="bi bi-card-checklist" aria-hidden="true"></i></span>
+            <h3>Grades and transcript</h3><p>See grades the moment they are published and download your transcript as a PDF.</p>
+          </article></div>
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box yellow"><i class="bi bi-calendar3" aria-hidden="true"></i></span>
+            <h3>Class schedule</h3><p>Your weekly timetable, exam dates, and room changes in one calendar with reminders.</p>
+          </article></div>
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box green"><i class="bi bi-play-circle" aria-hidden="true"></i></span>
+            <h3>E-learning</h3><p>Lecture videos, readings, quizzes, and assignments for every course you take.</p>
+          </article></div>
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box "><i class="bi bi-book" aria-hidden="true"></i></span>
+            <h3>Digital library</h3><p>Search journals and e-books from anywhere, with your student account.</p>
+          </article></div>
+          <div class="col-md-6 col-lg-4"><article class="gl-tile gl-feature">
+            <span class="lz-icon-box pink"><i class="bi bi-award" aria-hidden="true"></i></span>
+            <h3>Certificates and letters</h3><p>Request a study certificate or recommendation letter and track it online.</p>
+          </article></div>
+        </div>
+        <div class="text-center mt-4"><a class="btn btn-primary btn-lg" href="login.html?role=sso">Open the student portal</a></div>
+      </div>
+    </section>
+
+    <!-- Beasiswa -->
+    <section class="gl-sec gl-sec-tinted" id="scholarships">
+      <div class="gl-blob b3 gl-blob-sec" aria-hidden="true"></div>
+      <div class="gl-container">
+        <div class="gl-head"><h2>Scholarships that open doors</h2><p>Last year, one in four students received financial support. Apply together with your admission.</p></div>
+        <div class="row g-3">
+          <div class="col-md-4"><article class="gl-tile gl-scholar">
+            <span class="lz-icon-box yellow"><i class="bi bi-trophy" aria-hidden="true"></i></span>
+            <h3>Academic Excellence</h3><div class="gl-amount">Full tuition</div>
+            <ul><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Top 5% of the entrance test</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>GPA of 3.5 or higher each year</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Renewed every semester</li></ul>
+            <span class="badge badge-soft-yellow">Apply by Mar 1</span>
+          </article></div>
+          <div class="col-md-4"><article class="gl-tile gl-scholar">
+            <span class="lz-icon-box "><i class="bi bi-people" aria-hidden="true"></i></span>
+            <h3>Need-Based Support</h3><div class="gl-amount">Up to 100%</div>
+            <ul><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Family income review</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Open to all programs</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Includes a book allowance</li></ul>
+            <span class="badge badge-soft-yellow">Apply by Apr 15</span>
+          </article></div>
+          <div class="col-md-4"><article class="gl-tile gl-scholar">
+            <span class="lz-icon-box green"><i class="bi bi-journal-text" aria-hidden="true"></i></span>
+            <h3>Research Assistant</h3><div class="gl-amount">Monthly stipend</div>
+            <ul><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>For master and doctoral students</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>Work with a faculty research group</li><li><i class="bi bi-check-circle-fill" aria-hidden="true"></i>10 hours a week</li></ul>
+            <span class="badge badge-soft-yellow">Apply by May 10</span>
+          </article></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Berita -->
+    <section class="gl-sec" id="news">
+      <div class="gl-container">
+        <div class="gl-head"><h2>News and events</h2><p>What is happening on campus this season.</p></div>
+        <div class="row g-3">
+          <div class="col-md-4"><article class="gl-tile gl-news">
+            <div class="gl-news-cover blue"><i class="bi bi-calendar-event" aria-hidden="true"></i><span class="gs-tag">Event</span></div>
+            <div class="gl-news-body"><small>Feb 22</small><h3>Open Campus Day: meet the faculties</h3><p>Tour the labs, talk to lecturers, and join short sample classes from every faculty.</p></div>
+          </article></div>
+          <div class="col-md-4"><article class="gl-tile gl-news">
+            <div class="gl-news-cover green"><i class="bi bi-lightbulb" aria-hidden="true"></i><span class="gs-tag">Research</span></div>
+            <div class="gl-news-body"><small>Jan 30</small><h3>New research center for renewable energy</h3><p>Engineers and agriculture scientists will work together on solar and biogas systems for villages.</p></div>
+          </article></div>
+          <div class="col-md-4"><article class="gl-tile gl-news">
+            <div class="gl-news-cover yellow"><i class="bi bi-trophy" aria-hidden="true"></i><span class="gs-tag">Achievement</span></div>
+            <div class="gl-news-body"><small>Jan 12</small><h3>Students win the national robotics championship</h3><p>A team of informatics and electrical engineering students took first place among 48 universities.</p></div>
+          </article></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section class="gl-sec gl-sec-tight" id="stories">
+      <div class="gl-container">
+        <div class="gl-head"><h2>Students and alumni say</h2></div>
+        <div class="row g-3">
+          <div class="col-md-4"><figure class="gl-tile gl-quote m-0">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>The online portal let me plan my semester in minutes. Lecturers answer on the course page, so I never had to chase anyone.</blockquote>
+            <figcaption><span class="lz-avatar">NR</span><span><b>Nadia Rahma</b><small>Informatics, class of 2024</small></span></figcaption>
+          </figure></div>
+          <div class="col-md-4"><figure class="gl-tile gl-quote m-0">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>The scholarship covered my tuition, and the career center helped me find an internship in my second year.</blockquote>
+            <figcaption><span class="lz-avatar">BP</span><span><b>Bagas Pratama</b><small>Business Administration, 2023</small></span></figcaption>
+          </figure></div>
+          <div class="col-md-4"><figure class="gl-tile gl-quote m-0">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>I studied here, now I teach here. The research support and small classes made the difference for me.</blockquote>
+            <figcaption><span class="lz-avatar">MS</span><span><b>Dr. Maya Sari</b><small>Alumna and lecturer, Education</small></span></figcaption>
+          </figure></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="gl-sec" id="faq">
+      <div class="gl-container" style="max-width:860px">
+        <div class="gl-head"><h2>Admissions questions</h2><p>Quick answers before you apply.</p></div>
+        <div class="accordion" id="uniFaq">
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#uq0" aria-expanded="true">When can I apply?</button></h3>
+              <div id="uq0" class="accordion-collapse collapse show" data-bs-parent="#uniFaq"><div class="accordion-body">Registration opens on January 8 and closes on March 1. Late applications are accepted for some programs until the entrance test date.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#uq1" aria-expanded="false">Which documents do I need?</button></h3>
+              <div id="uq1" class="accordion-collapse collapse " data-bs-parent="#uniFaq"><div class="accordion-body">Your school certificate or latest transcript, a copy of your ID, and a recent photo. Master and doctoral applicants also upload a study plan.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#uq2" aria-expanded="false">Can I apply to more than one program?</button></h3>
+              <div id="uq2" class="accordion-collapse collapse " data-bs-parent="#uniFaq"><div class="accordion-body">Yes. You can choose up to two study programs. Your score is considered for both, in the order you listed them.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#uq3" aria-expanded="false">How much is tuition?</button></h3>
+              <div id="uq3" class="accordion-collapse collapse " data-bs-parent="#uniFaq"><div class="accordion-body">Tuition depends on the program and is shown on each program page. It can be paid in installments, and scholarships can lower the amount.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#uq4" aria-expanded="false">Is the entrance test online?</button></h3>
+              <div id="uq4" class="accordion-collapse collapse " data-bs-parent="#uniFaq"><div class="accordion-body">You can take it online from home or at a campus test center. Both versions use the same questions and the same scoring.</div></div></div>
+            <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#uq5" aria-expanded="false">Who can I ask for help?</button></h3>
+              <div id="uq5" class="accordion-collapse collapse " data-bs-parent="#uniFaq"><div class="accordion-body">Write to admissions@learnzie.example or use the help center. Our team replies within one working day.</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ajakan akhir -->
+    <section class="gl-sec gl-sec-tight">
+      <div class="gl-container">
+        <div class="gl-cta-band">
+          <div><h2>Ready to start your university journey?</h2><p>Create your account, choose your programs, and take the first step this week.</p></div>
+          <div class="gl-cta-actions"><a class="btn btn-light btn-lg" href="register.html">Create free account</a><a class="gb-link" href="mailto:admissions@learnzie.example">Talk to admissions</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="gl-footer" id="about">
+    <div class="gl-wrap">
+      <div><a class="brand" href="landing-2.html"><span class="brand-mark"></span>Learnzie</a><div><small>Short lessons, real projects, and clear progress.</small></div></div>
+      <ul>
+        <li><a href="login.html?next=pages%2Fexplore.html">Courses</a></li>
+        <li><a href="pages/faq.html">FAQ</a></li>
+        <li><a href="pages/pricing.html">Pricing</a></li>
+        <li><a href="mailto:help@learnzie.example">Contact</a></li>
+      </ul>
+      <small>Copyright © <span id="glYear">2026</span> Learnzie</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/data/mock.js"></script>
+  <script src="assets/js/lz.js"></script>
+  <script src="assets/js/public.js"></script>
+  <script src="assets/js/glass-landing.js"></script>
+</body>
+</html>

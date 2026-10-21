@@ -16,6 +16,7 @@ hal yang tidak ada di Bootstrap. Tanpa build step. Rencana dan status pengerjaan
 |---|---|
 | Halaman publik (sebelum login): landing, login, register, lupa password | `landing.html`, `login.html`, `register.html`, `forgot-password.html` |
 | Menu Pages (halaman contoh) | `landing.html`, `lock-screen.html`, `404.html`, `403.html`, `500.html`, `maintenance.html`, `coming-soon.html`, `pages/profile.html`, `pages/faq.html`, `pages/pricing.html`, `pages/invoice.html`, `pages/blank.html` |
+| Landing page kedua bergaya kaca | `landing-2.html` |
 | Dashboard | `index.html` |
 | Explore, Courses, Detail course | `pages/explore.html`, `pages/courses.html`, `pages/course-detail.html?id=1` |
 | Class (daftar + ruang kelas) | `pages/class.html`, `pages/class.html?course=1` |
@@ -161,6 +162,19 @@ Lz.charts.ring(canvas, 72);
 Tabel dengan sort, pencarian, dan pagination: beri atribut `data-lz-table` (opsional `data-page-size`) pada pembungkus,
 `data-sort` pada `<th>` yang bisa diurutkan, `data-lz-search` pada input, dan `data-lz-pager` pada penampung pagination.
 Nilai urut khusus bisa diberikan lewat `data-value` pada `<td>`. Contoh ada di menu Components dan `pages/analytics.html`.
+
+## Landing glass (`landing-2.html`)
+
+Landing kedua dengan navbar melayang berefek kaca dan banner berupa card stack selebar navbar (tiap kartu adalah banner penuh berisi teks dan ilustrasi). Gayanya di `assets/css/glass.css` (token `--glass-bg`, `--glass-bg-strong`, `--glass-border`, `--glass-shadow`
+untuk terang dan gelap), perilakunya di `assets/js/glass-landing.js`. Dropdown berkaca memakai kelas `glass-menu` pada `.dropdown-menu`. Untuk efek kaca yang benar, jangan menaruh
+`backdrop-filter` pada elemen yang menjadi induk dropdown berkaca; letakkan pada pseudo-elemen seperti `.gl-bar::before`. Card stack bisa berputar otomatis lewat
+`data-autoplay="6000"` (milidetik) dan tombol jeda `data-stack-toggle`. Di bawah banner terdapat konten universitas (fakultas, pendaftaran, kampus digital, beasiswa, berita, testimoni, FAQ) yang ditulis langsung di HTML; ubah teks dan angkanya sesuai kampus Anda. Tiap bagian memakai `.gl-sec` dengan `id` untuk tautan navbar, dan kartu `.gl-tile`. Ilustrasi pada banner adalah SVG inline di `landing-2.html` (dalam `.gb-art`) yang dapat diganti; warna tiap banner diatur kelas `gb-blue`, `gb-pink`, `gb-yellow`, `gb-green` dan teksnya `gb-light` atau `gb-dark`.
+
+## Card stack carousel
+
+Tumpukan kartu yang bisa digeser: beri `data-lz-stack` pada pembungkus yang berisi `.stack-track` dengan beberapa `.stack-card`, tombol `data-stack-prev` / `data-stack-next`,
+titik `data-stack-dot`, dan `.stack-live` (wilayah `aria-live`). Tinggi diatur `--stack-h`. Untuk stack yang dibuat belakangan panggil `Lz.cardStack(el)`.
+Contoh langsung ada di landing page (bagian learning paths) dan di halaman Components.
 
 ## Form wizard
 

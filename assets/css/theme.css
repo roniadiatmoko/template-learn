@@ -471,18 +471,18 @@ html.lz-loading .app-content, html.lz-loading .app-right { opacity: 0; }
   .side-collapse { display: inline-grid; }
   .app-shell { transition: grid-template-columns .25s ease; }
   html.sb-collapsed { --lz-sidebar-w: 92px; }
-  html.sb-collapsed .side-head { padding: 1.5rem 0 1rem; justify-content: center; }
-  html.sb-collapsed .side-head .brand { padding: 0; justify-content: center; }
-  html.sb-collapsed .brand-name,
-  html.sb-collapsed .side-nav a > span,
-  html.sb-collapsed .side-toggle > span,
-  html.sb-collapsed .side-toggle .chev,
-  html.sb-collapsed .side-nav .collapse,
-  html.sb-collapsed .promo { display: none !important; }
-  html.sb-collapsed .side-scroll { padding: 0 .75rem 1rem; scrollbar-gutter: auto; }
-  html.sb-collapsed .side-nav a, html.sb-collapsed .side-toggle { justify-content: center; padding: .85rem 0; }
-  html.sb-collapsed .side-nav a i, html.sb-collapsed .side-toggle > i:first-child { font-size: 1.3rem; }
-  html.sb-collapsed .side-nav > li { position: relative; }
-  html.sb-collapsed .side-nav .has-active > .side-toggle { background: var(--lz-primary-soft); }
+  html.sb-collapsed .app-sidebar .side-head { padding: 1.5rem 0 1rem; justify-content: center; }
+  html.sb-collapsed .app-sidebar .side-head .brand { padding: 0; justify-content: center; }
+  html.sb-collapsed .app-sidebar .brand-name,
+  html.sb-collapsed .app-sidebar .side-nav a > span,
+  html.sb-collapsed .app-sidebar .side-toggle > span,
+  html.sb-collapsed .app-sidebar .side-toggle .chev,
+  html.sb-collapsed .app-sidebar .side-nav .collapse,
+  html.sb-collapsed .app-sidebar .promo { display: none !important; }
+  html.sb-collapsed .app-sidebar .side-scroll { padding: 0 .75rem 1rem; scrollbar-gutter: auto; }
+  html.sb-collapsed .app-sidebar .side-nav a, html.sb-collapsed .app-sidebar .side-toggle { justify-content: center; padding: .85rem 0; }
+  html.sb-collapsed .app-sidebar .side-nav a i, html.sb-collapsed .app-sidebar .side-toggle > i:first-child { font-size: 1.3rem; }
+  html.sb-collapsed .app-sidebar .side-nav > li { position: relative; }
+  html.sb-collapsed .app-sidebar .side-nav .has-active > .side-toggle { background: var(--lz-primary-soft); }
 }
 @media (prefers-reduced-motion: reduce) { .app-shell, .side-collapse { transition: none; } }
